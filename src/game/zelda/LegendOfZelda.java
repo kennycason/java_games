@@ -27,9 +27,6 @@ import game.zelda.weapon.SwordLevel3;
 
 public class LegendOfZelda extends Game {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private TopMenu menu;
