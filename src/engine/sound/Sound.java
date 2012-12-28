@@ -1,14 +1,7 @@
 package engine.sound;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * @TODO http://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
@@ -56,29 +49,31 @@ public class Sound implements ISound {
 
 	@Override
 	public void play() {
-		if(loaded) {
-			if(clip.isRunning()) {
+
+		if (loaded) {
+			if (clip.isRunning()) {
 				clip.stop();
 			}
-	        if(looping) {
-		          clip.loop(Clip.LOOP_CONTINUOUSLY);
-		    } else {
-		    	clip.setFramePosition(0);  // Must always rewind!
-		        clip.start();
-		    }
+			if (looping) {
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+			} else {
+				clip.setFramePosition(0); // Must always rewind!
+				clip.start();
+			}
+
 		}
 	}
 
 	@Override
 	public void pause() {
-		if(loaded) {
+		if (loaded) {
 			clip.stop();
 		}
 	}
 
 	@Override
 	public void stop() {
-		if(loaded) {
+		if (loaded) {
 			clip.stop();
 		}
 	}
@@ -91,18 +86,19 @@ public class Sound implements ISound {
 	@Override
 	public void volume(int volume) {
 		this.volume = volume;
-		if(this.volume < 0) {
+		if (this.volume < 0) {
 			this.volume = 0;
-		} else if(this.volume > 100) {
+		} else if (this.volume > 100) {
 			this.volume = 100;
 		}
-		if(loaded) {
-			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		if (loaded) {
+			FloatControl gainControl = (FloatControl) clip
+					.getControl(FloatControl.Type.MASTER_GAIN);
 			float amt = 0;
 			float range = gainControl.getMaximum() - gainControl.getMinimum();
-			amt = (float) (gainControl.getMinimum() + range * this.volume / 100.0);
+			amt = (float) (gainControl.getMinimum() + range * this.volume
+					/ 100.0);
 			gainControl.setValue(amt); // Reduce volume by 10 decibels.
-				
 		}
 	}
 
