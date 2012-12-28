@@ -13,5 +13,7 @@ public interface ISound {
 	void volume(int volume);
 	
 	int volume();
+
+	String file();
 	
 }

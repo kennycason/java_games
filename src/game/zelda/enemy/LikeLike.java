@@ -5,7 +5,7 @@ import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteResources;
+import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 
 public class LikeLike extends AbstractEnemy {
@@ -13,7 +13,7 @@ public class LikeLike extends AbstractEnemy {
 	public LikeLike(Game game, int x, int y) {
 		super(game);
 		setAIStrategy(new RandomAIStrategy(game, this, 2500));
-		SpriteResources rsrcs = SpriteResources.getInstance();
+		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
 		sprite = new AnimatedSprite(sheet.getRange(462,464), 230);
 		sprite.reverseCycle(true);

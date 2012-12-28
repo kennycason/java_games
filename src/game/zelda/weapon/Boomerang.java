@@ -1,16 +1,17 @@
 package game.zelda.weapon;
 
+import java.awt.Graphics2D;
+
 import engine.FaceDirection;
 import engine.Game;
 import engine.entity.weapon.AbstractWeapon;
 import engine.math.Vector2D;
-import engine.sound.Sound;
+import engine.sound.ISound;
+import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteResources;
+import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
-
-import java.awt.Graphics2D;
 
 public class Boomerang extends AbstractWeapon {
 	
@@ -28,11 +29,11 @@ public class Boomerang extends AbstractWeapon {
 	
 	private boolean returning = false;
 	
-	private Sound sound;
+	private ISound sound;
 	
 	public Boomerang(Game game) {
 		super(game);
-		SpriteSheet entities = (SpriteSheet) SpriteResources.getInstance().get("entities");
+		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		
 		SpriteSheet sheet = new SpriteSheet(8, 16, 16);
 		sheet.set(0, entities.get(411));
@@ -51,7 +52,7 @@ public class Boomerang extends AbstractWeapon {
 		speed = 8;
 		distance = 16 * 5;
 		damage = 1;
-		sound = new  Sound("sound/effects/Oracle_Boomerang.wav", true);
+		sound = SoundBank.getInstance().get("boomerang");
 	}
 	
 	public void draw(Graphics2D g) {

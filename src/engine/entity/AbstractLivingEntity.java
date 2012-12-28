@@ -2,7 +2,7 @@ package engine.entity;
 
 import engine.Game;
 import engine.ai.IAIStrategy;
-import engine.sound.Sound;
+import engine.sound.ISound;
 
 public abstract class AbstractLivingEntity extends AbstractEntity {
 
@@ -48,9 +48,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	
 	protected double life = maxLife;
 	
-	protected Sound hitSound;
+	protected ISound hitSound;
 	
-	protected Sound deadSound;
+	protected ISound deadSound;
 	/**
 	 * is entity dead?
 	 */

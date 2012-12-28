@@ -5,7 +5,7 @@ import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteResources;
+import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 
@@ -14,7 +14,7 @@ public class Octorok extends AbstractEnemy {
 	public Octorok(Game game, int x, int y) {
 		super(game);
 		setAIStrategy(new RandomAIStrategy(game, this, 2500));
-		SpriteResources rsrcs = SpriteResources.getInstance();
+		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
 		SpriteSheet west = new SpriteSheet(2, 16, 16);
 		SpriteSheet south = new SpriteSheet(2, 16, 16);

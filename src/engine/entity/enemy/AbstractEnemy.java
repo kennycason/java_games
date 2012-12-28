@@ -2,14 +2,14 @@ package engine.entity.enemy;
 
 import engine.Game;
 import engine.entity.AbstractMultiFacingAnimatedEntity;
-import engine.sound.Sound;
+import engine.sound.SoundBank;
 
 public abstract class AbstractEnemy extends AbstractMultiFacingAnimatedEntity {
 
 	public AbstractEnemy(Game game) {
 		super(game);
-		hitSound = new Sound("sound/effects/Oracle_Enemy_Hit.wav");
-		deadSound = new Sound("sound/effects/Oracle_Enemy_Die.wav");
+		hitSound = SoundBank.getInstance().get("enemy_hit");
+		deadSound = SoundBank.getInstance().get("enemy_die");
 	}
 
 }

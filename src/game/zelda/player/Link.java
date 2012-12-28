@@ -13,10 +13,11 @@ import engine.entity.weapon.AbstractWeapon;
 import engine.entity.weapon.WeaponResources;
 import engine.keyboard.KeyBoard;
 import engine.math.Vector2D;
-import engine.sound.Sound;
+import engine.sound.ISound;
+import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteResources;
+import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 
@@ -40,12 +41,12 @@ public class Link extends AbstractLivingEntity {
 	
 	private AbstractWeapon weaponB;
 	
-	private Sound lowHeartsSound;
+	private ISound lowHeartsSound;
 	
 	public Link(Game game) {
 		super(game);
 
-		SpriteResources rsrcs = SpriteResources.getInstance();
+		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
 		
 		linkE = new AnimatedSprite(sheet.getRange(2, 3), 200);
@@ -66,8 +67,9 @@ public class Link extends AbstractLivingEntity {
 		invincibleTime = 500;
 		life = 5.5;
 		maxLife = 20;
-		hitSound = new  Sound("sound/effects/Oracle_Link_Hurt.wav");
-		lowHeartsSound = new Sound("sound/effects/Oracle_LowHealth.wav", true);
+		deadSound = SoundBank.getInstance().get("link_die");
+		hitSound = SoundBank.getInstance().get("link_hurt");
+		lowHeartsSound = SoundBank.getInstance().get("link_low_life");
 	}
 	
 	@Override
