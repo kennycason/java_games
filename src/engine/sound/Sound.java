@@ -13,6 +13,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import org.apache.log4j.Logger;
+
 /**
  *       http://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
  *       http://docs.oracle.com/javase/1.4.2/docs/guide/sound/programmer_guide/chapter4.html
@@ -34,9 +36,10 @@ public class Sound implements ISound {
 	private String file;
 	
 	private AudioFormat format ;
+	
+	private final static Logger LOGGER = Logger.getLogger(Sound.class.getName()); 
 
 	public Sound(String file) {
-
 		// Set up an audio input stream piped from the sound file.
 		try {
 			this.file = file;
@@ -57,7 +60,7 @@ public class Sound implements ISound {
 	            baout.close();
 	            data = baout.toByteArray();
 			}
-			// System.out.println("loaded: " + line.getBufferSize() + " bytes");
+			LOGGER.trace("loaded: " + line.getBufferSize() + " bytes");
 			loaded = true;
 			volume(volume);
 		} catch (UnsupportedAudioFileException e) {
@@ -77,7 +80,6 @@ public class Sound implements ISound {
 		if (loaded) {
 			Runnable runner = new Runnable() {
 				public void run() {
-					System.out.println("play: " + file);
 					try {
 						line.open(format);
 						line.start();
