@@ -1,0 +1,14 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+.classpath
+
+.classpath
+
+.settings/org.eclipse.jdt.core.prefs
+
+*.prefs
