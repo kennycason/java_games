@@ -1,7 +1,14 @@
 package engine.sound;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * @TODO http://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
@@ -24,26 +31,26 @@ public class Sound implements ISound {
 	}
 	
 	public Sound(String file, boolean looping) {	
-//		try {
-//			clip = AudioSystem.getClip();
-//			AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(file));
-//			
-//			// @TODO use below method to load
-//	        AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
-//	        clip.open(inputStream);
-//	        loaded = true;
-//	        this.looping = looping;
-//	        volume(volume);
-//		} catch(LineUnavailableException e) {
-//			e.printStackTrace();
-//			loaded = false;
-//		} catch(UnsupportedAudioFileException e) {
-//			e.printStackTrace();
-//			loaded = false;
-//		} catch(IOException e) {
-//			e.printStackTrace();
-//			loaded = false;
-//		}
+		try {
+			clip = AudioSystem.getClip();
+			AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(file));
+			
+			// @TODO use below method to load
+	        // AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
+	        clip.open(inputStream);
+	        loaded = true;
+	        this.looping = looping;
+	        volume(volume);
+		} catch(LineUnavailableException e) {
+			e.printStackTrace();
+			loaded = false;
+		} catch(UnsupportedAudioFileException e) {
+			e.printStackTrace();
+			loaded = false;
+		} catch(IOException e) {
+			e.printStackTrace();
+			loaded = false;
+		}
 		loaded = false;
 	}
 
