@@ -28,7 +28,6 @@ public class TiledSpriteSheet {
 		SimpleSprite sprite = new SimpleSprite(filename);
 		int numTilesX = sprite.width() / width;
 		int numTilesY = sprite.height() / height;
-		System.out.println("filename: " + filename);
 		numTiles = numTilesX * numTilesY + 1;
 		sprites = new SimpleSprite[numTiles];
 		for(int y = 0; y < numTilesY; y++) {

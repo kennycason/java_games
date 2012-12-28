@@ -3,7 +3,7 @@ package game.zelda.item;
 import engine.Game;
 import engine.entity.AbstractSimpleEntity;
 import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteResources;
+import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 
 import java.awt.Graphics2D;
@@ -12,7 +12,7 @@ public class Heart extends AbstractSimpleEntity {
 	
 	public Heart(Game game) {
 		super(game);
-		SpriteResources rsrcs = SpriteResources.getInstance();
+		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
 		sprite = new SimpleSprite(sheet.get(0));
 

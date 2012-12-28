@@ -1,12 +1,13 @@
 package game.zelda.weapon;
 
+import java.awt.Graphics2D;
+
 import engine.Game;
 import engine.entity.weapon.AbstractWeapon;
-import engine.sound.Sound;
+import engine.sound.ISound;
+import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteUtils;
-
-import java.awt.Graphics2D;
 
 public abstract class AbstractSword extends AbstractWeapon {
 	
@@ -23,7 +24,7 @@ public abstract class AbstractSword extends AbstractWeapon {
 	
 	protected SimpleSprite sprite;
 	
-	protected Sound swingSound;
+	protected ISound swingSound;
 
 	protected AbstractSword(Game game, int entityNumber, int damage) {
 		super(game);
@@ -37,7 +38,7 @@ public abstract class AbstractSword extends AbstractWeapon {
 		spriteW = SpriteUtils.flipHorizontal(spriteE);
 		spriteW2 = SpriteUtils.rotate(spriteW, Math.PI / 4);	
 		sprite = spriteN;
-		swingSound = new  Sound("sound/effects/Oracle_Sword_Slash1.wav");
+		swingSound = SoundBank.getInstance().get("sword_slash1");
 	}
 	
 	@Override

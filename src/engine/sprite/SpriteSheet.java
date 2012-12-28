@@ -3,7 +3,7 @@ package engine.sprite;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class SpriteSheet implements ISpriteResource {
+public class SpriteSheet implements ISpriteBankResource {
 	
 	private SimpleSprite[] sprites;
 	
