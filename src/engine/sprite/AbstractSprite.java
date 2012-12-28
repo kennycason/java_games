@@ -2,7 +2,7 @@ package engine.sprite;
 
 import engine.entity.AbstractCollidable;
 
-public abstract class AbstractSprite extends AbstractCollidable implements ISprite, ISpriteResource {
+public abstract class AbstractSprite extends AbstractCollidable implements ISprite, ISpriteBankResource {
 
 	protected int spriteWidth;
 
