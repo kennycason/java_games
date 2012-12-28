@@ -14,9 +14,8 @@ import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * @TODO 
  *       http://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
- *       use SourceDataLine
+ *       http://docs.oracle.com/javase/1.4.2/docs/guide/sound/programmer_guide/chapter4.html
  * @author kenny
  * 
  */
