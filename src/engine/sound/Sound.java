@@ -11,43 +11,46 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * @TODO http://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
- * 		use SourceDataLine
+ * @TODO 
+ *       http://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
+ *       use SourceDataLine
  * @author kenny
- *
+ * 
  */
 public class Sound implements ISound {
-	
+
 	private Clip clip;
-	
+
 	private boolean loaded = false;
-	
+
 	private int volume = 50;
-	
+
 	private boolean looping = false;
-	
+
 	public Sound(String url) {
 		this(url, false);
 	}
-	
-	public Sound(String file, boolean looping) {	
+
+	public Sound(String file, boolean looping) {
 		try {
 			clip = AudioSystem.getClip();
 			AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(file));
-			
+
 			// @TODO use below method to load
-	        //AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
-	        clip.open(inputStream);
-	        loaded = true;
-	        this.looping = looping;
-	        volume(volume);
-		} catch(LineUnavailableException e) {
+			// AudioInputStream inputStream =
+			// AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
+			clip.open(inputStream);
+			loaded = true;
+			this.looping = looping;
+			volume(volume);
+
+		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 			loaded = false;
-		} catch(UnsupportedAudioFileException e) {
+		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 			loaded = false;
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			loaded = false;
 		}
@@ -55,29 +58,29 @@ public class Sound implements ISound {
 
 	@Override
 	public void play() {
-		if(loaded) {
-			if(clip.isRunning()) {
+		if (loaded) {
+			if (clip.isRunning()) {
 				clip.stop();
 			}
-	        if(looping) {
-		          clip.loop(Clip.LOOP_CONTINUOUSLY);
-		    } else {
-		    	clip.setFramePosition(0);  // Must always rewind!
-		        clip.start();
-		    }
+			if (looping) {
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+			} else {
+				clip.setFramePosition(0); // Must always rewind!
+				clip.start();
+			}
 		}
 	}
 
 	@Override
 	public void pause() {
-		if(loaded) {
+		if (loaded) {
 			clip.stop();
 		}
 	}
 
 	@Override
 	public void stop() {
-		if(loaded) {
+		if (loaded) {
 			clip.stop();
 		}
 	}
@@ -90,18 +93,20 @@ public class Sound implements ISound {
 	@Override
 	public void volume(int volume) {
 		this.volume = volume;
-		if(this.volume < 0) {
+		if (this.volume < 0) {
 			this.volume = 0;
-		} else if(this.volume > 100) {
+		} else if (this.volume > 100) {
 			this.volume = 100;
 		}
-		if(loaded) {
-			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		if (loaded) {
+			FloatControl gainControl = (FloatControl) clip
+					.getControl(FloatControl.Type.MASTER_GAIN);
 			float amt = 0;
 			float range = gainControl.getMaximum() - gainControl.getMinimum();
-			amt = (float) (gainControl.getMinimum() + range * this.volume / 100.0);
+			amt = (float) (gainControl.getMinimum() + range * this.volume
+					/ 100.0);
 			gainControl.setValue(amt); // Reduce volume by 10 decibels.
-				
+
 		}
 	}
 
