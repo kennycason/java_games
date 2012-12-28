@@ -31,26 +31,27 @@ public class Sound implements ISound {
 	}
 	
 	public Sound(String file, boolean looping) {	
-		try {
-			clip = AudioSystem.getClip();
-			AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(file));
-			
-			// @TODO use below method to load
-	        //AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
-	        clip.open(inputStream);
-	        loaded = true;
-	        this.looping = looping;
-	        volume(volume);
-		} catch(LineUnavailableException e) {
-			e.printStackTrace();
-			loaded = false;
-		} catch(UnsupportedAudioFileException e) {
-			e.printStackTrace();
-			loaded = false;
-		} catch(IOException e) {
-			e.printStackTrace();
-			loaded = false;
-		}
+//		try {
+//			clip = AudioSystem.getClip();
+//			AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(file));
+//			
+//			// @TODO use below method to load
+//	        AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
+//	        clip.open(inputStream);
+//	        loaded = true;
+//	        this.looping = looping;
+//	        volume(volume);
+//		} catch(LineUnavailableException e) {
+//			e.printStackTrace();
+//			loaded = false;
+//		} catch(UnsupportedAudioFileException e) {
+//			e.printStackTrace();
+//			loaded = false;
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//			loaded = false;
+//		}
+		loaded = false;
 	}
 
 	@Override
