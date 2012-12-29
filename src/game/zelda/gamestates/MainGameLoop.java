@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
-import engine.AbstractGameStateLoop;
+import engine.AbstractGameLoop;
 import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.AbstractEntity;
@@ -13,7 +13,7 @@ import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import game.zelda.TopMenu;
 
-public class MainGameLoop extends AbstractGameStateLoop {
+public class MainGameLoop extends AbstractGameLoop {
 
 
 	private TopMenu menu;

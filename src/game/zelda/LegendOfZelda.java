@@ -2,7 +2,6 @@ package game.zelda;
 
 import java.awt.Font;
 
-import engine.AbstractGameStateLoop;
 import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.weapon.WeaponBank;
@@ -26,12 +25,6 @@ import game.zelda.weapon.SwordLevel3;
 public class LegendOfZelda extends Game {
 
 	private static final long serialVersionUID = 1L;
-	
-	//private AbstractGameStateLoop titleScreenLoop;
-	
-	private AbstractGameStateLoop mainLoop;
-	
-	private AbstractGameStateLoop pauseLoop;
 
 
 	public static void main(String[] args) {
@@ -74,8 +67,8 @@ public class LegendOfZelda extends Game {
 
 		SoundBank.getInstance().get("main_theme").play();
 		
-		mainLoop = new MainGameLoop(this);
-		pauseLoop = new PauseGameLoop(this);
+		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop(this));
+		gameLoops.put(GameStateEnum.PAUSED, new PauseGameLoop(this));
 	}
 	
 	public void run() {
@@ -86,10 +79,10 @@ public class LegendOfZelda extends Game {
 					gameState = GameStateEnum.MAIN;
 					break;
 				case MAIN:
-					mainLoop.run();
+					gameLoops.get(GameStateEnum.MAIN).run();
 					break;
 				case PAUSED:
-					pauseLoop.run();
+					gameLoops.get(GameStateEnum.PAUSED).run();
 					break;
 				case DEAD:
 					gameState = GameStateEnum.TITLE_SCREEN;

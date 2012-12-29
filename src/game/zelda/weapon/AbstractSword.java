@@ -1,8 +1,10 @@
 package game.zelda.weapon;
 
 import java.awt.Graphics2D;
+import java.util.Iterator;
 
 import engine.Game;
+import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractWeapon;
 import engine.sound.ISound;
 import engine.sound.SoundBank;
@@ -51,6 +53,16 @@ public abstract class AbstractSword extends AbstractWeapon {
 	@Override
 	public void handle() {
 		if(phase > 0) {
+			
+			// enemies
+			Iterator<AbstractEnemy> iter = game.map().enemies().iterator();
+			while (iter.hasNext()) {
+				AbstractEnemy enemy = iter.next();
+				if (rectangleCollide(enemy)) {
+					enemy.hit(damage());
+				}
+			}
+			
 			game.link().attackFace(game.link().face());
 			if(phase == 1) {
 				switch(game.link().face()) {

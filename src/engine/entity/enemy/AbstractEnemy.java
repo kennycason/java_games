@@ -22,6 +22,7 @@ public abstract class AbstractEnemy extends AbstractLivingEntity {
 		hitSound = SoundBank.getInstance().get("enemy_hit");
 		deadSound = SoundBank.getInstance().get("enemy_die");
 		dropItems = new LinkedList<AbstractItem>();
+		invincibleTime = 400;
 	}
 	
 	@Override

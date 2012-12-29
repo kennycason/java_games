@@ -2,7 +2,7 @@ package engine;
 
 import java.awt.image.BufferedImage;
 
-public abstract class AbstractGameStateLoop {
+public abstract class AbstractGameLoop {
 
 	protected Game game;
 	
@@ -12,13 +12,14 @@ public abstract class AbstractGameStateLoop {
 	
 	protected final long refreshInterval = 30;
 	
-	protected AbstractGameStateLoop(Game game) {
+	protected AbstractGameLoop(Game game) {
 		this.game = game;
-		transitionTime = System.currentTimeMillis();
+		reset();
 	}
 	
 	public void reset() {
 		lastRefresh = System.currentTimeMillis() - refreshInterval;
+		transitionTime = System.currentTimeMillis();
 	}
 	
 	public abstract void run();

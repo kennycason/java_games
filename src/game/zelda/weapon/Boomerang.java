@@ -1,9 +1,11 @@
 package game.zelda.weapon;
 
 import java.awt.Graphics2D;
+import java.util.Iterator;
 
 import engine.FaceDirection;
 import engine.Game;
+import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractWeapon;
 import engine.math.Vector2D;
@@ -53,6 +55,7 @@ public class Boomerang extends AbstractWeapon {
 		speed = 8;
 		distance = 16 * 5;
 		damage = 1;
+		collisionOffset = 6;
 		sound = SoundBank.getInstance().get("boomerang");
 	}
 	
@@ -116,12 +119,21 @@ public class Boomerang extends AbstractWeapon {
 			return;
 		}
 		// items
-
 		for(AbstractItem item : game.map().items()) {
 			if(!item.mustTouch() && rectangleCollide(item)) {
 				item.consume();
 			}
 		}
+		// enemies
+		Iterator<AbstractEnemy> iter = game.map().enemies().iterator();
+		while (iter.hasNext()) {
+			AbstractEnemy enemy = iter.next();
+			if (rectangleCollide(enemy)) {
+				enemy.hit(damage());
+				returning = true;
+			}
+		}
+		
 		if(!returning) {
 			x += acceleration.x();
 			y += acceleration.y();

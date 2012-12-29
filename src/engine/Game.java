@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.KeyboardFocusManager;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -43,6 +44,8 @@ public abstract class Game extends JPanel {
 	protected MapLoader loader;
 	
 	protected GameStateEnum gameState;
+	
+	protected HashMap<GameStateEnum, AbstractGameLoop> gameLoops;
 
 	public Game() {
 		super(true);
@@ -65,6 +68,7 @@ public abstract class Game extends JPanel {
 		
 		loader = new MapLoader();
 		gameState = GameStateEnum.TITLE_SCREEN;
+		gameLoops = new HashMap<GameStateEnum, AbstractGameLoop>();
 	}
 	
 	public void start() {
@@ -108,6 +112,10 @@ public abstract class Game extends JPanel {
 
 	public int zoom() {
 		return zoom;
+	}
+	
+	public HashMap<GameStateEnum, AbstractGameLoop> gameLoops() {
+		return gameLoops;
 	}
 	
 }

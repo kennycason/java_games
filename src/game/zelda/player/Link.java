@@ -99,7 +99,9 @@ public class Link extends AbstractLivingEntity {
 		// handle enemy collisions
 		Iterator<AbstractEnemy> iter = game.map().enemies().iterator();
 		while (iter.hasNext()) {
-			if(life() <= 0){ lowHeartsSound.stop(); }
+			if(life() <= 0){ 
+				lowHeartsSound.stop(); 
+			}
 			AbstractEnemy entity = iter.next();
 			if (rectangleCollide(entity)) {
 				hit(entity.damage());
@@ -107,16 +109,6 @@ public class Link extends AbstractLivingEntity {
 					if (!lowHeartsSound.playing()) {
 						lowHeartsSound.play();
 					}
-				}
-			}
-			if (weaponA.using()) {
-				if (weaponA.rectangleCollide(entity)) {
-					entity.hit(weaponA.damage());
-				}
-			}
-			if (weaponB.using()) {
-				if (weaponB.rectangleCollide(entity)) {
-					entity.hit(weaponB.damage());
 				}
 			}
 		}
@@ -173,6 +165,7 @@ public class Link extends AbstractLivingEntity {
 			} else {
 				face(FaceDirection.NORTH);
 			}
+			face = FaceDirection.NORTH_EAST;
 		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT)
 				&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
 			if(!game.map().collide(this, offX + 1, offY, accelerationRateAngled, accelerationRateAngled) &&
@@ -187,6 +180,7 @@ public class Link extends AbstractLivingEntity {
 			} else {
 				face(FaceDirection.SOUTH);
 			}
+			face = FaceDirection.SOUTH_EAST;
 		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)
 				&& kb.isKeyPressed(KeyEvent.VK_UP)) {
 			if(!game.map().collide(this, offX - 1, offY, -accelerationRateAngled, -accelerationRateAngled) &&
@@ -201,6 +195,7 @@ public class Link extends AbstractLivingEntity {
 			} else {
 				face(FaceDirection.NORTH);
 			}
+			face = FaceDirection.NORTH_WEST;
 		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)
 				&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
 			if(!game.map().collide(this, offX - 1, offY, -accelerationRateAngled, accelerationRateAngled) &&
@@ -215,6 +210,7 @@ public class Link extends AbstractLivingEntity {
 			} else {
 				face(FaceDirection.SOUTH);
 			}
+			face = FaceDirection.SOUTH_WEST;
 		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT)) {
 			if(!game.map().collide(this, offX + 1, offY - 1, accelerationRate, 0) &&
 					!game.map().collide(this, offX + 1, offY, accelerationRate, 0) &&
@@ -272,7 +268,10 @@ public class Link extends AbstractLivingEntity {
 			}
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_SPACE)) {
-			game.gameState(GameStateEnum.PAUSED);
+			if(System.currentTimeMillis() - game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
+				game.gameLoops().get(GameStateEnum.PAUSED).reset();
+				game.gameState(GameStateEnum.PAUSED);
+			}
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_ESCAPE)) {
 			game.gameState(GameStateEnum.END);
