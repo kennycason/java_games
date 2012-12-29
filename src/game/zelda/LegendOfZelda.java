@@ -3,6 +3,7 @@ package game.zelda;
 import java.awt.Font;
 
 import engine.Game;
+import engine.GameFactory;
 import engine.GameStateEnum;
 import engine.entity.weapon.WeaponBank;
 import engine.font.FontBank;
@@ -28,13 +29,15 @@ public class LegendOfZelda extends Game {
 
 
 	public static void main(String[] args) {
-		LegendOfZelda zelda = new LegendOfZelda();
-		zelda.start();
-		zelda.run();
+		GameFactory.set(new LegendOfZelda());
+		Game game = GameFactory.get();
+		game.init();
+		game.start();
+		game.run();
 	}
 	
-	public LegendOfZelda() {
-		init();
+	private LegendOfZelda() {
+		super();
 	}
 	
 	/**
@@ -60,15 +63,15 @@ public class LegendOfZelda extends Game {
 		SoundBank.getInstance().set("link_die", new Sound("sound/effects/Oracle_Link_Dying.wav"));
 		SoundBank.getInstance().set("link_low_life", new LoopingSound("sound/effects/Oracle_LowHealth.wav"));
 		
-		WeaponBank.getInstance().set("sword1", new SwordLevel1(this));
-		WeaponBank.getInstance().set("sword2", new SwordLevel2(this));
-		WeaponBank.getInstance().set("sword3", new SwordLevel3(this));
-		WeaponBank.getInstance().set("boomerang", new Boomerang(this));
+		WeaponBank.getInstance().set("sword1", new SwordLevel1());
+		WeaponBank.getInstance().set("sword2", new SwordLevel2());
+		WeaponBank.getInstance().set("sword3", new SwordLevel3());
+		WeaponBank.getInstance().set("boomerang", new Boomerang());
 
 		SoundBank.getInstance().get("main_theme").play();
 		
-		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop(this));
-		gameLoops.put(GameStateEnum.PAUSED, new PauseGameLoop(this));
+		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());
+		gameLoops.put(GameStateEnum.PAUSED, new PauseGameLoop());
 	}
 	
 	public void run() {
@@ -98,16 +101,16 @@ public class LegendOfZelda extends Game {
 		map = loader.load("maps/small.tmx");
 		map.offset().set(2 * map.tileWidth(), -4 *  map.tileHeight());
 
-		map.enemies().add(new LikeLike(this, 5, 5));
-		map.enemies().add(new Octorok(this, 10, 10));
-		map.enemies().add(new LikeLike(this, 12, 19));
-		map.enemies().add(new LikeLike(this, 16, 9));
+		map.enemies().add(new LikeLike(5, 5));
+		map.enemies().add(new Octorok(10, 10));
+		map.enemies().add(new LikeLike(12, 19));
+		map.enemies().add(new LikeLike(16, 9));
 		
-		FullHeart heart = new FullHeart(this);
+		FullHeart heart = new FullHeart();
 		heart.locate(16 * 4, 16 * 10);
 		map.items().add(heart);
 		
-		link = new Link(this);		
+		link = new Link();		
 		gameState = GameStateEnum.MAIN;
 	}
 	

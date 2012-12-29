@@ -1,12 +1,9 @@
 package game.zelda.weapon;
 
-import engine.Game;
-
-
 public class SwordLevel3 extends AbstractSword {
 
-	public SwordLevel3(Game game) {
-		super(game, 55, 3);
+	public SwordLevel3() {
+		super(55, 3);
 	}
 
 	@Override

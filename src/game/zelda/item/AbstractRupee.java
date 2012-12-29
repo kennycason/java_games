@@ -1,6 +1,5 @@
 package game.zelda.item;
 
-import engine.Game;
 import engine.entity.item.AbstractItem;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
@@ -10,8 +9,8 @@ public abstract class AbstractRupee extends AbstractItem {
 	
 	protected int value;
 	
-	protected AbstractRupee(Game game, int value, int spriteNumber) {
-		super(game);
+	protected AbstractRupee(int value, int spriteNumber) {
+		super();
 		this.value = value;
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		sprite = new AnimatedSprite(sheet.getRange(spriteNumber, spriteNumber), 0);

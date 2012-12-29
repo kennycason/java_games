@@ -47,7 +47,7 @@ public abstract class Game extends JPanel {
 	
 	protected HashMap<GameStateEnum, AbstractGameLoop> gameLoops;
 
-	public Game() {
+	protected Game() {
 		super(true);
 		System.setProperty("sun.java2d.opengl", "true");
 		System.setProperty("sun.java2d.ddscale", "true");

@@ -15,12 +15,11 @@ import game.zelda.TopMenu;
 
 public class MainGameLoop extends AbstractGameLoop {
 
-
 	private TopMenu menu;
 	
-	public MainGameLoop(Game game) {
-		super(game);
-		menu = new TopMenu(game);
+	public MainGameLoop() {
+		super();
+		menu = new TopMenu();
 	}
 
 	@Override

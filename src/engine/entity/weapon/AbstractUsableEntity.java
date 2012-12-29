@@ -3,13 +3,12 @@ package engine.entity.weapon;
 import java.awt.Graphics2D;
 
 import engine.FaceDirection;
-import engine.Game;
 import engine.entity.AbstractEntity;
 
 public abstract class AbstractUsableEntity extends AbstractEntity {
 	
-	protected AbstractUsableEntity(Game game) {
-		super(game);
+	public AbstractUsableEntity() {
+		super();
 	}
 	
 	public abstract void draw(Graphics2D g);

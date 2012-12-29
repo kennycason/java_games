@@ -1,7 +1,6 @@
 package game.zelda.enemy;
 
 import engine.FaceDirection;
-import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
@@ -13,8 +12,7 @@ import game.zelda.item.RupeeGreen;
 
 public class Octorok extends AbstractEnemy {
 
-	public Octorok(Game game, int x, int y) {
-		super(game);
+	public Octorok(int x, int y) {
 		setAIStrategy(new RandomAIStrategy(game, this, 2500));
 		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
@@ -39,10 +37,10 @@ public class Octorok extends AbstractEnemy {
 		damage = 0.5;
 		life = 4;
 		maxLife = 1;
-		dropItems.add(new Heart(game));
-		dropItems.add(new Heart(game));
-		dropItems.add(new RupeeGreen(game));
-		dropItems.add(new RupeeGreen(game));
+		dropItems.add(new Heart());
+		dropItems.add(new Heart());
+		dropItems.add(new RupeeGreen());
+		dropItems.add(new RupeeGreen());
 		
 		
 	}

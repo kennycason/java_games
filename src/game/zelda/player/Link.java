@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
 import engine.FaceDirection;
-import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
@@ -45,8 +44,8 @@ public class Link extends AbstractLivingEntity {
 	private AnimatedSprite attackS;
 	private AnimatedSprite attackW;
 
-	public Link(Game game) {
-		super(game);
+	public Link() {
+		super();
 
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
 

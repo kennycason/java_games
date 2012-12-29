@@ -12,8 +12,8 @@ public abstract class AbstractGameLoop {
 	
 	protected final long refreshInterval = 30;
 	
-	protected AbstractGameLoop(Game game) {
-		this.game = game;
+	protected AbstractGameLoop() {
+		game = GameFactory.get();
 		reset();
 	}
 	

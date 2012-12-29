@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.util.Iterator;
 
 import engine.FaceDirection;
-import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractWeapon;
@@ -34,8 +33,8 @@ public class Boomerang extends AbstractWeapon {
 	
 	private ISound sound;
 	
-	public Boomerang(Game game) {
-		super(game);
+	public Boomerang() {
+		super();
 		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		
 		SpriteSheet sheet = new SpriteSheet(8, 16, 16);

@@ -1,15 +1,14 @@
 package engine.entity;
 
 import engine.FaceDirection;
-import engine.Game;
 import engine.sprite.AnimatedSprite;
 
 public abstract class AbstractSimpleEntity extends AbstractEntity {
 
 	protected AnimatedSprite sprite;
 	
-	public AbstractSimpleEntity(Game game) {
-		super(game);
+	public AbstractSimpleEntity() {
+		super();
 	}
 
 	@Override

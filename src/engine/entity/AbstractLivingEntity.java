@@ -3,7 +3,6 @@ package engine.entity;
 import java.awt.Graphics2D;
 
 import engine.FaceDirection;
-import engine.Game;
 import engine.ai.IAIStrategy;
 import engine.sound.ISound;
 import engine.sprite.AnimatedSprite;
@@ -70,8 +69,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	
 	protected ISound deadSound;
 	
-	public AbstractLivingEntity(Game game) {
-		super(game);
+	public AbstractLivingEntity() {
+		super();
 	}
 
 	@Override

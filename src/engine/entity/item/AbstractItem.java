@@ -2,7 +2,6 @@ package engine.entity.item;
 
 import java.awt.Graphics2D;
 
-import engine.Game;
 import engine.entity.AbstractSimpleEntity;
 
 public abstract class AbstractItem extends AbstractSimpleEntity {
@@ -11,8 +10,8 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	
 	protected boolean mustTouch; // if true link must physically touch the item to obtain. i.e. can't use boomerang
 	
-	public AbstractItem(Game game) {
-		super(game);
+	public AbstractItem() {
+		super();
 		consumed = false;
 		mustTouch = false;
 		locate(0, 0);

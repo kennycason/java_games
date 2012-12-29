@@ -1,6 +1,5 @@
 package game.zelda.enemy;
 
-import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
@@ -10,8 +9,7 @@ import game.zelda.item.RupeeBlue;
 
 public class LikeLike extends AbstractEnemy {
 
-	public LikeLike(Game game, int x, int y) {
-		super(game);
+	public LikeLike(int x, int y) {
 		setAIStrategy(new RandomAIStrategy(game, this, 2500));
 		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
@@ -23,7 +21,7 @@ public class LikeLike extends AbstractEnemy {
 		life = 2;
 		maxLife = 2;
 		dropItemProbability = 60;
-		dropItems.add(new RupeeBlue(game));
+		dropItems.add(new RupeeBlue());
 	}
 
 	@Override

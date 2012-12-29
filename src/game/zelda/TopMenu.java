@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import engine.Game;
+import engine.GameFactory;
 import engine.font.FontBank;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
@@ -18,8 +19,8 @@ public class TopMenu {
 	 */
 	private SpriteSheet entities8x8;
 	
-	public TopMenu(Game game) {
-		this.game = game;
+	public TopMenu() {
+		game = GameFactory.get();
 		entities8x8 = (SpriteSheet) SpriteBank.getInstance().get("entities8x8");
 	}
 	

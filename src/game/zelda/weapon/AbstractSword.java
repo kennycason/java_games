@@ -3,7 +3,6 @@ package game.zelda.weapon;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 
-import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractWeapon;
 import engine.sound.ISound;
@@ -30,8 +29,8 @@ public abstract class AbstractSword extends AbstractWeapon {
 	
 	protected ISound swingSound;
 
-	protected AbstractSword(Game game, int entityNumber, int damage) {
-		super(game);
+	protected AbstractSword(int entityNumber, int damage) {
+		super();
 		this.damage = damage;
 		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		

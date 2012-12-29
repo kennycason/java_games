@@ -2,6 +2,7 @@ package engine.entity;
 
 import engine.FaceDirection;
 import engine.Game;
+import engine.GameFactory;
 
 import java.awt.Graphics2D;
 
@@ -16,8 +17,8 @@ public abstract class AbstractEntity extends AbstractCollidable {
 	 */
 	protected int collisionOffset = 1;
 
-	public AbstractEntity(Game game) {
-		this.game = game;
+	public AbstractEntity() {
+		game = GameFactory.get();
 	}
 	
 	public abstract void draw(Graphics2D g);

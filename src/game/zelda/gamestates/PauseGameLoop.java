@@ -21,9 +21,9 @@ public class PauseGameLoop extends AbstractGameLoop {
 	
 	private long cursorLastMoved;
 
-	public PauseGameLoop(Game game) {
-		super(game);
-		menu = new TopMenu(game);
+	public PauseGameLoop() {
+		super();
+		menu = new TopMenu();
 		
 		cursorX = 0;
 		cursorY = 0;
