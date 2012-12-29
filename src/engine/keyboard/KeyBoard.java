@@ -12,6 +12,9 @@ public class KeyBoard implements KeyListener {
 	public KeyBoard() {
 		keys = new boolean[KeyEvent.KEY_LAST];
 		keyPressedTime = new long[KeyEvent.KEY_LAST];
+		for(int i = 0; i < keys.length; i++) {
+			keyPressedTime[i] = -1;
+		}
 	}
 	
 	@Override
@@ -20,8 +23,10 @@ public class KeyBoard implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if(keyPressedTime(e.getKeyCode()) == -1) { // only want to store the time when the key is first pressed
+			keyPressedTime[e.getKeyCode()] = System.currentTimeMillis();
+		}
 		keys[e.getKeyCode()] = true;
-		keyPressedTime[e.getKeyCode()] = System.currentTimeMillis();
 	}
 
 	@Override
@@ -46,4 +51,13 @@ public class KeyBoard implements KeyListener {
 		return ret;
 	}
 	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < keys.length; i++) {
+			if(isKeyPressed(i)) {
+				sb.append("[" + i + "]\t = " + keyPressedTime(i) + "\n");
+			}
+		}
+		return sb.toString();
+	}
 }

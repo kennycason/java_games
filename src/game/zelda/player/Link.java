@@ -28,6 +28,8 @@ public class Link extends AbstractLivingEntity {
 	protected Vector2D acceleration = new Vector2D(0, 0);
 
 	private int accelerationRate;
+	
+	private int accelerationRateAngled;
 
 	private int rupees = 208;
 
@@ -60,7 +62,9 @@ public class Link extends AbstractLivingEntity {
 
 		mapPosition = new Vector2D();
 		acceleration = new Vector2D();
-		accelerationRate = 4;
+		accelerationRate = 4; // for horizontal & vertical directions
+		accelerationRateAngled = 3; // for moving diagonally ~4.2 pixels
+		
 		face = FaceDirection.EAST;
 		linkCurrent = linkE;
 		invincibleTime = 500;
@@ -171,39 +175,59 @@ public class Link extends AbstractLivingEntity {
 		// handle angles first
 		if (kb.isKeyPressed(KeyEvent.VK_RIGHT)
 				&& kb.isKeyPressed(KeyEvent.VK_UP)) {
-			if(!game.map().collide(this, offX + 1, offY, accelerationRate, -accelerationRate) &&
-					!game.map().collide(this, offX + 1, offY - 1, accelerationRate, -accelerationRate) &&
-					!game.map().collide(this, offX , offY - 1, accelerationRate, -accelerationRate)
+			if(!game.map().collide(this, offX + 1, offY, accelerationRateAngled, -accelerationRateAngled) &&
+					!game.map().collide(this, offX + 1, offY - 1, accelerationRateAngled, -accelerationRateAngled) &&
+					!game.map().collide(this, offX , offY - 1, accelerationRateAngled, -accelerationRateAngled)
 					) {
-				acceleration.add(accelerationRate, -accelerationRate); // normalize later
+				acceleration.add(accelerationRateAngled, -accelerationRateAngled); // normalize later
 				move = true;
+			}
+			if(kb.keyPressedTime(KeyEvent.VK_RIGHT) < kb.keyPressedTime(KeyEvent.VK_UP)) {
+				face(FaceDirection.EAST);
+			} else {
+				face(FaceDirection.NORTH);
 			}
 		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT)
 				&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
-			if(!game.map().collide(this, offX + 1, offY, accelerationRate, accelerationRate) &&
-					!game.map().collide(this, offX + 1, offY + 1, accelerationRate, accelerationRate) &&
-					!game.map().collide(this, offX , offY + 1, accelerationRate, accelerationRate)
+			if(!game.map().collide(this, offX + 1, offY, accelerationRateAngled, accelerationRateAngled) &&
+					!game.map().collide(this, offX + 1, offY + 1, accelerationRateAngled, accelerationRateAngled) &&
+					!game.map().collide(this, offX , offY + 1, accelerationRateAngled, accelerationRateAngled)
 					) {
-				acceleration.add(accelerationRate, accelerationRate); // normalize later
+				acceleration.add(accelerationRateAngled, accelerationRateAngled); // normalize later
 				move = true;
+			}
+			if(kb.keyPressedTime(KeyEvent.VK_RIGHT) < kb.keyPressedTime(KeyEvent.VK_DOWN)) {
+				face(FaceDirection.EAST);
+			} else {
+				face(FaceDirection.SOUTH);
 			}
 		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)
 				&& kb.isKeyPressed(KeyEvent.VK_UP)) {
-			if(!game.map().collide(this, offX - 1, offY, -accelerationRate, -accelerationRate) &&
-					!game.map().collide(this, offX - 1, offY - 1, -accelerationRate, -accelerationRate) &&
-					!game.map().collide(this, offX , offY - 1, -accelerationRate, -accelerationRate)
+			if(!game.map().collide(this, offX - 1, offY, -accelerationRateAngled, -accelerationRateAngled) &&
+					!game.map().collide(this, offX - 1, offY - 1, -accelerationRateAngled, -accelerationRateAngled) &&
+					!game.map().collide(this, offX , offY - 1, -accelerationRateAngled, -accelerationRateAngled)
 					) {
-				acceleration.add(-accelerationRate, -accelerationRate); // normalize later
+				acceleration.add(-accelerationRateAngled, -accelerationRateAngled); // normalize later
 				move = true;
+			}
+			if(kb.keyPressedTime(KeyEvent.VK_LEFT) < kb.keyPressedTime(KeyEvent.VK_UP)) {
+				face(FaceDirection.WEST);
+			} else {
+				face(FaceDirection.NORTH);
 			}
 		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)
 				&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
-			if(!game.map().collide(this, offX - 1, offY, -accelerationRate, accelerationRate) &&
-					!game.map().collide(this, offX - 1, offY + 1, -accelerationRate, accelerationRate) &&
-					!game.map().collide(this, offX , offY + 1, -accelerationRate, accelerationRate)
+			if(!game.map().collide(this, offX - 1, offY, -accelerationRateAngled, accelerationRateAngled) &&
+					!game.map().collide(this, offX - 1, offY + 1, -accelerationRateAngled, accelerationRateAngled) &&
+					!game.map().collide(this, offX , offY + 1, -accelerationRateAngled, accelerationRateAngled)
 					) {
-				acceleration.add(-accelerationRate, accelerationRate); // normalize later
+				acceleration.add(-accelerationRateAngled, accelerationRateAngled); // normalize later
 				move = true;
+			}
+			if(kb.keyPressedTime(KeyEvent.VK_LEFT) < kb.keyPressedTime(KeyEvent.VK_DOWN)) {
+				face(FaceDirection.WEST);
+			} else {
+				face(FaceDirection.SOUTH);
 			}
 		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT)) {
 			if(!game.map().collide(this, offX + 1, offY - 1, accelerationRate, 0) &&
@@ -213,6 +237,7 @@ public class Link extends AbstractLivingEntity {
 				acceleration.add(accelerationRate, 0);
 				move = true;
 			}
+			face(FaceDirection.EAST);
 		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)) {
 			if(!game.map().collide(this, offX - 1, offY - 1, -accelerationRate, 0) &&
 					!game.map().collide(this, offX - 1, offY, -accelerationRate, 0) &&
@@ -221,6 +246,7 @@ public class Link extends AbstractLivingEntity {
 				acceleration.add(-accelerationRate, 0);
 				move = true;
 			}
+			face(FaceDirection.WEST);
 		} else if (kb.isKeyPressed(KeyEvent.VK_UP)) {
 			if(!game.map().collide(this, offX - 1, offY - 1, 0, -accelerationRate) &&
 					!game.map().collide(this, offX, offY - 1, 0, -accelerationRate) &&
@@ -229,7 +255,7 @@ public class Link extends AbstractLivingEntity {
 				acceleration.add(0, -accelerationRate);
 				move = true;
 			}
-			
+			face(FaceDirection.NORTH);
 		} else if (kb.isKeyPressed(KeyEvent.VK_DOWN)) {
 			if(!game.map().collide(this, offX - 1, offY + 1, 0, accelerationRate) &&
 					!game.map().collide(this, offX, offY + 1, 0, accelerationRate) &&
@@ -238,29 +264,11 @@ public class Link extends AbstractLivingEntity {
 				acceleration.add(0, accelerationRate);
 				move = true;
 			}
-		}
-		
-		// facing
-		if (kb.isKeyPressed(KeyEvent.VK_RIGHT)) {
-			face = FaceDirection.EAST;
-			linkCurrent = linkE;
-		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)) {
-			face = FaceDirection.WEST;
-			linkCurrent = linkW;
-		} else if (kb.isKeyPressed(KeyEvent.VK_UP)) {
-			face = FaceDirection.NORTH;
-			linkCurrent = linkN;
-		} else if (kb.isKeyPressed(KeyEvent.VK_DOWN)) {
-			face = FaceDirection.SOUTH;
-			linkCurrent = linkS;
+			face(FaceDirection.SOUTH);
 		}
 
 		// update position on grid
 		if (move) {
-			// offX = (int) (-(game.map().offset().x() + -acceleration.x()) /
-			// game.map().tileWidth() + game.map().entityOffset());
-			// offY = (int) (-(game.map().offset().y() + -acceleration.y()) /
-			// game.map().tileHeight() + game.map().entityOffset());
 			game.map().offset().subtract(acceleration);
 			mapPosition.set(offsetX(), offsetX());
 			x += (int) acceleration.x();
@@ -322,6 +330,20 @@ public class Link extends AbstractLivingEntity {
 
 	public void face(FaceDirection face) {
 		this.face = face;
+		switch(face) {
+			case NORTH:
+				linkCurrent = linkN;
+				break;
+			case EAST:
+				linkCurrent = linkE;
+				break;
+			case SOUTH:
+				linkCurrent = linkS;
+				break;
+			case WEST:
+				linkCurrent = linkW;
+				break;
+		}
 	}
 
 }
