@@ -32,17 +32,17 @@ public class TopMenu {
 	    g.drawString("B", 0, 10);
 		g.setFont(FontBank.getInstance().get("menu_large"));
 	    g.drawString("[   ]",10, 19);
-	    game.link().weaponB().menuDraw(g, 13, 3);
+	    game.link().itemB().menuDraw(g, 13, 3);
 	    g.setFont(FontBank.getInstance().get("menu_smaller"));
-	    g.drawString(game.link().weaponB().menuDisplayName(), 28, 20);
+	    g.drawString(game.link().itemB().menuDisplayName(), 28, 20);
 	    
 		g.setFont(FontBank.getInstance().get("menu_small"));
 	    g.drawString("A", 55, 10);
 		g.setFont(FontBank.getInstance().get("menu_large"));
 	    g.drawString("[   ]", 65, 19);
-	    game.link().weaponA().menuDraw(g, 69, 3);
+	    game.link().itemA().menuDraw(g, 69, 3);
 	    g.setFont(FontBank.getInstance().get("menu_smaller"));
-	    g.drawString(game.link().weaponA().menuDisplayName(), 85, 20);
+	    g.drawString(game.link().itemA().menuDisplayName(), 85, 20);
 	    
 	    drawRupees(g);
 	    drawHearts(g);

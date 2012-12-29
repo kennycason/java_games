@@ -9,6 +9,8 @@ import engine.entity.weapon.AbstractWeapon;
 import engine.sound.ISound;
 import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
+import engine.sprite.SpriteBank;
+import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 
 public abstract class AbstractSword extends AbstractWeapon {
@@ -31,6 +33,8 @@ public abstract class AbstractSword extends AbstractWeapon {
 	protected AbstractSword(Game game, int entityNumber, int damage) {
 		super(game);
 		this.damage = damage;
+		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		
 		spriteN = new SimpleSprite(entities.get(entityNumber));
 		spriteN2 = SpriteUtils.rotate(spriteN, Math.PI / 4);
 		spriteS = SpriteUtils.flipVertical(spriteN);
