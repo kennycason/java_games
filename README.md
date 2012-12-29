@@ -3,7 +3,7 @@ Legend of Zelda
 By: Kenny Cason<br/>
 Zelda Game written in Java - Still a new project so it's definitely a work in progress.<br/>
 
-![Alt text](http://ken-soft.com/images/zelda/zelda2.png "Zelda Screenshot")
+![Alt text](http://ken-soft.com/images/zelda/zelda3.png "Zelda Screenshot")
 
 **Required Libraries**<br/>
 Java 1.7<br/>
