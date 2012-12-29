@@ -76,7 +76,7 @@ public class AnimatedSprite extends AbstractSprite {
 			return;
 		}
 		sprites.get(currentFrame).draw(g, x, y);
-		if (numFrames > 0) {
+		if (numFrames > 0 && animationSpeed > 0) {
 			if (System.currentTimeMillis() - lastAnimation > animationSpeed) {
 				lastAnimation = System.currentTimeMillis();
 				currentFrame += animationIncrementor;

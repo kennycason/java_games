@@ -4,17 +4,16 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.KeyboardFocusManager;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import engine.entity.enemy.AbstractEnemy;
 import engine.keyboard.DefaultKeyEventDispatcher;
 import engine.keyboard.KeyBoard;
 import engine.map.Map;
+import engine.map.MapLoader;
 import engine.sprite.SimpleSprite;
 import game.zelda.player.Link;
 
@@ -49,9 +48,8 @@ public abstract class Game extends JPanel {
 	protected Link link;
 	
 	protected Map map;
-		
-	// @TODO move enemies/events/etc to Map Class
-	protected List<AbstractEnemy> enemies;
+	
+	protected MapLoader loader;
 
 	public Game() {
 		super(true);
@@ -72,6 +70,7 @@ public abstract class Game extends JPanel {
 		this.setFocusable(true);
 		this.requestFocusInWindow();
 		
+		loader = new MapLoader();
 		gameState = GameState.TITLE_SCREEN;
 	}
 	
@@ -120,10 +119,6 @@ public abstract class Game extends JPanel {
 
 	public Map map() {
 		return map;
-	}
-	
-	public List<AbstractEnemy> enemies() {
-		return enemies;
 	}
 	
 	public void gameState(GameState gameState) {

@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import engine.Game;
 import engine.entity.AbstractEntity;
@@ -13,7 +12,6 @@ import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.WeaponBank;
 import engine.font.FontBank;
-import engine.map.Map;
 import engine.sound.LoopingSound;
 import engine.sound.Sound;
 import engine.sound.SoundBank;
@@ -37,10 +35,6 @@ public class LegendOfZelda extends Game {
 		LegendOfZelda zelda = new LegendOfZelda();
 		zelda.start();
 		zelda.run();
-	}
-	
-	public LegendOfZelda() {
-		
 	}
 	
 	public void init() {
@@ -75,32 +69,31 @@ public class LegendOfZelda extends Game {
 	}
 	
 	public void loadNewGame() { 
-		map = new Map(); 
-		map.load("maps/small.tmx");
+		map = loader.load("maps/small.tmx");
 		map.offset().set(2 * map.tileWidth(), -4 *  map.tileHeight());
 		lastRefresh = System.currentTimeMillis() - refreshInterval;
 		
-		link = new Link(this);
+		map.enemies().add(new LikeLike(this, 5, 5));
+		map.enemies().add(new Octorok(this, 10, 10));
+		map.enemies().add(new LikeLike(this, 12, 19));
+		map.enemies().add(new LikeLike(this, 16, 9));
 		
-		enemies = new LinkedList<AbstractEnemy>();
-		enemies.add(new LikeLike(this, 5, 5));
-		enemies.add(new Octorok(this, 10, 10));
-		enemies.add(new LikeLike(this, 12, 19));
-		enemies.add(new LikeLike(this, 16, 9));
-		
+		link = new Link(this);		
 		menu = new TopMenu(this);
 	}
 	
 	public void mainLoop() {
 		// #TODO: is this the best way? Probably should send to main menu once it exists
-		if(this.link.dead()){ loadNewGame(); }
+		if(this.link.dead()){ 
+			loadNewGame(); 
+		}
 		
 		if(System.currentTimeMillis() - lastRefresh >= refreshInterval) {
 			// handle game logic
 			link.keyBoard(keyboard);
 			link.handle();
 			
-			Iterator<AbstractEnemy> iter = enemies.iterator();
+			Iterator<AbstractEnemy> iter = map.enemies().iterator();
 			while(iter.hasNext()) {
 				AbstractLivingEntity entity = iter.next();
 				entity.handle();
@@ -128,7 +121,7 @@ public class LegendOfZelda extends Game {
 
 		link.draw(g);
 		
-		for(AbstractEntity enemy : enemies) {
+		for(AbstractEntity enemy : map.enemies()) {
 			enemy.handle();
 			enemy.draw(g);
 		}
