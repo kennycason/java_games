@@ -1,10 +1,10 @@
 package engine.entity.enemy;
 
 import engine.Game;
-import engine.entity.AbstractMultiFacingAnimatedEntity;
+import engine.entity.AbstractLivingEntity;
 import engine.sound.SoundBank;
 
-public abstract class AbstractEnemy extends AbstractMultiFacingAnimatedEntity {
+public abstract class AbstractEnemy extends AbstractLivingEntity {
 
 	public AbstractEnemy(Game game) {
 		super(game);

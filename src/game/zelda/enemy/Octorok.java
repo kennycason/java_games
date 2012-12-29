@@ -31,7 +31,7 @@ public class Octorok extends AbstractEnemy {
 		spriteN = SpriteUtils.flipVertical(spriteS);
 		
 		face = FaceDirection.EAST;
-		sprite = spriteE;
+		spriteCurrent = spriteE;
 		
 		locate(x * game.map().tileWidth(), y * game.map().tileHeight());
 		damage = 0.5;
@@ -56,16 +56,16 @@ public class Octorok extends AbstractEnemy {
 		this.face = face;
 		switch(face) {
 			case NORTH:
-				sprite = spriteN;
+				spriteCurrent = spriteN;
 				break;
 			case EAST:
-				sprite = spriteE;
+				spriteCurrent = spriteE;
 				break;
 			case SOUTH:
-				sprite = spriteS;
+				spriteCurrent = spriteS;
 				break;
 			case WEST:
-				sprite = spriteW;
+				spriteCurrent = spriteW;
 				break;
 		}
 	}

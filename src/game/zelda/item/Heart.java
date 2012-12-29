@@ -1,12 +1,12 @@
 package game.zelda.item;
 
+import java.awt.Graphics2D;
+
 import engine.Game;
 import engine.entity.AbstractSimpleEntity;
-import engine.sprite.SimpleSprite;
+import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
-
-import java.awt.Graphics2D;
 
 public class Heart extends AbstractSimpleEntity {
 	
@@ -14,7 +14,7 @@ public class Heart extends AbstractSimpleEntity {
 		super(game);
 		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
-		sprite = new SimpleSprite(sheet.get(0));
+		sprite = new AnimatedSprite(sheet.getRange(0, 0), -1);
 
 		locate(10 * 0, 10 * 0);
 	}

@@ -16,7 +16,6 @@ import engine.math.Vector2D;
 import engine.sound.ISound;
 import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
@@ -33,12 +32,6 @@ public class Link extends AbstractLivingEntity {
 
 	private int rupees = 208;
 
-	private AnimatedSprite linkCurrent;
-	private AnimatedSprite linkN;
-	private AnimatedSprite linkE;
-	private AnimatedSprite linkS;
-	private AnimatedSprite linkW;
-
 	private AbstractWeapon weaponA;
 
 	private AbstractWeapon weaponB;
@@ -50,10 +43,10 @@ public class Link extends AbstractLivingEntity {
 
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
 
-		linkE = new AnimatedSprite(sheet.getRange(2, 3), 200);
-		linkW = SpriteUtils.flipHorizontal(linkE);
-		linkN = new AnimatedSprite(sheet.getRange(4, 5), 200);
-		linkS = new AnimatedSprite(sheet.getRange(0, 1), 200);
+		spriteE = new AnimatedSprite(sheet.getRange(2, 3), 200);
+		spriteW = SpriteUtils.flipHorizontal(spriteE);
+		spriteN = new AnimatedSprite(sheet.getRange(4, 5), 200);
+		spriteS = new AnimatedSprite(sheet.getRange(0, 1), 200);
 		
 		weaponA = WeaponBank.getInstance().get("sword3");
 		weaponB = WeaponBank.getInstance().get("boomerang");
@@ -66,7 +59,7 @@ public class Link extends AbstractLivingEntity {
 		accelerationRateAngled = 3; // for moving diagonally ~4.2 pixels
 		
 		face = FaceDirection.EAST;
-		linkCurrent = linkE;
+		spriteCurrent = spriteE;
 		invincibleTime = 500;
 		life = 5.5;
 		maxLife = 20;
@@ -124,26 +117,9 @@ public class Link extends AbstractLivingEntity {
 	public void draw(Graphics2D g) {
 		weaponA.draw(g);
 		weaponB.draw(g);
-		if (!invincible) {
-			linkCurrent.draw(g, renderX(), renderY());
-		} else {
-			if (flicker) {
-				// @TODO find better way to do this without creating a new
-				// sprite each time
-				SimpleSprite neg = SpriteUtils.negative(linkCurrent
-						.currentSprite());
-				neg.draw(g, renderX(), renderY());
-				neg = null;
-				flicker = false;
-				flickerCount++;
-			} else {
-				linkCurrent.draw(g, renderX(), renderY());
-				if (flickerCount < maxFlickerCount) {
-					flicker = true;
-				}
-			}
-		}
+		super.draw(g);
 	}
+
 
 	/*
 	 * used for keyboard handling
@@ -289,7 +265,6 @@ public class Link extends AbstractLivingEntity {
 		if (kb.isKeyPressed(KeyEvent.VK_ESCAPE)) {
 			game.gameState(GameState.END);
 		}
-
 	}
 
 	public AbstractWeapon weaponA() {
@@ -316,34 +291,6 @@ public class Link extends AbstractLivingEntity {
 	@Override
 	public int renderY() {
 		return game.map().tileHeight() * game.map().entityOffset();
-	}
-
-	@Override
-	public int width() {
-		return linkCurrent.width();
-	}
-
-	@Override
-	public int height() {
-		return linkCurrent.height();
-	}
-
-	public void face(FaceDirection face) {
-		this.face = face;
-		switch(face) {
-			case NORTH:
-				linkCurrent = linkN;
-				break;
-			case EAST:
-				linkCurrent = linkE;
-				break;
-			case SOUTH:
-				linkCurrent = linkS;
-				break;
-			case WEST:
-				linkCurrent = linkW;
-				break;
-		}
 	}
 
 }

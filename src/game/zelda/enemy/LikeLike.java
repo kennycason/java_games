@@ -1,6 +1,5 @@
 package game.zelda.enemy;
 
-import engine.FaceDirection;
 import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
@@ -15,9 +14,9 @@ public class LikeLike extends AbstractEnemy {
 		setAIStrategy(new RandomAIStrategy(game, this, 2500));
 		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
-		sprite = new AnimatedSprite(sheet.getRange(462,464), 230);
-		sprite.reverseCycle(true);
-		spriteE = spriteW = spriteN = spriteS = sprite;
+		spriteCurrent = new AnimatedSprite(sheet.getRange(462,464), 230);
+		spriteCurrent.reverseCycle(true);
+		spriteE = spriteW = spriteN = spriteS = spriteCurrent;
 		locate(x * game.map().tileWidth(), y * game.map().tileHeight());
 		damage = 0.5;
 		life = 2;
@@ -34,11 +33,6 @@ public class LikeLike extends AbstractEnemy {
 				flickerCount = 0;
 			}
 		}
-	}
-
-	@Override
-	public void face(FaceDirection face) {
-		this.face = face;
 	}
 
 }

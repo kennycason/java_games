@@ -1,8 +1,14 @@
 package engine.entity;
 
+import java.awt.Graphics2D;
+
+import engine.FaceDirection;
 import engine.Game;
 import engine.ai.IAIStrategy;
 import engine.sound.ISound;
+import engine.sprite.AnimatedSprite;
+import engine.sprite.SimpleSprite;
+import engine.sprite.SpriteUtils;
 
 public abstract class AbstractLivingEntity extends AbstractEntity {
 
@@ -10,6 +16,13 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	 * an Artificial Intelligence strategy for non playable entities
 	 */
 	protected IAIStrategy strategy;
+	
+	protected AnimatedSprite spriteCurrent;
+	
+	protected AnimatedSprite spriteE;
+	protected AnimatedSprite spriteW;
+	protected AnimatedSprite spriteN;
+	protected AnimatedSprite spriteS;
 	
 	/**
 	 * amount of damage this entity does
@@ -48,18 +61,41 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	
 	protected double life = maxLife;
 	
-	protected ISound hitSound;
-	
-	protected ISound deadSound;
 	/**
 	 * is entity dead?
 	 */
 	protected boolean dead = false;
 	
+	protected ISound hitSound;
+	
+	protected ISound deadSound;
+	
 	public AbstractLivingEntity(Game game) {
 		super(game);
 	}
 
+	@Override
+	public void draw(Graphics2D g) {
+		if(!invincible) {
+			spriteCurrent.draw(g, renderX(), renderY());
+		} else {
+			if(flicker) {
+				// @TODO find better way to do this without creating a new sprite each time
+				SimpleSprite neg = SpriteUtils.negative(spriteCurrent.currentSprite());
+				neg.draw(g, renderX(), renderY());
+				neg = null;	
+				flicker = false;
+				flickerCount++;
+			} else {
+				spriteCurrent.draw(g, renderX(), renderY());
+				if(flickerCount < maxFlickerCount) {
+					flicker = true;
+				}
+			}	
+		}
+	}
+	
+	
 	public double life() {
 		return life;
 	}
@@ -95,6 +131,35 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	
 	protected void setAIStrategy(IAIStrategy strategy) {
 		this.strategy = strategy;
+	}
+	
+	@Override
+	public int width() {
+		return spriteCurrent.width();
+	}
+	
+	@Override
+	public int height() {
+		return spriteCurrent.height();
+	}
+	
+	@Override
+	public void face(FaceDirection face) {
+		this.face = face;
+		switch(face) {
+			case NORTH:
+				spriteCurrent = spriteN;
+				break;
+			case EAST:
+				spriteCurrent = spriteE;
+				break;
+			case SOUTH:
+				spriteCurrent = spriteS;
+				break;
+			case WEST:
+				spriteCurrent = spriteW;
+				break;
+		}
 	}
 	
 }
