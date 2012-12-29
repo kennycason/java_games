@@ -71,7 +71,10 @@ public class LegendOfZelda extends Game {
 		
 		SoundBank.getInstance().get("main_theme").play();
 		
-		
+		loadNewGame();
+	}
+	
+	public void loadNewGame() { 
 		map = new Map(); 
 		map.load("maps/small.tmx");
 		map.offset().set(2 * map.tileWidth(), -4 *  map.tileHeight());
@@ -89,6 +92,9 @@ public class LegendOfZelda extends Game {
 	}
 	
 	public void mainLoop() {
+		// #TODO: is this the best way? Probably should send to main menu once it exists
+		if(this.link.dead()){ loadNewGame(); }
+		
 		if(System.currentTimeMillis() - lastRefresh >= refreshInterval) {
 			// handle game logic
 			link.keyBoard(keyboard);
