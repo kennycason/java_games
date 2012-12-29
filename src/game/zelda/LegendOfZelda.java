@@ -135,6 +135,7 @@ public class LegendOfZelda extends Game {
 		
 		// map.drawTopLayer(g);
 		menu.draw(g);
+		map.drawMetaLater(g); // doesn't really draw, just resets the positions
 		g.dispose();
 	}
 	

@@ -1,10 +1,11 @@
 package engine.map;
 
-public class MetaTiles {
+public class MetaTilesNumber {
 
-	private MetaTiles() {
+	private MetaTilesNumber() {
 		
 	}
 	
 	public static final int COLLISION = 401;
+	
 }

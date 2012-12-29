@@ -27,7 +27,7 @@ public class Link extends AbstractLivingEntity {
 
 	protected Vector2D acceleration = new Vector2D(0, 0);
 
-	private double accelerationRate;
+	private int accelerationRate;
 
 	private int rupees = 208;
 
@@ -52,7 +52,6 @@ public class Link extends AbstractLivingEntity {
 		linkW = SpriteUtils.flipHorizontal(linkE);
 		linkN = new AnimatedSprite(sheet.getRange(4, 5), 200);
 		linkS = new AnimatedSprite(sheet.getRange(0, 1), 200);
-
 		
 		weaponA = WeaponBank.getInstance().get("sword3");
 		weaponB = WeaponBank.getInstance().get("boomerang");
@@ -67,6 +66,7 @@ public class Link extends AbstractLivingEntity {
 		invincibleTime = 500;
 		life = 5.5;
 		maxLife = 20;
+		collisionOffset(5);
 		deadSound = SoundBank.getInstance().get("link_die");
 		hitSound = SoundBank.getInstance().get("link_hurt");
 		lowHeartsSound = SoundBank.getInstance().get("link_low_life");
@@ -144,20 +144,12 @@ public class Link extends AbstractLivingEntity {
 	/*
 	 * used for keyboard handling
 	 */
-	private int offsetX(int off) {
-		return (x + off) / game.map().tileWidth();// (int)
-													// -(game.map().offset().x()
-													// + off) /
-													// game.map().tileWidth() +
-													// game.map().entityOffset();
+	private int offsetX() {
+		return (x + collisionOffset()) / game.map().tileWidth();
 	}
 
-	private int offsetY(int off) {
-		return (y + off) / game.map().tileHeight(); // (int)
-													// -(game.map().offset().y()
-													// + off) /
-													// game.map().tileHeight() +
-													// game.map().entityOffset();
+	private int offsetY() {
+		return (y + collisionOffset()) / game.map().tileHeight(); 
 	}
 
 	public void keyBoard(KeyBoard kb) {
@@ -170,47 +162,84 @@ public class Link extends AbstractLivingEntity {
 				|| kb.isKeyPressed(KeyEvent.VK_RIGHT)
 				|| kb.isKeyPressed(KeyEvent.VK_UP)
 				|| kb.isKeyPressed(KeyEvent.VK_DOWN)) {
-			offX = offsetX(0);
-			offY = offsetY(0);
+			offX = offsetX();
+			offY = offsetY();
 
 		}
-
-		if (kb.isKeyPressed(KeyEvent.VK_RIGHT)) {
-			if (game.map().offset().x() % game.map().tileWidth() != 0) {
-				offX--;
+		
+		//@TODO do not check offx + m, offy + n such that it is out outside the map
+		// handle angles first
+		if (kb.isKeyPressed(KeyEvent.VK_RIGHT)
+				&& kb.isKeyPressed(KeyEvent.VK_UP)) {
+			if(!game.map().collide(this, offX + 1, offY, accelerationRate, -accelerationRate) &&
+					!game.map().collide(this, offX + 1, offY - 1, accelerationRate, -accelerationRate) &&
+					!game.map().collide(this, offX , offY - 1, accelerationRate, -accelerationRate)
+					) {
+				acceleration.add(accelerationRate, -accelerationRate); // normalize later
+				move = true;
 			}
-			if (game.map().isWalkable(offX + 1, offY)) {
+		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT)
+				&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
+			if(!game.map().collide(this, offX + 1, offY, accelerationRate, accelerationRate) &&
+					!game.map().collide(this, offX + 1, offY + 1, accelerationRate, accelerationRate) &&
+					!game.map().collide(this, offX , offY + 1, accelerationRate, accelerationRate)
+					) {
+				acceleration.add(accelerationRate, accelerationRate); // normalize later
+				move = true;
+			}
+		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)
+				&& kb.isKeyPressed(KeyEvent.VK_UP)) {
+			if(!game.map().collide(this, offX - 1, offY, -accelerationRate, -accelerationRate) &&
+					!game.map().collide(this, offX - 1, offY - 1, -accelerationRate, -accelerationRate) &&
+					!game.map().collide(this, offX , offY - 1, -accelerationRate, -accelerationRate)
+					) {
+				acceleration.add(-accelerationRate, -accelerationRate); // normalize later
+				move = true;
+			}
+		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)
+				&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
+			if(!game.map().collide(this, offX - 1, offY, -accelerationRate, accelerationRate) &&
+					!game.map().collide(this, offX - 1, offY + 1, -accelerationRate, accelerationRate) &&
+					!game.map().collide(this, offX , offY + 1, -accelerationRate, accelerationRate)
+					) {
+				acceleration.add(-accelerationRate, accelerationRate); // normalize later
+				move = true;
+			}
+		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT)) {
+			if(!game.map().collide(this, offX + 1, offY - 1, accelerationRate, 0) &&
+					!game.map().collide(this, offX + 1, offY, accelerationRate, 0) &&
+					!game.map().collide(this, offX + 1, offY + 1, accelerationRate, 0)
+					) {
 				acceleration.add(accelerationRate, 0);
 				move = true;
 			}
-		}
-		if (kb.isKeyPressed(KeyEvent.VK_LEFT)) {
-			if (game.map().offset().x() % game.map().tileWidth() != 0) {
-				offX++;
-			}
-			if (game.map().isWalkable(offX - 1, offY)) {
-				acceleration.subtract(accelerationRate, 0);
+		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)) {
+			if(!game.map().collide(this, offX - 1, offY - 1, -accelerationRate, 0) &&
+					!game.map().collide(this, offX - 1, offY, -accelerationRate, 0) &&
+					!game.map().collide(this, offX - 1, offY + 1, -accelerationRate, 0)
+					) {
+				acceleration.add(-accelerationRate, 0);
 				move = true;
 			}
-		}
-		if (kb.isKeyPressed(KeyEvent.VK_UP)) {
-			if (game.map().offset().y() % game.map().tileHeight() != 0) {
-				offY++;
-			}
-			if (game.map().isWalkable(offX, offY - 1)) {
-				acceleration.subtract(0, accelerationRate);
+		} else if (kb.isKeyPressed(KeyEvent.VK_UP)) {
+			if(!game.map().collide(this, offX - 1, offY - 1, 0, -accelerationRate) &&
+					!game.map().collide(this, offX, offY - 1, 0, -accelerationRate) &&
+					!game.map().collide(this, offX + 1, offY - 1, 0, -accelerationRate)
+					) {
+				acceleration.add(0, -accelerationRate);
 				move = true;
 			}
-		}
-		if (kb.isKeyPressed(KeyEvent.VK_DOWN)) {
-			if (game.map().offset().y() % game.map().tileHeight() != 0) {
-				offY--;
-			}
-			if (game.map().isWalkable(offX, offY + 1)) {
+			
+		} else if (kb.isKeyPressed(KeyEvent.VK_DOWN)) {
+			if(!game.map().collide(this, offX - 1, offY + 1, 0, accelerationRate) &&
+					!game.map().collide(this, offX, offY + 1, 0, accelerationRate) &&
+					!game.map().collide(this, offX + 1, offY + 1, 0, accelerationRate)
+					) { 
 				acceleration.add(0, accelerationRate);
 				move = true;
 			}
 		}
+		
 		// facing
 		if (kb.isKeyPressed(KeyEvent.VK_RIGHT)) {
 			face = FaceDirection.EAST;
@@ -225,19 +254,6 @@ public class Link extends AbstractLivingEntity {
 			face = FaceDirection.SOUTH;
 			linkCurrent = linkS;
 		}
-		if (kb.isKeyPressed(KeyEvent.VK_RIGHT)
-				&& kb.isKeyPressed(KeyEvent.VK_UP)) {
-			face = FaceDirection.NORTH_EAST;
-		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT)
-				&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
-			face = FaceDirection.SOUTH_EAST;
-		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)
-				&& kb.isKeyPressed(KeyEvent.VK_UP)) {
-			face = FaceDirection.NORTH_WEST;
-		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)
-				&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
-			face = FaceDirection.SOUTH_WEST;
-		}
 
 		// update position on grid
 		if (move) {
@@ -246,7 +262,7 @@ public class Link extends AbstractLivingEntity {
 			// offY = (int) (-(game.map().offset().y() + -acceleration.y()) /
 			// game.map().tileHeight() + game.map().entityOffset());
 			game.map().offset().subtract(acceleration);
-			mapPosition.set(offsetX(0), offsetX(0));
+			mapPosition.set(offsetX(), offsetX());
 			x += (int) acceleration.x();
 			y += (int) acceleration.y();
 		}

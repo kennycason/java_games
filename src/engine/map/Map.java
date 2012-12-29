@@ -1,11 +1,5 @@
 package engine.map;
 
-import engine.Game;
-import engine.math.Vector2D;
-import engine.sprite.SimpleSprite;
-import engine.utils.Base64Coder;
-import engine.utils.ZLibUtils;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.File;
@@ -16,6 +10,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import engine.Game;
+import engine.entity.AbstractCollidable;
+import engine.math.Vector2D;
+import engine.sprite.SimpleSprite;
+import engine.utils.Base64Coder;
+import engine.utils.ZLibUtils;
+
 /**
  * A simplified Map Loader based of the Tiled Map Editor 
  * @author destructo
@@ -23,7 +24,10 @@ import org.jsoup.select.Elements;
  */
 public class Map {
 
-	private int[][][] layers;
+	//private int[][][] layers;
+	private BasicTile[][][] layers;
+	
+	private MetaTile[][] meta;
 
 	private int width;
 
@@ -40,7 +44,7 @@ public class Map {
 	private TiledSpriteSheet spriteSheet;
 
     private SimpleSprite bg = new SimpleSprite("sprites/map/Sand.bmp");
-
+    
 	public Map() {
 		offset = new Vector2D();
 	}
@@ -56,7 +60,9 @@ public class Map {
 			tileWidth = Integer.parseInt(map.attr("tilewidth"));
 			tileHeight = Integer.parseInt(map.attr("tileheight"));
 			// String orientation = map.attr("orientation");
-			layers = new int[3][width][height];
+			// layers = new int[3][width][height];
+			layers = new BasicTile[2][width][height];
+			meta = new MetaTile[width][height];
 			
 			// Only use the first tileset, the others are all for meta data
 			Element tileset = map.select("tileset").first();
@@ -94,6 +100,7 @@ public class Map {
 	
 	private void buildLayerFromCSV(int layer, String csv) {
 		csv = csv.trim();
+		int gid;
 		String[] ys = csv.split(System.getProperty("line.separator"));
 		for(int y = 0; y < ys.length; y++) {
 			String[] xs = ys[y].split(",");
@@ -104,11 +111,21 @@ public class Map {
 						x = 0;
 						y++;
 					}
-					layers[layer][x][y] = Integer.parseInt(xs[i]);
+					gid = Integer.parseInt(xs[x]);
+					if(layer < 2) {
+						layers[layer][x][y] = new BasicTile(spriteSheet.get(gid), gid);
+					} else if (layer == 2) {
+						meta[x][y] = new MetaTile(gid);
+					}
 				}
 			} else { // standard row
 				for(int x = 0; x < xs.length; x++) {
-					layers[layer][x][y] = Integer.parseInt(xs[x]);
+					gid = Integer.parseInt(xs[x]);
+					if(layer < 2) {
+						layers[layer][x][y] = new BasicTile(spriteSheet.get(gid), gid);
+					} else if (layer == 2) {
+						meta[x][y] = new MetaTile(gid);
+					}
 				}
 			}
 		}
@@ -118,13 +135,17 @@ public class Map {
 		int x = 0;
 		int y = 0;
 		int i = 0;
+		int gid;
 		for (Element tile : tiles) {
 			if (i > 0 && i % width == 0) {
 				x = 0;
 				y++;
 			}
-			layers[layer][x][y] = Integer.parseInt(tile.attr("gid"));
-			if(layer == 0) {
+			gid = Integer.parseInt(tile.attr("gid"));
+			if(layer < 2) {
+				layers[layer][x][y] = new BasicTile(spriteSheet.get(gid), gid);
+			} else if (layer == 2) {
+				meta[x][y] = new MetaTile(gid);
 			}
 			x++;
 			i++;
@@ -151,15 +172,19 @@ public class Map {
 		}
 	}
 
-	public void drawBottomLayer(Graphics g) {
+	public void drawBottomLayer(Graphics2D g) {
 		draw(g, 0);
 	}
-
-	public void drawTopLayer(Graphics g) {
+	
+	public void drawTopLater(Graphics2D g) {
 		draw(g, 1);
 	}
 
-	private void draw(Graphics g, int l) {
+	public void drawMetaLater(Graphics2D g) {
+		draw(g, 2);
+	}
+
+	private void draw(Graphics2D g, int l) {
 		int xOff = 0;
 		int yOff = 0;
 		for (int y = 0; y < height; y++) {
@@ -168,13 +193,44 @@ public class Map {
 				yOff = y * tileHeight + (int) offset.y();
 				if(xOff > -tileWidth && xOff < width * tileWidth && 
 						yOff > -tileHeight && yOff < height * tileHeight) {
-					if(layers[l][x][y] != 0) {
-						spriteSheet.get(layers[l][x][y]).draw(g, 
-								x * tileWidth + (int) offset.x(), 
-								y * tileHeight + (int) offset.y());
+					if(l < 2) {
+						if(layers[l][x][y].value() != 0) {
+							layers[l][x][y].draw(g, 
+									x * tileWidth + (int) offset.x(), 
+									y * tileHeight + (int) offset.y());
+						}
+					} else {
+					//	if(meta[x][y].value() != 0) {
+							meta[x][y].draw(g, 
+									x * tileWidth + (int) offset.x(), 
+									y * tileHeight + (int) offset.y());
+					//	}
 					}
 				}
 			}
+		}
+	}
+	
+	/**
+	 * what a mess :P
+	 * @param collidable
+	 * @param offX
+	 * @param offY
+	 * @param xShift
+	 * @param yShift
+	 * @return
+	 */
+	public boolean collide(AbstractCollidable collidable,int offX, int offY, int xShift, int yShift) {
+		if(offX < 0 || offY < 0 || offX >= width || offY >= height) {
+			return true;
+		}
+		if(meta[offX][offY].value() > 0) {
+			meta[offX][offY].locate(meta[offX][offY].x() - xShift - (int)offset().x(), meta[offX][offY].y() - yShift - (int)offset().y());
+			boolean collide = meta[offX][offY].rectangleCollide(collidable);
+			meta[offX][offY].locate(meta[offX][offY].x() + xShift + (int)offset().x(), meta[offX][offY].y() + yShift + (int)offset().y());
+			return collide;
+		} else {
+			return false;
 		}
 	}
 	
@@ -191,14 +247,14 @@ public class Map {
 	}
 
 	public int metaLayer(int x, int y) {
-		return layers[2][x][y];
+		return meta[x][y].value();
 	}
 
 	public boolean isWalkable(int x, int y) {
 		if(x < 0 || y < 0 || x >= width || y >= height) {
 			return false;
 		}
-		if(metaLayer(x, y) != MetaTiles.COLLISION) {
+		if(metaLayer(x, y) != MetaTilesNumber.COLLISION) {
 			return true;
 		}
 		return false;
@@ -215,5 +271,7 @@ public class Map {
 	public int tileHeight() {
 		return tileHeight;
 	}
+	
+
 	
 }
