@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 import engine.FaceDirection;
 import engine.Game;
-import engine.GameState;
+import engine.GameStateEnum;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractWeapon;
@@ -37,6 +37,11 @@ public class Link extends AbstractLivingEntity {
 	private AbstractWeapon weaponB;
 
 	private ISound lowHeartsSound;
+	
+	private AnimatedSprite attackN;
+	private AnimatedSprite attackE;
+	private AnimatedSprite attackS;
+	private AnimatedSprite attackW;
 
 	public Link(Game game) {
 		super(game);
@@ -47,6 +52,11 @@ public class Link extends AbstractLivingEntity {
 		spriteW = SpriteUtils.flipHorizontal(spriteE);
 		spriteN = new AnimatedSprite(sheet.getRange(4, 5), 200);
 		spriteS = new AnimatedSprite(sheet.getRange(0, 1), 200);
+		
+		attackE = new AnimatedSprite(sheet.getRange(6, 6), 0);
+		attackW = SpriteUtils.flipHorizontal(spriteE);
+		attackN = new AnimatedSprite(sheet.getRange(51, 51), 0);
+		attackS = new AnimatedSprite(sheet.getRange(50, 50), 0);
 		
 		weaponA = WeaponBank.getInstance().get("sword3");
 		weaponB = WeaponBank.getInstance().get("boomerang");
@@ -72,7 +82,7 @@ public class Link extends AbstractLivingEntity {
 	@Override
 	public void handle() {
 		if (dead()) {
-			game.gameState(GameState.DEAD);
+			game.gameState(GameStateEnum.DEAD);
 			lowHeartsSound.stop();
 		}
 		weaponA.handle();
@@ -261,9 +271,11 @@ public class Link extends AbstractLivingEntity {
 				weaponA.use();
 			}
 		}
-
+		if (kb.isKeyPressed(KeyEvent.VK_SPACE)) {
+			game.gameState(GameStateEnum.PAUSED);
+		}
 		if (kb.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-			game.gameState(GameState.END);
+			game.gameState(GameStateEnum.END);
 		}
 	}
 
@@ -291,6 +303,24 @@ public class Link extends AbstractLivingEntity {
 	@Override
 	public int renderY() {
 		return game.map().tileHeight() * game.map().entityOffset();
+	}
+	
+	public void attackFace(FaceDirection face) {
+		this.face = face;
+		switch(face) {
+			case NORTH:
+				spriteCurrent = attackN;
+				break;
+			case EAST:
+				spriteCurrent = attackE;
+				break;
+			case SOUTH:
+				spriteCurrent = attackS;
+				break;
+			case WEST:
+				spriteCurrent = attackW;
+				break;
+		}
 	}
 
 }

@@ -51,6 +51,7 @@ public abstract class AbstractSword extends AbstractWeapon {
 	@Override
 	public void handle() {
 		if(phase > 0) {
+			game.link().attackFace(game.link().face());
 			if(phase == 1) {
 				switch(game.link().face()) {
 					case NORTH:
@@ -93,6 +94,7 @@ public abstract class AbstractSword extends AbstractWeapon {
 				phase++;
 				if(phase >= 6) {
 					phase = 0;
+					game.link().face(game.link().face());
 				}
 			}
 		}

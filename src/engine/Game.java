@@ -19,9 +19,6 @@ import game.zelda.player.Link;
 
 public abstract class Game extends JPanel {
 
-	/**
-	 * 
-	 */
 	protected static final long serialVersionUID = 1L;
 
 	public static final int SCREEN_WIDTH = 240;
@@ -37,19 +34,15 @@ public abstract class Game extends JPanel {
 	protected final KeyBoard keyboard;
 	
 	protected int volume = 50;
-	
-	protected long lastRefresh;
-	
-	protected final long refreshInterval = 30;
-	
-	protected GameState gameState;
-	
+
 	// @TODO create Interface for Player to decouple Game and Link
 	protected Link link;
 	
 	protected Map map;
 	
 	protected MapLoader loader;
+	
+	protected GameStateEnum gameState;
 
 	public Game() {
 		super(true);
@@ -71,7 +64,7 @@ public abstract class Game extends JPanel {
 		this.requestFocusInWindow();
 		
 		loader = new MapLoader();
-		gameState = GameState.TITLE_SCREEN;
+		gameState = GameStateEnum.TITLE_SCREEN;
 	}
 	
 	public void start() {
@@ -87,32 +80,8 @@ public abstract class Game extends JPanel {
 	
 	public abstract void init();
 	
-	public void run() {
-		while(true) {
-			switch(gameState) {
-				case TITLE_SCREEN:
-					init();
-					gameState = GameState.MAIN_RUNNING;
-					break;
-				case MAIN_RUNNING:
-					mainLoop();
-					break;
-				case DEAD:
-					//loadNewGame();
-					gameState = GameState.MAIN_RUNNING;
-					break;
-				case END:
-					System.exit(0);
-					break;
-			}
-		}
-	}
+	public abstract void run();
 
-	public abstract void mainLoop();
-
-	public abstract void draw(BufferedImage bi);
-	
-	
 	public Link link() {
 		return link;
 	}
@@ -120,9 +89,25 @@ public abstract class Game extends JPanel {
 	public Map map() {
 		return map;
 	}
-	
-	public void gameState(GameState gameState) {
+
+	public void gameState(GameStateEnum gameState) {
 		this.gameState = gameState;
 	}
+	
+	public JLabel screenPanel() {
+		return screenPanel;
+	}
+	
+	public SimpleSprite screen() {
+		return screen;
+	}
 
+	public KeyBoard keyboard() {
+		return keyboard;
+	}
+
+	public int zoom() {
+		return zoom;
+	}
+	
 }

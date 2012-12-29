@@ -1,8 +1,8 @@
 package engine;
 
-public enum GameState {
+public enum GameStateEnum {
 	TITLE_SCREEN,
-	MAIN_RUNNING,
+	MAIN,
 	PAUSED,
 	DEAD, 
 	END

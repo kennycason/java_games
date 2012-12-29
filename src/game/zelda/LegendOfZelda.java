@@ -1,15 +1,10 @@
 package game.zelda;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.Iterator;
 
+import engine.AbstractGameStateLoop;
 import engine.Game;
-import engine.entity.AbstractEntity;
-import engine.entity.enemy.AbstractEnemy;
-import engine.entity.item.AbstractItem;
+import engine.GameStateEnum;
 import engine.entity.weapon.WeaponBank;
 import engine.font.FontBank;
 import engine.sound.LoopingSound;
@@ -19,6 +14,8 @@ import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import game.zelda.enemy.LikeLike;
 import game.zelda.enemy.Octorok;
+import game.zelda.gamestates.MainGameLoop;
+import game.zelda.gamestates.PauseGameLoop;
 import game.zelda.item.FullHeart;
 import game.zelda.player.Link;
 import game.zelda.weapon.Boomerang;
@@ -29,15 +26,27 @@ import game.zelda.weapon.SwordLevel3;
 public class LegendOfZelda extends Game {
 
 	private static final long serialVersionUID = 1L;
-
-	private TopMenu menu;
 	
+	//private AbstractGameStateLoop titleScreenLoop;
+	
+	private AbstractGameStateLoop mainLoop;
+	
+	private AbstractGameStateLoop pauseLoop;
+
+
 	public static void main(String[] args) {
 		LegendOfZelda zelda = new LegendOfZelda();
 		zelda.start();
 		zelda.run();
 	}
 	
+	public LegendOfZelda() {
+		init();
+	}
+	
+	/**
+	 * load global resources
+	 */
 	public void init() {
 		// load globals
 		// @TODO use resource loader LegendOfZelda.class.getResourceAsStream(spritename)
@@ -65,14 +74,37 @@ public class LegendOfZelda extends Game {
 
 		SoundBank.getInstance().get("main_theme").play();
 		
-		loadNewGame();
+		mainLoop = new MainGameLoop(this);
+		pauseLoop = new PauseGameLoop(this);
+	}
+	
+	public void run() {
+		while(true) {
+			switch(gameState) {
+				case TITLE_SCREEN:
+					loadNewGame();
+					gameState = GameStateEnum.MAIN;
+					break;
+				case MAIN:
+					mainLoop.run();
+					break;
+				case PAUSED:
+					pauseLoop.run();
+					break;
+				case DEAD:
+					gameState = GameStateEnum.TITLE_SCREEN;
+					break;
+				case END:
+					System.exit(0);
+					break;
+			}
+		}
 	}
 	
 	public void loadNewGame() { 
 		map = loader.load("maps/small.tmx");
 		map.offset().set(2 * map.tileWidth(), -4 *  map.tileHeight());
-		lastRefresh = System.currentTimeMillis() - refreshInterval;
-		
+
 		map.enemies().add(new LikeLike(this, 5, 5));
 		map.enemies().add(new Octorok(this, 10, 10));
 		map.enemies().add(new LikeLike(this, 12, 19));
@@ -83,72 +115,7 @@ public class LegendOfZelda extends Game {
 		map.items().add(heart);
 		
 		link = new Link(this);		
-		menu = new TopMenu(this);
+		gameState = GameStateEnum.MAIN;
 	}
-	
-	public void mainLoop() {
-		// #TODO: is this the best way? Probably should send to main menu once it exists
-		if(this.link.dead()){ 
-			loadNewGame(); 
-		}
-		
-		if(System.currentTimeMillis() - lastRefresh >= refreshInterval) {
-			// handle game logic
-			link.keyBoard(keyboard);
-			link.handle();
-			
-			// enemies
-			Iterator<AbstractEnemy> enemyIter = map.enemies().iterator();
-			while(enemyIter.hasNext()) {
-				AbstractEnemy entity = enemyIter.next();
-				entity.handle();
-				if(entity.dead()) {
-					enemyIter.remove();
-				}
-			}
-			// items
-			Iterator<AbstractItem> itemIter = map.items().iterator();
-			while(itemIter.hasNext()) {
-				AbstractItem item = itemIter.next();
-				item.handle();
-				if(item.consumed()) {
-					itemIter.remove();
-				}
-			}
-			
-			// paint everything
-			draw(screen.bufferedImage());
-			screenPanel.repaint();
-			lastRefresh = System.currentTimeMillis();
-		}
-	}
-
-	public void draw(BufferedImage bi) {
-		Graphics2D g = bi.createGraphics();
-		if(zoom > 1) {
-			g.scale(zoom, zoom);
-		}
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, SCREEN_WIDTH * zoom, SCREEN_HEIGHT * zoom);
-		map.drawBackground(g);
-		map.drawBottomLayer(g);
-		
-		for(AbstractItem item : map.items()) {
-			item.draw(g);
-		}
-		
-		for(AbstractEntity enemy : map.enemies()) {
-			enemy.draw(g);
-		}
-		
-		link.draw(g);
-
-		// map.drawTopLayer(g);
-		menu.draw(g);
-		map.drawMetaLater(g); // doesn't really draw, just resets the positions
-		g.dispose();
-	}
-	
-
 	
 }
