@@ -99,6 +99,9 @@ public abstract class Game extends JPanel {
 					mainLoop();
 					break;
 				case DEAD:
+					//loadNewGame();
+					gameState = GameState.MAIN_RUNNING;
+					break;
 				case END:
 					System.exit(0);
 					break;
