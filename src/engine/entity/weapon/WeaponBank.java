@@ -2,18 +2,18 @@ package engine.entity.weapon;
 
 import java.util.HashMap;
 
-public class WeaponResources {
+public class WeaponBank {
 	
-	private static WeaponResources INSTANCE;
+	private static WeaponBank INSTANCE;
 	
 	private HashMap<String, AbstractWeapon>  resources = new HashMap<String, AbstractWeapon>();
 	
-	private WeaponResources() {
+	private WeaponBank() {
 	}
 
-	public static WeaponResources getInstance() {
+	public static WeaponBank getInstance() {
 		if(INSTANCE == null) {
-			INSTANCE = new WeaponResources();
+			INSTANCE = new WeaponBank();
 		}
 		return INSTANCE;
 	}

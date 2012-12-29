@@ -11,7 +11,7 @@ import engine.Game;
 import engine.entity.AbstractEntity;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
-import engine.entity.weapon.WeaponResources;
+import engine.entity.weapon.WeaponBank;
 import engine.font.FontBank;
 import engine.map.Map;
 import engine.sound.LoopingSound;
@@ -63,10 +63,10 @@ public class LegendOfZelda extends Game {
 		SoundBank.getInstance().set("link_die", new Sound("sound/effects/Oracle_Link_Dying.wav"));
 		SoundBank.getInstance().set("link_low_life", new LoopingSound("sound/effects/Oracle_LowHealth.wav"));
 		
-		WeaponResources.getInstance().set("sword1", new SwordLevel1(this));
-		WeaponResources.getInstance().set("sword2", new SwordLevel2(this));
-		WeaponResources.getInstance().set("sword3", new SwordLevel3(this));
-		WeaponResources.getInstance().set("boomerang", new Boomerang(this));
+		WeaponBank.getInstance().set("sword1", new SwordLevel1(this));
+		WeaponBank.getInstance().set("sword2", new SwordLevel2(this));
+		WeaponBank.getInstance().set("sword3", new SwordLevel3(this));
+		WeaponBank.getInstance().set("boomerang", new Boomerang(this));
 
 		
 		SoundBank.getInstance().get("main_theme").play();

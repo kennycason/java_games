@@ -10,7 +10,7 @@ import engine.GameState;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractWeapon;
-import engine.entity.weapon.WeaponResources;
+import engine.entity.weapon.WeaponBank;
 import engine.keyboard.KeyBoard;
 import engine.math.Vector2D;
 import engine.sound.ISound;
@@ -46,16 +46,15 @@ public class Link extends AbstractLivingEntity {
 	public Link(Game game) {
 		super(game);
 
-		SpriteBank rsrcs = SpriteBank.getInstance();
-		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
+		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		
 		linkE = new AnimatedSprite(sheet.getRange(2, 3), 200);
 		linkW = SpriteUtils.flipHorizontal(linkE);
 		linkN = new AnimatedSprite(sheet.getRange(4, 5), 200);
 		linkS = new AnimatedSprite(sheet.getRange(0, 1), 200);
 		
-		weaponA = WeaponResources.getInstance().get("sword3");
-		weaponB = WeaponResources.getInstance().get("boomerang");
+		weaponA = WeaponBank.getInstance().get("sword3");
+		weaponB = WeaponBank.getInstance().get("boomerang");
 		
 		locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
 		
