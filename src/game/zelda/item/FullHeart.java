@@ -6,18 +6,20 @@ import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 
-public class Heart extends AbstractItem {
+public class FullHeart extends AbstractItem {
 	
-	public Heart(Game game) {
+	public FullHeart(Game game) {
 		super(game);
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
-		sprite = new AnimatedSprite(sheet.getRange(257, 257), 0);
+		sprite = new AnimatedSprite(sheet.getRange(252, 252), 0);
 		collisionOffset = 8;
+		mustTouch = true;
 	}
 	
 	@Override
 	public void consume() {
-		game.link().life(game.link().life() + 1);
+		game.link().maxLife(game.link().maxLife() + 1);
+		game.link().life(game.link().maxLife());
 		consumed = true;
 	}
 

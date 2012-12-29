@@ -8,6 +8,8 @@ import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
+import game.zelda.item.Heart;
+import game.zelda.item.RupeeGreen;
 
 public class Octorok extends AbstractEnemy {
 
@@ -35,8 +37,14 @@ public class Octorok extends AbstractEnemy {
 		
 		locate(x * game.map().tileWidth(), y * game.map().tileHeight());
 		damage = 0.5;
-		life = 10;
+		life = 4;
 		maxLife = 1;
+		dropItems.add(new Heart(game));
+		dropItems.add(new Heart(game));
+		dropItems.add(new RupeeGreen(game));
+		dropItems.add(new RupeeGreen(game));
+		
+		
 	}
 
 	@Override

@@ -6,18 +6,21 @@ import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 
-public class Heart extends AbstractItem {
+public abstract class AbstractRupee extends AbstractItem {
 	
-	public Heart(Game game) {
+	protected int value;
+	
+	protected AbstractRupee(Game game, int value, int spriteNumber) {
 		super(game);
+		this.value = value;
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
-		sprite = new AnimatedSprite(sheet.getRange(257, 257), 0);
-		collisionOffset = 8;
+		sprite = new AnimatedSprite(sheet.getRange(spriteNumber, spriteNumber), 0);
+		collisionOffset = 6;
 	}
 	
 	@Override
 	public void consume() {
-		game.link().life(game.link().life() + 1);
+		game.link().rupees(game.link().rupees() + value);
 		consumed = true;
 	}
 

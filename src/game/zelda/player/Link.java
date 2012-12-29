@@ -62,7 +62,7 @@ public class Link extends AbstractLivingEntity {
 		spriteCurrent = spriteE;
 		invincibleTime = 500;
 		life = 5.5;
-		maxLife = 20;
+		maxLife = 11;
 		collisionOffset(5);
 		deadSound = SoundBank.getInstance().get("link_die");
 		hitSound = SoundBank.getInstance().get("link_hurt");

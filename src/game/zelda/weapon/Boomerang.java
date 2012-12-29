@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import engine.FaceDirection;
 import engine.Game;
+import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractWeapon;
 import engine.math.Vector2D;
 import engine.sound.ISound;
@@ -113,6 +114,13 @@ public class Boomerang extends AbstractWeapon {
 	public void handle() {
 		if(!using) {
 			return;
+		}
+		// items
+
+		for(AbstractItem item : game.map().items()) {
+			if(!item.mustTouch() && rectangleCollide(item)) {
+				item.consume();
+			}
 		}
 		if(!returning) {
 			x += acceleration.x();

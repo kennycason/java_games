@@ -8,8 +8,8 @@ import java.util.Iterator;
 
 import engine.Game;
 import engine.entity.AbstractEntity;
-import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
+import engine.entity.item.AbstractItem;
 import engine.entity.weapon.WeaponBank;
 import engine.font.FontBank;
 import engine.sound.LoopingSound;
@@ -19,6 +19,7 @@ import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import game.zelda.enemy.LikeLike;
 import game.zelda.enemy.Octorok;
+import game.zelda.item.FullHeart;
 import game.zelda.player.Link;
 import game.zelda.weapon.Boomerang;
 import game.zelda.weapon.SwordLevel1;
@@ -62,7 +63,6 @@ public class LegendOfZelda extends Game {
 		WeaponBank.getInstance().set("sword3", new SwordLevel3(this));
 		WeaponBank.getInstance().set("boomerang", new Boomerang(this));
 
-		
 		SoundBank.getInstance().get("main_theme").play();
 		
 		loadNewGame();
@@ -77,6 +77,10 @@ public class LegendOfZelda extends Game {
 		map.enemies().add(new Octorok(this, 10, 10));
 		map.enemies().add(new LikeLike(this, 12, 19));
 		map.enemies().add(new LikeLike(this, 16, 9));
+		
+		FullHeart heart = new FullHeart(this);
+		heart.locate(16 * 4, 16 * 10);
+		map.items().add(heart);
 		
 		link = new Link(this);		
 		menu = new TopMenu(this);
@@ -93,12 +97,22 @@ public class LegendOfZelda extends Game {
 			link.keyBoard(keyboard);
 			link.handle();
 			
-			Iterator<AbstractEnemy> iter = map.enemies().iterator();
-			while(iter.hasNext()) {
-				AbstractLivingEntity entity = iter.next();
+			// enemies
+			Iterator<AbstractEnemy> enemyIter = map.enemies().iterator();
+			while(enemyIter.hasNext()) {
+				AbstractEnemy entity = enemyIter.next();
 				entity.handle();
 				if(entity.dead()) {
-					iter.remove();
+					enemyIter.remove();
+				}
+			}
+			// items
+			Iterator<AbstractItem> itemIter = map.items().iterator();
+			while(itemIter.hasNext()) {
+				AbstractItem item = itemIter.next();
+				item.handle();
+				if(item.consumed()) {
+					itemIter.remove();
 				}
 			}
 			
@@ -118,14 +132,17 @@ public class LegendOfZelda extends Game {
 		g.fillRect(0, 0, SCREEN_WIDTH * zoom, SCREEN_HEIGHT * zoom);
 		map.drawBackground(g);
 		map.drawBottomLayer(g);
-
-		link.draw(g);
+		
+		for(AbstractItem item : map.items()) {
+			item.draw(g);
+		}
 		
 		for(AbstractEntity enemy : map.enemies()) {
-			enemy.handle();
 			enemy.draw(g);
 		}
 		
+		link.draw(g);
+
 		// map.drawTopLayer(g);
 		menu.draw(g);
 		map.drawMetaLater(g); // doesn't really draw, just resets the positions

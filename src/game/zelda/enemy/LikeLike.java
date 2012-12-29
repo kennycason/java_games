@@ -6,6 +6,7 @@ import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
+import game.zelda.item.RupeeBlue;
 
 public class LikeLike extends AbstractEnemy {
 
@@ -21,6 +22,8 @@ public class LikeLike extends AbstractEnemy {
 		damage = 0.5;
 		life = 2;
 		maxLife = 2;
+		dropItemProbability = 60;
+		dropItems.add(new RupeeBlue(game));
 	}
 
 	@Override

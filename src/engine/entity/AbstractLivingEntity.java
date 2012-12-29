@@ -100,8 +100,16 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 		return life;
 	}
 	
+	public void life(double life) {
+		this.life = life;
+	}
+	
 	public double maxLife() {
 		return maxLife;
+	}
+	
+	public void maxLife(double maxLife) {
+		this.maxLife = maxLife;
 	}
 	
 	public double damage() {

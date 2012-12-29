@@ -7,6 +7,7 @@ import java.util.List;
 import engine.Game;
 import engine.entity.AbstractCollidable;
 import engine.entity.enemy.AbstractEnemy;
+import engine.entity.item.AbstractItem;
 import engine.math.Vector2D;
 import engine.sprite.SimpleSprite;
 
@@ -16,7 +17,7 @@ import engine.sprite.SimpleSprite;
  *
  */
 public class Map {
-
+	
 	//private int[][][] layers;
 	private BasicTile[][][] layers;
 	
@@ -40,6 +41,8 @@ public class Map {
     
     protected List<AbstractEnemy> enemies;
     
+	protected List<AbstractItem> items;
+    
 	public Map(int width, int height, int tileWidth, int tileHeight) {
 		offset = new Vector2D();
 		this.width = width;
@@ -49,6 +52,7 @@ public class Map {
 		layers = new BasicTile[2][width][height];
 		meta = new MetaTile[width][height];
 		enemies = new LinkedList<AbstractEnemy>();
+		items = new LinkedList<AbstractItem>();
 	}
 	
 	public void drawBackground(Graphics2D g) {
@@ -187,6 +191,10 @@ public class Map {
 	
 	public List<AbstractEnemy> enemies() {
 		return enemies;
+	}
+	
+	public List<AbstractItem> items() {
+		return items;
 	}
 	
 }
