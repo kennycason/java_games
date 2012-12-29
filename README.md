@@ -1,11 +1,12 @@
-legendofzelda
+Legend of Zelda
 =============
-By: Kenny Cason
+By: Kenny Cason<br/>
+Zelda Game written in Java - Still a new project so it's definitely a work in progress.<br/>
 
-Zelda Game written in Java
+![Alt text](http://ken-soft.com/images/zelda/zelda2.png "Zelda Screenshot")
 
-
-required libraries
-
-jsoup-1.7.1.jar
-log4j-1.2.17.jar
+**Required Libraries**<br/>
+Java 1.7<br/>
+jsoup-1.7.1.jar<br/>
+log4j-1.2.17.jar<br/>
+Maps written using Tiled<br/>
