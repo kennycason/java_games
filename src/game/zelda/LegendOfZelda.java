@@ -74,7 +74,8 @@ public class LegendOfZelda extends Game {
 		SoundBank.getInstance().set("tune_of_ages", new SoundEffect("sound/effects/OOA_Harp_TuneOfAges.wav"));
 		SoundBank.getInstance().set("open_chest", new SoundEffect("sound/effects/Oracle_Chest.wav"));
 		SoundBank.getInstance().set("secret", new SoundEffect("sound/effects/Oracle_Secret.wav"));
-		
+		SoundBank.getInstance().set("menu_cursor", new SoundEffect("sound/effects/Oracle_Menu_Cursor.wav"));
+		SoundBank.getInstance().set("menu_select", new SoundEffect("sound/effects/Oracle_Menu_Select.wav"));	
 		
 		UsableBank.getInstance().set("sword1", new SwordLevel1());
 		UsableBank.getInstance().set("sword2", new SwordLevel2());
@@ -88,15 +89,20 @@ public class LegendOfZelda extends Game {
 		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());
 		gameLoops.put(GameStateEnum.PAUSED, new PauseGameLoop());
 		
+
 		gameState = GameStateEnum.TITLE_SCREEN;
-		gameLoops.get(GameStateEnum.TITLE_SCREEN).start();
+		//gameLoops.get(GameStateEnum.TITLE_SCREEN).start();
+		
 	}
 	
 	public void run() {
 		while(true) {
 			switch(gameState) {
 				case TITLE_SCREEN:
-					gameLoops.get(GameStateEnum.TITLE_SCREEN).run();
+					//gameLoops.get(GameStateEnum.TITLE_SCREEN).run();
+					((TitleScreenGameLoop)gameLoops.get(GameStateEnum.TITLE_SCREEN)).newGame();
+					gameLoops.get(GameStateEnum.TITLE_SCREEN).start();
+					gameState = GameStateEnum.MAIN;
 					break;
 				case MAIN:
 					gameLoops.get(GameStateEnum.MAIN).run();

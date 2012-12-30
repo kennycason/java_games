@@ -38,10 +38,11 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	public abstract void consume();
 	
 	public boolean consumed() {
-		if(!disappearAfterConsume) {
-			return false;
-		}
 		return consumed;
+	}
+	
+	public boolean disappearAfterConsume() {
+		return disappearAfterConsume;
 	}
 	
 	public boolean walkable() {

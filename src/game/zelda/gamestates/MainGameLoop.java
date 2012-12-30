@@ -53,7 +53,7 @@ public class MainGameLoop extends AbstractGameLoop {
 			while(itemIter.hasNext()) {
 				AbstractItem item = itemIter.next();
 				item.handle();
-				if(item.consumed()) {
+				if(item.consumed() && item.disappearAfterConsume()) {
 					itemIter.remove();
 				}
 			}

@@ -37,10 +37,10 @@ public class TreasureChest extends AbstractItem {
 	public void consume() {
 		if(!open) {
 			if(game.link().offsetX() == offsetX() && game.link().offsetY() == offsetY() + 1) {
-				contents.consume();
 				consumed = true;
 				openSound.play();
 				open = true;
+				contents.consume();
 			}
 		}
 	}

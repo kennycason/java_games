@@ -120,5 +120,13 @@ public abstract class Game extends JPanel {
 	public HashMap<GameStateEnum, AbstractGameLoop> gameLoops() {
 		return gameLoops;
 	}
+
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

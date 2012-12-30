@@ -271,9 +271,11 @@ public class Link extends AbstractLivingEntity {
 			if(face() == FaceDirection.NORTH) {
 				for(AbstractItem item : game.map().items()) {
 					if(!item.walkable()) {
+						boolean wasConsumed = item.consumed();
 						item.consume(); // actually should just attempt to consume
-						if(item.consumed()) {
+						if(item.consumed() && !wasConsumed) {
 							itemConsumed = true;
+							game.sleep(100);
 						}
 					}
 				}
@@ -286,7 +288,6 @@ public class Link extends AbstractLivingEntity {
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_SPACE)) {
 			if(System.currentTimeMillis() - game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
-				//game.gameLoops().get(GameStateEnum.MAIN).end();
 				game.gameLoops().get(GameStateEnum.PAUSED).start();
 				game.gameState(GameStateEnum.PAUSED);
 			}
