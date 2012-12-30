@@ -103,46 +103,6 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		game.map().items().add(new FullHeart(4, 10));
 		game.map().items().add(new TreasureChest(new FullHeart(), 2, 8));		
 		
-		
-// 		OLD
-//		//n = 0
-//		if(n >= 50) {
-//			game.map(loader.load("maps/small.tmx"));
-//			game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());
-//	
-//			game.map().events().add(new EnemyDeployEvent(new LikeLike(5, 5)));
-//			game.map().events().add(new EnemyDeployEvent(new Octorok(10, 10)));
-//			game.map().events().add(new EnemyDeployEvent(new LikeLike(12, 19)));
-//			game.map().events().add(new EnemyDeployEvent(new LikeLike(16, 9)));
-//			game.map().events().add(new EnemyDeployEvent(new RedTurtle(15, 10)));
-//			
-//			game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 10), 10000));
-//			game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 11), 10000));
-//			game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 12), 10000));
-//			game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(3, 11), 10000));
-//			game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(3, 12), 10000));
-//			
-//			game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new RupeeGold(), 2, 12)));
-//			
-//			game.map().items().add(new FullHeart(4, 10));
-//			game.map().items().add(new TreasureChest(new FullHeart(), 2, 8));
-//		} else {
-//			game.map(loader.load("maps/small2.tmx"));
-//			game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());
-//			game.map().events().add(new EnemyDeployEvent(new Octorok(10, 4)));
-//			game.map().events().add(new EnemyDeployEvent(new Octorok(14, 6)));
-//			game.map().events().add(new EnemyDeployEvent(new Octorok(12, 8)));
-//			game.map().events().add(new EnemyDeployEvent(new RedTurtle(4, 4)));
-//			game.map().events().add(new EnemyDeployEvent(new RedTurtle(5, 5)));
-//			game.map().events().add(new EnemyDeployEvent(new RedTurtle(12, 17)));
-//			game.map().events().add(new EnemyDeployEvent(new RedTurtle(17, 17)));
-//			game.map().items().add(new FullHeart(4, 10));
-//			game.map().items().add(new TreasureChest(new FullHeart(), 14, 1));
-//			game.map().items().add(new TreasureChest(new Heart(), 15, 1));
-//			game.map().items().add(new TreasureChest(new RupeeBlue(), 16, 1));
-//			game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new RupeeGold(), 10, 9)));
-//		}
-//		
 		game.link(new Link());
 		
 		// stop all looping sounds

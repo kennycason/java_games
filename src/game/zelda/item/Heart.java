@@ -21,9 +21,15 @@ public class Heart extends AbstractItem {
 	
 	@Override
 	public void consume() {
-		game.link().life(game.link().life() + 1);
-		consumed = true;
-		sound.play();
+		if(!justDropped) {
+			game.link().life(game.link().life() + 1);
+			consumed = true;
+			sound.play();
+		} else {
+			if(System.currentTimeMillis() - droppedTime > 500) {
+				justDropped = false;
+			}
+		}
 	}
 
 }

@@ -22,9 +22,15 @@ public abstract class AbstractRupee extends AbstractItem {
 	
 	@Override
 	public void consume() {
-		game.link().rupees(game.link().rupees() + value);
-		consumed = true;
-		sound.play();
+		if(!justDropped) {
+			game.link().rupees(game.link().rupees() + value);
+			consumed = true;
+			sound.play();
+		} else {
+			if(System.currentTimeMillis() - droppedTime > 500) {
+				justDropped = false;
+			}
+		}
 	}
 
 }

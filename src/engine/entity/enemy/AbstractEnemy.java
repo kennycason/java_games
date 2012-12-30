@@ -40,6 +40,7 @@ public abstract class AbstractEnemy extends AbstractLivingEntity {
 		if(dead() && dropItems()) {
 			for(AbstractItem item : dropItems) {
 				item.locate(x() + -width() / 2 + random.nextInt(width()), y() + -height() / 2 + random.nextInt(height()));
+				item.justDropped();
 			}
 			game.map().items().addAll(dropItems);
 		}

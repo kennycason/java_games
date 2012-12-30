@@ -33,8 +33,7 @@ public class SoundEffect extends AbstractSound {
 
 	private AudioFormat format;
 
-	private final static Logger LOGGER = Logger
-			.getLogger(SoundEffect.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(SoundEffect.class.getName());
 
 	public SoundEffect(String file) {
 		super(file);
@@ -87,7 +86,7 @@ public class SoundEffect extends AbstractSound {
 							line.drain();
 							line.close();
 						} else {
-							// System.out.println("line is null");
+							LOGGER.warn("Sound Line is null, playing: " + file());
 						}
 					} catch (LineUnavailableException e) {
 						e.printStackTrace();

@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.Iterator;
 
 import engine.entity.enemy.AbstractEnemy;
+import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractWeapon;
 import engine.sound.AbstractSound;
 import engine.sound.SoundBank;
@@ -56,6 +57,13 @@ public abstract class AbstractSword extends AbstractWeapon {
 	@Override
 	public void handle() {
 		if(phase > 0) {
+			
+			// items
+			for(AbstractItem item : game.map().items()) {
+				if(!item.mustTouch() && rectangleCollide(item)) {
+					item.consume();
+				}
+			}
 			
 			// enemies
 			Iterator<AbstractEnemy> iter = game.map().enemies().iterator();

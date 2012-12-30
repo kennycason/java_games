@@ -15,12 +15,17 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	
 	protected boolean walkable;
 	
+	protected boolean justDropped;
+	
+	protected long droppedTime;
+	
 	public AbstractItem() {
 		super();
 		consumed = false;
 		mustTouch = false;
 		walkable = true;
 		disappearAfterConsume = true;
+		justDropped = false;
 		locate(0, 0);
 	}
 	
@@ -51,6 +56,11 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	
 	public boolean mustTouch() {
 		return mustTouch;
+	}
+	
+	public void justDropped() {
+		justDropped = true;
+		droppedTime = System.currentTimeMillis();
 	}
 	
 	@Override
