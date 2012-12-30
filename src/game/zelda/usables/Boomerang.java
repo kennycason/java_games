@@ -8,7 +8,7 @@ import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractWeapon;
 import engine.math.Vector2D;
-import engine.sound.AbstractSound;
+import engine.sound.LoopingSound;
 import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
@@ -31,7 +31,7 @@ public class Boomerang extends AbstractWeapon {
 	
 	private boolean returning = false;
 	
-	private AbstractSound sound;
+	private LoopingSound sound;
 	
 	public Boomerang() {
 		super();
@@ -55,7 +55,7 @@ public class Boomerang extends AbstractWeapon {
 		distance = 16 * 5;
 		damage = 1;
 		collisionOffset = 6;
-		sound = SoundBank.getInstance().get("boomerang");
+		sound = (LoopingSound) SoundBank.getInstance().get("boomerang");
 	}
 	
 	public void draw(Graphics2D g) {

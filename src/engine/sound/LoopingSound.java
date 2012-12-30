@@ -40,7 +40,6 @@ public class LoopingSound extends AbstractSound {
 		}
 	}
 
-	@Override
 	public void play() {
 		if (loaded) {
 			if (clip.isRunning()) {
@@ -51,26 +50,16 @@ public class LoopingSound extends AbstractSound {
 		}
 	}
 
-	@Override
-	public void pause() {
-		if (loaded) {
-			clip.stop();
-		}
-	}
-
-	@Override
 	public void stop() {
 		if (loaded) {
 			clip.stop();
 		}
 	}
 
-	@Override
 	public boolean playing() {
 		return clip.isActive();
 	}
 
-	@Override
 	public void volume(int volume) {
 		this.volume = volume;
 		if (this.volume < 0) {

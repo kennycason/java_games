@@ -12,7 +12,7 @@ import engine.entity.weapon.AbstractUsableEntity;
 import engine.entity.weapon.UsableBank;
 import engine.keyboard.KeyBoard;
 import engine.math.Vector2D;
-import engine.sound.AbstractSound;
+import engine.sound.LoopingSound;
 import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
@@ -37,7 +37,7 @@ public class Link extends AbstractLivingEntity {
 	
 	private AbstractUsableEntity[] items;
 
-	private AbstractSound lowHeartsSound;
+	private LoopingSound lowHeartsSound;
 	
 	private AnimatedSprite attackN;
 	private AnimatedSprite attackE;
@@ -84,7 +84,7 @@ public class Link extends AbstractLivingEntity {
 		collisionOffset(5);
 		deadSound = SoundBank.getInstance().get("link_die");
 		hitSound = SoundBank.getInstance().get("link_hurt");
-		lowHeartsSound = SoundBank.getInstance().get("link_low_life");
+		lowHeartsSound = (LoopingSound)SoundBank.getInstance().get("link_low_life");
 	}
 
 	@Override

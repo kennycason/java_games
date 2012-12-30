@@ -14,24 +14,7 @@ public abstract class AbstractSound {
 		this.file = file;
 	}
 
-	public abstract void play();
-	
-	public abstract void pause();
-	
-	public abstract void stop();
-	
-	public abstract boolean playing();
-	
-	
-	public abstract void volume(int volume);
-	
-	public int volume() {
-		return volume;
-	}
-	
-	public boolean mute() {
-		return volume == 0;
-	}
+	public abstract void play();	
 	
 	public String file() {
 		return file;

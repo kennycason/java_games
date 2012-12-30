@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
  * @author kenny
  * 
  */
-public class Sound extends AbstractSound {
+public class SoundEffect extends AbstractSound {
 
 	private static final int BUFFER_SIZE = 64 * 1024; // 64 KB
 
@@ -34,9 +34,9 @@ public class Sound extends AbstractSound {
 	private AudioFormat format;
 
 	private final static Logger LOGGER = Logger
-			.getLogger(Sound.class.getName());
+			.getLogger(SoundEffect.class.getName());
 
-	public Sound(String file) {
+	public SoundEffect(String file) {
 		super(file);
 		// Set up an audio input stream piped from the sound file.
 		try {
@@ -99,24 +99,7 @@ public class Sound extends AbstractSound {
 			playThread.start();
 		}
 	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void stop() {
-	}
-
-	@Override
-	public boolean playing() {
-		return false;
-	}
-
-	@Override
-	public void volume(int volume) {
-	}
-
+	
 	public void volume(int volume, SourceDataLine line) {
 		this.volume = volume;
 		if (volume < 0) {

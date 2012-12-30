@@ -8,8 +8,9 @@ import engine.GameStateEnum;
 import engine.entity.weapon.UsableBank;
 import engine.font.FontBank;
 import engine.sound.LoopingSound;
-import engine.sound.Sound;
 import engine.sound.SoundBank;
+import engine.sound.SoundChannels;
+import engine.sound.SoundEffect;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import game.zelda.enemy.LikeLike;
@@ -59,19 +60,19 @@ public class LegendOfZelda extends Game {
 		FontBank.getInstance().set("menu_large", new Font("Serif", Font.PLAIN, 24));
 		
 		SoundBank.getInstance().set("main_theme", new LoopingSound("sound/bg/LoZ Oracle of Seasons Main Theme.WAV"));
-		SoundBank.getInstance().set("sword_slash1", new Sound("sound/effects/Oracle_Sword_Slash1.wav"));
+		SoundBank.getInstance().set("sword_slash1", new SoundEffect("sound/effects/Oracle_Sword_Slash1.wav"));
 		SoundBank.getInstance().set("boomerang", new LoopingSound("sound/effects/Oracle_Boomerang.wav"));
-		SoundBank.getInstance().set("enemy_hit", new Sound("sound/effects/Oracle_Enemy_Hit.wav"));
-		SoundBank.getInstance().set("enemy_die", new Sound("sound/effects/Oracle_Enemy_Die.wav"));
-		SoundBank.getInstance().set("link_hurt", new Sound("sound/effects/Oracle_Link_Hurt.wav"));
-		SoundBank.getInstance().set("link_die", new Sound("sound/effects/Oracle_Link_Dying.wav"));
+		SoundBank.getInstance().set("enemy_hit", new SoundEffect("sound/effects/Oracle_Enemy_Hit.wav"));
+		SoundBank.getInstance().set("enemy_die", new SoundEffect("sound/effects/Oracle_Enemy_Die.wav"));
+		SoundBank.getInstance().set("link_hurt", new SoundEffect("sound/effects/Oracle_Link_Hurt.wav"));
+		SoundBank.getInstance().set("link_die", new SoundEffect("sound/effects/Oracle_Link_Dying.wav"));
 		SoundBank.getInstance().set("link_low_life", new LoopingSound("sound/effects/Oracle_LowHealth.wav"));
-		SoundBank.getInstance().set("link_get_rupee", new Sound("sound/effects/Oracle_Get_Rupee.wav"));
-		SoundBank.getInstance().set("link_get_rupee5", new Sound("sound/effects/Oracle_Get_Rupee5.wav"));
-		SoundBank.getInstance().set("link_get_heart", new Sound("sound/effects/Oracle_Get_Heart.wav"));
-		SoundBank.getInstance().set("link_get_item", new Sound("sound/effects/Oracle_Get_Item.wav"));
-		SoundBank.getInstance().set("link_get_heart_container", new Sound("sound/effects/Oracle_HeartContainer.wav"));
-		SoundBank.getInstance().set("tune_of_ages", new Sound("sound/effects/OOA_Harp_TuneOfAges.wav"));
+		SoundBank.getInstance().set("link_get_rupee", new SoundEffect("sound/effects/Oracle_Get_Rupee.wav"));
+		SoundBank.getInstance().set("link_get_rupee5", new SoundEffect("sound/effects/Oracle_Get_Rupee5.wav"));
+		SoundBank.getInstance().set("link_get_heart", new SoundEffect("sound/effects/Oracle_Get_Heart.wav"));
+		SoundBank.getInstance().set("link_get_item", new SoundEffect("sound/effects/Oracle_Get_Item.wav"));
+		SoundBank.getInstance().set("link_get_heart_container", new SoundEffect("sound/effects/Oracle_HeartContainer.wav"));
+		SoundBank.getInstance().set("tune_of_ages", new SoundEffect("sound/effects/OOA_Harp_TuneOfAges.wav"));
 		
 		
 		
@@ -121,10 +122,15 @@ public class LegendOfZelda extends Game {
 		map.enemies().add(new RedTurtle(15, 10));
 		map.enemies().add(new RedTurtle(14, 8));
 		map.enemies().add(new RedTurtle(11, 7));
-		// stop all sounds
+		
+		// stop all looping sounds
 		for(String soundId : SoundBank.getInstance().all().keySet()) {
-			SoundBank.getInstance().get(soundId).stop();
+			if(SoundBank.getInstance().get(soundId) instanceof LoopingSound) {
+				((LoopingSound) SoundBank.getInstance().get(soundId)).stop();
+			}
 		}
+		SoundChannels.getInstance().stopAll();
+		
 		SoundBank.getInstance().get("main_theme").play();
 		
 		FullHeart heart = new FullHeart();

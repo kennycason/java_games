@@ -42,4 +42,18 @@ public class SoundChannels {
 		return null;
 	}
 	
+	public SourceDataLine[] lines() {
+		return lines;
+	}
+
+	public void stopAll() {
+		for(int i = 0; i < numLines; i++) {
+			if(lines[i] != null) {
+				if(lines[i].isActive()) {
+					lines[i].close();
+				}
+			}
+		}
+	}
+	
 }
