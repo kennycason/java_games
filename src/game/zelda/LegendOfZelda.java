@@ -14,7 +14,8 @@ import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import game.zelda.gamestates.MainGameLoop;
-import game.zelda.gamestates.PauseGameLoop;
+import game.zelda.gamestates.ItemScreenGameLoop;
+import game.zelda.gamestates.PausedScreenGameLoop;
 import game.zelda.gamestates.TitleScreenGameLoop;
 import game.zelda.usables.Boomerang;
 import game.zelda.usables.BowAndArrow;
@@ -87,7 +88,8 @@ public class LegendOfZelda extends Game {
 		
 		gameLoops.put(GameStateEnum.TITLE_SCREEN, new TitleScreenGameLoop());
 		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());
-		gameLoops.put(GameStateEnum.PAUSED, new PauseGameLoop());
+		gameLoops.put(GameStateEnum.ITEM_SCREEN, new ItemScreenGameLoop());
+		gameLoops.put(GameStateEnum.PAUSED, new PausedScreenGameLoop());
 		
 
 		gameState = GameStateEnum.TITLE_SCREEN;
@@ -107,9 +109,12 @@ public class LegendOfZelda extends Game {
 				case MAIN:
 					gameLoops.get(GameStateEnum.MAIN).run();
 					break;
+				case ITEM_SCREEN:
+					gameLoops.get(GameStateEnum.ITEM_SCREEN).run();
+					break;
 				case PAUSED:
 					gameLoops.get(GameStateEnum.PAUSED).run();
-					break;
+					break;		
 				case DEAD:
 					gameState = GameStateEnum.TITLE_SCREEN;
 					break;

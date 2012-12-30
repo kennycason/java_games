@@ -14,7 +14,7 @@ import engine.sound.AbstractSound;
 import engine.sound.SoundBank;
 import game.zelda.TopMenu;
 
-public class PauseGameLoop extends AbstractGameLoop {
+public class ItemScreenGameLoop extends AbstractGameLoop {
 
 	private TopMenu menu;
 
@@ -30,7 +30,7 @@ public class PauseGameLoop extends AbstractGameLoop {
 	
 	private AbstractSound mouseSelect;
 
-	public PauseGameLoop() {
+	public ItemScreenGameLoop() {
 		super();
 		menu = new TopMenu();
 
@@ -46,7 +46,7 @@ public class PauseGameLoop extends AbstractGameLoop {
 		if (currentTime - lastRefresh >= refreshInterval) {
 			if (game.keyboard().isKeyPressed(KeyEvent.VK_SPACE)) {
 				if (currentTime
-						- game.gameLoops().get(GameStateEnum.PAUSED)
+						- game.gameLoops().get(GameStateEnum.ITEM_SCREEN)
 								.transitionTime() >= 1000) {
 					end();
 					game.gameLoops().get(GameStateEnum.MAIN).start();

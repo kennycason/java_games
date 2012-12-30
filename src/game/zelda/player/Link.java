@@ -288,6 +288,12 @@ public class Link extends AbstractLivingEntity {
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_SPACE)) {
 			if(System.currentTimeMillis() - game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
+				game.gameLoops().get(GameStateEnum.ITEM_SCREEN).start();
+				game.gameState(GameStateEnum.ITEM_SCREEN);
+			}
+		}
+		if (kb.isKeyPressed(KeyEvent.VK_P)) {
+			if(System.currentTimeMillis() - game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
 				game.gameLoops().get(GameStateEnum.PAUSED).start();
 				game.gameState(GameStateEnum.PAUSED);
 			}
