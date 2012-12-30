@@ -15,7 +15,6 @@ public abstract class AbstractEntity extends AbstractCollidable {
 	/**
 	 * used to make the "rectangle" in rectangle collision a bit smaller or larger
 	 */
-	protected int collisionOffset = 1;
 
 	public AbstractEntity() {
 		game = GameFactory.get();
@@ -48,10 +47,10 @@ public abstract class AbstractEntity extends AbstractCollidable {
 	public abstract void face(FaceDirection face);
 	
 	public int offsetX() {
-		return (x + collisionOffset()) / game.map().tileWidth();
+		return (x + (width() /*- collisionOffset()*/) / 2) / game.map().tileWidth();
 	}
 
 	public int offsetY() {
-		return (y + collisionOffset()) / game.map().tileHeight(); 
+		return (y + (height() /*- collisionOffset()*/) / 2) / game.map().tileHeight(); 
 	}
 }

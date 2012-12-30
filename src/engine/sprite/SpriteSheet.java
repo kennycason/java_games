@@ -57,6 +57,15 @@ public class SpriteSheet implements ISpriteBankResource {
 		return sheet;
 	}
 	
+	public SpriteSheet range(int index) {
+		int num = 1;
+		SpriteSheet sheet = new SpriteSheet(num, tileWidth(), tileHeight());
+		for(int i = 0; i < num; i++) {
+			sheet.set(i, this.get(index + i));
+		}
+		return sheet;
+	}
+	
 	public SpriteSheet getRange(int[] indexes) {
 		SpriteSheet sheet = new SpriteSheet(indexes.length, tileWidth(), tileHeight());
 		for(int i = 0; i < numTiles; i++) {

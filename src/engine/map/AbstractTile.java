@@ -10,11 +10,15 @@ public abstract class AbstractTile extends AbstractCollidable {
 	
 	protected AbstractTile(int value) {
 		this.value = value;
-		this.collisionOffset(0);
+		collisionOffset = 0;
 	}
 	
 	public int value() {
 		return value;
+	}
+	
+	public void value(int value) {
+		this.value = value;
 	}
 	
 	public abstract void draw(Graphics2D g, int x, int y);

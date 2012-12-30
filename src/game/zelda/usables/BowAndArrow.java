@@ -42,9 +42,9 @@ public class BowAndArrow extends AbstractWeapon {
 		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		
 		bow = entities.get(163);
-		arrowN = new AnimatedSprite(entities.range(362, 362), 0);
+		arrowN = new AnimatedSprite(entities.range(362), 0);
 		arrowS = SpriteUtils.flipVertical(arrowN);
-		arrowE = new AnimatedSprite(entities.range(363, 363), 0);
+		arrowE = new AnimatedSprite(entities.range(363), 0);
 		arrowW = SpriteUtils.flipVertical(arrowE);
 		
 		using = false;
@@ -94,7 +94,9 @@ public class BowAndArrow extends AbstractWeapon {
 	public void handle() {
 
 		Iterator<Arrow> arrowIter = arrows.iterator();
+		boolean removeArrow;
 		while(arrowIter.hasNext()) {
+			removeArrow = false;
 			Arrow arrow = arrowIter.next();
 			
 			arrow.handle();
@@ -105,13 +107,16 @@ public class BowAndArrow extends AbstractWeapon {
 				AbstractEnemy enemy = iter.next();
 				if (arrow.rectangleCollide(enemy)) {
 					enemy.hit(damage());
-					arrowIter.remove();
+					removeArrow = true;
 					break;
 				}
 			}	
 			
 			if(arrow.renderX() < -arrow.width() || arrow.renderX() > Game.SCREEN_WIDTH ||
 					arrow.renderY() < -arrow.height() || arrow.renderY() > Game.SCREEN_HEIGHT) {
+				removeArrow = true;
+			}
+			if(removeArrow) {
 				arrowIter.remove();
 			}
 		}
@@ -146,7 +151,7 @@ public class BowAndArrow extends AbstractWeapon {
 			locate(x, y);
 			this.speedX = speedX;
 			this.speedY = speedY;
-			collisionOffset = 10;
+			collisionOffset = 5;
 		}
 		
 		public void handle() {

@@ -9,17 +9,13 @@ import engine.entity.weapon.UsableBank;
 import engine.font.FontBank;
 import engine.sound.LoopingSound;
 import engine.sound.SoundBank;
-import engine.sound.SoundChannels;
 import engine.sound.SoundEffect;
+import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
-import game.zelda.enemy.LikeLike;
-import game.zelda.enemy.Octorok;
-import game.zelda.enemy.RedTurtle;
 import game.zelda.gamestates.MainGameLoop;
 import game.zelda.gamestates.PauseGameLoop;
-import game.zelda.item.FullHeart;
-import game.zelda.player.Link;
+import game.zelda.gamestates.TitleScreenGameLoop;
 import game.zelda.usables.Boomerang;
 import game.zelda.usables.BowAndArrow;
 import game.zelda.usables.MegatonHammer;
@@ -36,7 +32,6 @@ public class LegendOfZelda extends Game {
 	public static void main(String[] args) {
 		GameFactory.set(new LegendOfZelda());
 		Game game = GameFactory.get();
-		game.init();
 		game.start();
 		game.run();
 	}
@@ -48,17 +43,21 @@ public class LegendOfZelda extends Game {
 	/**
 	 * load global resources
 	 */
-	public void init() {
+	@Override
+	public void start() {
+		super.start();
 		// load globals
 		// @TODO use resource loader LegendOfZelda.class.getResourceAsStream(spritename)
 		SpriteBank.getInstance().set("entities", new SpriteSheet("sprites/entity/zelda/entities.png", 16, 16));
 		// @TODO make a util that grabs specific rectangles instead of parsing entities.png as 8x8...
 		SpriteBank.getInstance().set("entities8x8", new SpriteSheet("sprites/entity/zelda/entities.png", 8, 8));
+		SpriteBank.getInstance().set("title_screen", new SimpleSprite("sprites/entity/zelda/Oracle_of_Ages_logo.png"));
 		
 		FontBank.getInstance().set("menu_smaller", new Font("Serif", Font.BOLD, 10));
 		FontBank.getInstance().set("menu_small", new Font("Serif", Font.BOLD, 12));
 		FontBank.getInstance().set("menu_large", new Font("Serif", Font.PLAIN, 24));
 		
+		// SoundBank.getInstance().set("title_screen", new LoopingSound("sound/bg/LoZ Oracle of Seasons Intro + Title Screen.WAV"));
 		SoundBank.getInstance().set("main_theme", new LoopingSound("sound/bg/LoZ Oracle of Seasons Main Theme.WAV"));
 		SoundBank.getInstance().set("sword_slash1", new SoundEffect("sound/effects/Oracle_Sword_Slash1.wav"));
 		SoundBank.getInstance().set("boomerang", new LoopingSound("sound/effects/Oracle_Boomerang.wav"));
@@ -73,7 +72,8 @@ public class LegendOfZelda extends Game {
 		SoundBank.getInstance().set("link_get_item", new SoundEffect("sound/effects/Oracle_Get_Item.wav"));
 		SoundBank.getInstance().set("link_get_heart_container", new SoundEffect("sound/effects/Oracle_HeartContainer.wav"));
 		SoundBank.getInstance().set("tune_of_ages", new SoundEffect("sound/effects/OOA_Harp_TuneOfAges.wav"));
-		
+		SoundBank.getInstance().set("open_chest", new SoundEffect("sound/effects/Oracle_Chest.wav"));
+		SoundBank.getInstance().set("secret", new SoundEffect("sound/effects/Oracle_Secret.wav"));
 		
 		
 		UsableBank.getInstance().set("sword1", new SwordLevel1());
@@ -84,16 +84,19 @@ public class LegendOfZelda extends Game {
 		UsableBank.getInstance().set("ocarina", new Ocarina());
 		UsableBank.getInstance().set("megaton", new MegatonHammer()); // still working on
 		
+		gameLoops.put(GameStateEnum.TITLE_SCREEN, new TitleScreenGameLoop());
 		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());
 		gameLoops.put(GameStateEnum.PAUSED, new PauseGameLoop());
+		
+		gameState = GameStateEnum.TITLE_SCREEN;
+		gameLoops.get(GameStateEnum.TITLE_SCREEN).start();
 	}
 	
 	public void run() {
 		while(true) {
 			switch(gameState) {
 				case TITLE_SCREEN:
-					loadNewGame();
-					gameState = GameStateEnum.MAIN;
+					gameLoops.get(GameStateEnum.TITLE_SCREEN).run();
 					break;
 				case MAIN:
 					gameLoops.get(GameStateEnum.MAIN).run();
@@ -110,35 +113,5 @@ public class LegendOfZelda extends Game {
 			}
 		}
 	}
-	
-	public void loadNewGame() { 
-		map = loader.load("maps/small.tmx");
-		map.offset().set(2 * map.tileWidth(), -4 *  map.tileHeight());
-
-		map.enemies().add(new LikeLike(5, 5));
-		map.enemies().add(new Octorok(10, 10));
-		map.enemies().add(new LikeLike(12, 19));
-		map.enemies().add(new LikeLike(16, 9));
-		map.enemies().add(new RedTurtle(15, 10));
-		map.enemies().add(new RedTurtle(14, 8));
-		map.enemies().add(new RedTurtle(11, 7));
 		
-		// stop all looping sounds
-		for(String soundId : SoundBank.getInstance().all().keySet()) {
-			if(SoundBank.getInstance().get(soundId) instanceof LoopingSound) {
-				((LoopingSound) SoundBank.getInstance().get(soundId)).stop();
-			}
-		}
-		SoundChannels.getInstance().stopAll();
-		
-		SoundBank.getInstance().get("main_theme").play();
-		
-		FullHeart heart = new FullHeart();
-		heart.locate(16 * 4, 16 * 10);
-		map.items().add(heart);
-		
-		link = new Link();		
-		gameState = GameStateEnum.MAIN;
-	}
-	
 }

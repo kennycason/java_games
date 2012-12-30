@@ -11,20 +11,26 @@ import engine.GameStateEnum;
 import engine.entity.AbstractEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
+import engine.sound.LoopingSound;
+import engine.sound.SoundBank;
 import game.zelda.TopMenu;
 
 public class MainGameLoop extends AbstractGameLoop {
 
 	private TopMenu menu;
 	
+	private LoopingSound sound;
+	
 	public MainGameLoop() {
 		super();
 		menu = new TopMenu();
+		sound = (LoopingSound) SoundBank.getInstance().get("main_theme");
 	}
 
 	@Override
 	public void run() {
 		if(game.link().dead()){ 
+			end();
 			game.gameState(GameStateEnum.DEAD);
 		}
 		
@@ -51,6 +57,8 @@ public class MainGameLoop extends AbstractGameLoop {
 					itemIter.remove();
 				}
 			}
+			// map event
+			game.map().events().handle();
 			
 			// paint everything
 			draw(game.screen().bufferedImage());
@@ -84,6 +92,19 @@ public class MainGameLoop extends AbstractGameLoop {
 		menu.draw(g);
 		game.map().drawMetaLater(g); // doesn't really draw, just resets the positions
 		g.dispose();
+	}
+	
+	@Override
+	public void start() {
+		super.start();
+		if(!sound.playing()) {
+			sound.play();
+		}
+	}
+	
+	@Override
+	public void end() {
+		sound.stop();
 	}
 
 }

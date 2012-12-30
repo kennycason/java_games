@@ -38,7 +38,8 @@ public class PauseGameLoop extends AbstractGameLoop {
 		if (currentTime - lastRefresh >= refreshInterval) {
 			if (game.keyboard().isKeyPressed(KeyEvent.VK_SPACE)) {
 				if(currentTime - game.gameLoops().get(GameStateEnum.PAUSED).transitionTime() >= 1000) {
-					game.gameLoops().get(GameStateEnum.MAIN).reset();
+					end();
+					game.gameLoops().get(GameStateEnum.MAIN).start();
 					game.gameState(GameStateEnum.MAIN);
 				}
 			}
@@ -130,6 +131,11 @@ public class PauseGameLoop extends AbstractGameLoop {
 
 		menu.draw(g);
 		g.dispose();
+	}
+	
+	@Override
+	public void end() {
+		//sound.stop();
 	}
 
 }

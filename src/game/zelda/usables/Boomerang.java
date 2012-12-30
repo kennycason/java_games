@@ -54,7 +54,7 @@ public class Boomerang extends AbstractWeapon {
 		speed = 8;
 		distance = 16 * 5;
 		damage = 1;
-		collisionOffset = 6;
+		collisionOffset = 4;
 		sound = (LoopingSound) SoundBank.getInstance().get("boomerang");
 	}
 	
@@ -144,14 +144,14 @@ public class Boomerang extends AbstractWeapon {
 			}
 		} else {
 			double mX = 0, mY = 0;
-			if(game.link().x() - x() < -10) {
+			if(game.link().x() - x() < -4) {
 				mX = -speed;
-			} else if(game.link().x() - x() > 10) {
+			} else if(game.link().x() - x() > 4) {
 				mX = speed;
 			}
-			if(game.link().y() - y() < -10) {
+			if(game.link().y() - y() < -4) {
 				mY = -speed;
-			} else if(game.link().y() - y() > 10) {
+			} else if(game.link().y() - y() > 4) {
 				mY = speed;
 			} 
 			acceleration.set(mX, mY);

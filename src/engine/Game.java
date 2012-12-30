@@ -34,8 +34,6 @@ public abstract class Game extends JPanel {
 
 	protected final KeyBoard keyboard;
 	
-	protected int volume = 50;
-
 	// @TODO create Interface for Player to decouple Game and Link
 	protected Link link;
 	
@@ -79,19 +77,24 @@ public abstract class Game extends JPanel {
 		frame.pack();
 		frame.setResizable(false);
 		frame.setVisible(true);
-	
 	}
-	
-	public abstract void init();
 	
 	public abstract void run();
 
 	public Link link() {
 		return link;
 	}
+	
+	public void link(Link link) {
+		this.link = link;
+	}
 
 	public Map map() {
 		return map;
+	}
+	
+	public void map(Map map) {
+		this.map = map;
 	}
 
 	public void gameState(GameStateEnum gameState) {

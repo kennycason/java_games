@@ -32,10 +32,6 @@ public abstract class AbstractCollidable {
 	
 	public abstract int height();
 	
-	public void collisionOffset(int collisionOffset) {
-		this.collisionOffset = collisionOffset;
-	}
-	
 	public int collisionOffset() {
 		return collisionOffset;
 	}

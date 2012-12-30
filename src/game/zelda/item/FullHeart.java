@@ -12,10 +12,15 @@ public class FullHeart extends AbstractItem {
 	private AbstractSound sound;
 	
 	public FullHeart() {
+		this(0, 0);
+	}
+	
+	public FullHeart(int x, int y) {
 		super();
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		sprite = new AnimatedSprite(sheet.range(252, 252), 0);
-		collisionOffset = 8;
+		locate(x * sprite.width(), y * sprite.height());
+		collisionOffset = 1;
 		mustTouch = true;
 		sound = SoundBank.getInstance().get("link_get_heart_container");
 	}

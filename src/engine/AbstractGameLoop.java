@@ -14,15 +14,16 @@ public abstract class AbstractGameLoop {
 	
 	protected AbstractGameLoop() {
 		game = GameFactory.get();
-		reset();
 	}
 	
-	public void reset() {
+	public void start() {
 		lastRefresh = System.currentTimeMillis() - refreshInterval;
 		transitionTime = System.currentTimeMillis();
 	}
 	
 	public abstract void run();
+	
+	public abstract void end();
 	
 	public abstract void draw(BufferedImage bi);
 	

@@ -8,6 +8,7 @@ import engine.FaceDirection;
 import engine.GameStateEnum;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
+import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractUsableEntity;
 import engine.entity.weapon.UsableBank;
 import engine.keyboard.KeyBoard;
@@ -30,6 +31,8 @@ public class Link extends AbstractLivingEntity {
 	private int accelerationRateAngled;
 
 	private int rupees = 208;
+	
+	private int maxRupees = 999;
 
 	private AbstractUsableEntity itemA;
 
@@ -61,13 +64,13 @@ public class Link extends AbstractLivingEntity {
 		
 		items = new AbstractUsableEntity[16];
 		items[0] = UsableBank.getInstance().get("megaton");
-		items[1] = UsableBank.getInstance().get("sword3");
+		items[1] = UsableBank.getInstance().get("sword1");
 		items[2] = UsableBank.getInstance().get("boomerang");
 		items[3] = UsableBank.getInstance().get("ocarina");
 		items[4] = UsableBank.getInstance().get("sword2");
 		
-		itemA = UsableBank.getInstance().get("sword1");
-		itemB = UsableBank.getInstance().get("bow");
+		itemA = UsableBank.getInstance().get("bow");
+		itemB = UsableBank.getInstance().get("sword3");
 		
 		locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
 
@@ -81,7 +84,7 @@ public class Link extends AbstractLivingEntity {
 		invincibleTime = 500;
 		life = 5.5;
 		maxLife = 11;
-		collisionOffset(5);
+		collisionOffset = 5;
 		deadSound = SoundBank.getInstance().get("link_die");
 		hitSound = SoundBank.getInstance().get("link_hurt");
 		lowHeartsSound = (LoopingSound)SoundBank.getInstance().get("link_low_life");
@@ -264,17 +267,32 @@ public class Link extends AbstractLivingEntity {
 			}
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_S)) {
-			if (itemA() != null && !itemA().using() && !itemB().using()) {
-				itemA().use();
+			boolean itemConsumed = false;
+			if(face() == FaceDirection.NORTH) {
+				for(AbstractItem item : game.map().items()) {
+					if(!item.walkable()) {
+						item.consume(); // actually should just attempt to consume
+						if(item.consumed()) {
+							itemConsumed = true;
+						}
+					}
+				}
+			}
+			if(!itemConsumed) {
+				if (itemA() != null && !itemA().using() && !itemB().using()) {
+					itemA().use();
+				}
 			}
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_SPACE)) {
 			if(System.currentTimeMillis() - game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
-				game.gameLoops().get(GameStateEnum.PAUSED).reset();
+				//game.gameLoops().get(GameStateEnum.MAIN).end();
+				game.gameLoops().get(GameStateEnum.PAUSED).start();
 				game.gameState(GameStateEnum.PAUSED);
 			}
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_R)) {
+			game.gameLoops().get(GameStateEnum.MAIN).end();
 			game.gameState(GameStateEnum.TITLE_SCREEN);
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_ESCAPE)) {
@@ -311,7 +329,21 @@ public class Link extends AbstractLivingEntity {
 
 	public void rupees(int rupees) {
 		this.rupees = rupees;
+		if(rupees < maxRupees) {
+			rupees = maxRupees;
+		}
 	}
+	
+	public int maxRupees() {
+		return maxRupees;
+	}
+	
+	public void maxRupees(int maxRupees) {
+		this.maxRupees = maxRupees;
+	}
+	
+	
+	
 
 	@Override
 	public int renderX() {
@@ -344,5 +376,18 @@ public class Link extends AbstractLivingEntity {
 	public AbstractUsableEntity[] items() {
 		return items;
 	}
+	
+//  // use local overrides to test offsetX/Y	
+//	public int offsetX() {
+//		int off = super.offsetX();
+//		System.out.println("link offset X: " + off);
+//		return off;
+//	}
+//
+//	public int offsetY() {
+//		int off = super.offsetY();
+//		System.out.println("link offset Y: " + off);
+//		return off;
+//	}
 
 }

@@ -15,7 +15,7 @@ public class Heart extends AbstractItem {
 		super();
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		sprite = new AnimatedSprite(sheet.range(257, 257), 0);
-		collisionOffset = 8;
+		collisionOffset = 4;
 		sound = SoundBank.getInstance().get("link_get_heart");
 	}
 	

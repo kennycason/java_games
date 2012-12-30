@@ -8,6 +8,7 @@ import engine.Game;
 import engine.entity.AbstractCollidable;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
+import engine.event.EventQueue;
 import engine.math.Vector2D;
 import engine.sprite.SimpleSprite;
 
@@ -39,9 +40,11 @@ public class Map {
 
     private SimpleSprite bg = new SimpleSprite("sprites/map/Sand.bmp");
     
-    protected List<AbstractEnemy> enemies;
+    private List<AbstractEnemy> enemies;
     
-	protected List<AbstractItem> items;
+    private List<AbstractItem> items;
+	
+    private EventQueue events;
     
 	public Map(int width, int height, int tileWidth, int tileHeight) {
 		offset = new Vector2D();
@@ -53,6 +56,7 @@ public class Map {
 		meta = new MetaTile[width][height];
 		enemies = new LinkedList<AbstractEnemy>();
 		items = new LinkedList<AbstractItem>();
+		events = new EventQueue();
 	}
 	
 	public void drawBackground(Graphics2D g) {
@@ -195,6 +199,10 @@ public class Map {
 	
 	public List<AbstractItem> items() {
 		return items;
+	}
+	
+	public EventQueue events() {
+		return events;
 	}
 	
 }
