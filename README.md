@@ -7,7 +7,7 @@ Zelda Game written in Java - Still a new project so it's definitely a work in pr
 <table>
     <tr>
         <td>
-            <img src="http://ken-soft.com/images/zelda/zelda3.png" width="400px"/>
+            <img src="http://ken-soft.com/images/zelda/zelda8.png" width="400px"/>
         </td>
         <td>
             <img src="http://ken-soft.com/images/zelda/zelda5.png" width="400px"/>
