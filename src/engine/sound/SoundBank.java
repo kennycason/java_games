@@ -8,7 +8,7 @@ public class SoundBank {
 	
 	private static SoundBank INSTANCE = null;
 
-	private HashMap<String, ISound> resources = new HashMap<String, ISound>();
+	private HashMap<String, AbstractSound> resources = new HashMap<String, AbstractSound>();
 	
 	private final static Logger LOGGER = Logger.getLogger(SoundBank.class.getName()); 
 	
@@ -22,12 +22,12 @@ public class SoundBank {
 		return INSTANCE;
 	}
 	
-	public void set(String key, ISound sound) {
+	public void set(String key, AbstractSound sound) {
 		LOGGER.debug("loading new sound: " + sound.file());
 		resources.put(key, sound);
 	}
 	
-	public ISound get(String key) {
+	public AbstractSound get(String key) {
 		return resources.get(key);
 	}
 	
@@ -35,7 +35,7 @@ public class SoundBank {
 		return resources.size();
 	}
 
-	public HashMap<String, ISound> all() {
+	public HashMap<String, AbstractSound> all() {
 		return resources;
 	}
 	

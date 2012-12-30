@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import engine.FaceDirection;
 import engine.entity.weapon.AbstractUsableEntity;
-import engine.sound.ISound;
+import engine.sound.AbstractSound;
 import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteBank;
@@ -16,7 +16,7 @@ public class Ocarina extends AbstractUsableEntity {
 	
 	private boolean using;
 
-	private ISound sound;
+	private AbstractSound sound;
 	
 	private long playTime;
 	

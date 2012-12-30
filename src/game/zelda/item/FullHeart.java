@@ -1,7 +1,7 @@
 package game.zelda.item;
 
 import engine.entity.item.AbstractItem;
-import engine.sound.ISound;
+import engine.sound.AbstractSound;
 import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
@@ -9,7 +9,7 @@ import engine.sprite.SpriteSheet;
 
 public class FullHeart extends AbstractItem {
 	
-	private ISound sound;
+	private AbstractSound sound;
 	
 	public FullHeart() {
 		super();

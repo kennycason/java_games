@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import engine.FaceDirection;
 import engine.ai.IAIStrategy;
-import engine.sound.ISound;
+import engine.sound.AbstractSound;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteUtils;
@@ -67,9 +67,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	 */
 	protected boolean dead = false;
 	
-	protected ISound hitSound;
+	protected AbstractSound hitSound;
 	
-	protected ISound deadSound;
+	protected AbstractSound deadSound;
 	
 	public AbstractLivingEntity() {
 		super();

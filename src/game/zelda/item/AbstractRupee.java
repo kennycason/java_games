@@ -1,7 +1,7 @@
 package game.zelda.item;
 
 import engine.entity.item.AbstractItem;
-import engine.sound.ISound;
+import engine.sound.AbstractSound;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
@@ -10,7 +10,7 @@ public abstract class AbstractRupee extends AbstractItem {
 	
 	protected int value;
 	
-	protected ISound sound;
+	protected AbstractSound sound;
 	
 	protected AbstractRupee(int value, int spriteNumber) {
 		super();

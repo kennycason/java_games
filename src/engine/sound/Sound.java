@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  * @author kenny
  * 
  */
-public class Sound implements ISound {
+public class Sound extends AbstractSound {
 
 	private static final int BUFFER_SIZE = 64 * 1024; // 64 KB
 	
@@ -29,20 +29,14 @@ public class Sound implements ISound {
 	
 	private byte[] data;
 
-	private boolean loaded = false;
-
-	private int volume = 50;
-	
-	private String file;
-	
 	private AudioFormat format ;
 	
 	private final static Logger LOGGER = Logger.getLogger(Sound.class.getName()); 
 
 	public Sound(String file) {
+		super(file);
 		// Set up an audio input stream piped from the sound file.
 		try {
-			this.file = file;
 			ByteArrayOutputStream baout = new ByteArrayOutputStream();
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(file));
 			format = audioInputStream.getFormat();

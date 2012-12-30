@@ -12,7 +12,7 @@ import engine.entity.weapon.AbstractUsableEntity;
 import engine.entity.weapon.UsableBank;
 import engine.keyboard.KeyBoard;
 import engine.math.Vector2D;
-import engine.sound.ISound;
+import engine.sound.AbstractSound;
 import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
@@ -37,7 +37,7 @@ public class Link extends AbstractLivingEntity {
 	
 	private AbstractUsableEntity[] items;
 
-	private ISound lowHeartsSound;
+	private AbstractSound lowHeartsSound;
 	
 	private AnimatedSprite attackN;
 	private AnimatedSprite attackE;

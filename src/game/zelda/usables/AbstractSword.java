@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractWeapon;
-import engine.sound.ISound;
+import engine.sound.AbstractSound;
 import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteBank;
@@ -27,7 +27,7 @@ public abstract class AbstractSword extends AbstractWeapon {
 	
 	protected SimpleSprite sprite;
 	
-	protected ISound swingSound;
+	protected AbstractSound swingSound;
 
 	protected AbstractSword(int entityNumber, int damage) {
 		super();

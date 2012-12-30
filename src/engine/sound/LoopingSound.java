@@ -14,22 +14,15 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author kenny
  *
  */
-public class LoopingSound implements ISound {
+public class LoopingSound extends AbstractSound {
 	
 	private Clip clip;
-	
-	private boolean loaded = false;
-	
-	private int volume = 50;
-	
-	private String file;
-	
+
 	public LoopingSound(String file) {	
+		super(file);
 		try {
-			this.file = file;
 			clip = AudioSystem.getClip();
 			AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(file));
-			
 			// @TODO use below method to load
 	        // AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
 	        clip.open(inputStream);
@@ -94,16 +87,6 @@ public class LoopingSound implements ISound {
 					/ 100.0);
 			gainControl.setValue(amt); // Reduce volume by 10 decibels.
 		}
-	}
-
-	@Override
-	public int volume() {
-		return volume;
-	}
-	
-	@Override
-	public String file() {
-		return file;
 	}
 
 }

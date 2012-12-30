@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractWeapon;
-import engine.sound.ISound;
+import engine.sound.AbstractSound;
 import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
@@ -21,7 +21,7 @@ public class MegatonHammer extends AbstractWeapon {
 
 	private AnimatedSprite sprite;
 	
-	private ISound swingSound;
+	private AbstractSound swingSound;
 	
 	private boolean using = false;
 
