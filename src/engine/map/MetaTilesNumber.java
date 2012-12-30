@@ -6,6 +6,6 @@ public class MetaTilesNumber {
 		
 	}
 	
-	public static final int COLLISION = 401;
+	public static final int COLLISION = 1;
 	
 }

@@ -50,10 +50,12 @@ public class MapLoader {
 				int layerNumber = -1;
 				if("bottom".equals(layer.attr("name"))) {
 					layerNumber = 0;
-				} else if("top".equals(layer.attr("name"))) {
+				} else if("middle".equals(layer.attr("name"))) {
 					layerNumber = 1;
-				} else if("meta".equals(layer.attr("name"))) {
+				}  else if("top".equals(layer.attr("name"))) {
 					layerNumber = 2;
+				} else if("meta".equals(layer.attr("name"))) {
+					layerNumber = 3;
 				}
 				Element data = layer.select("data").first();
 				String encoding = data.attr("encoding");
@@ -86,18 +88,24 @@ public class MapLoader {
 						y++;
 					}
 					gid = Integer.parseInt(xs[x]);
-					if(layer < 2) {
+					if(layer < 3) {
 						map.layers()[layer][x][y] = new BasicTile(map.spriteSheet().get(gid), gid);
-					} else if (layer == 2) {
+					} else if (layer == 3) {
+						if(gid > 0) {
+							gid -= (map.getSpriteSheet().numTiles() - 1);
+						}
 						map.meta()[x][y] = new MetaTile(gid);
 					}
 				}
 			} else { // standard row
 				for(int x = 0; x < xs.length; x++) {
 					gid = Integer.parseInt(xs[x]);
-					if(layer < 2) {
+					if(layer < 3) {
 						map.layers()[layer][x][y] = new BasicTile(map.spriteSheet().get(gid), gid);
-					} else if (layer == 2) {
+					} else if (layer == 3) {
+						if(gid > 0) {
+							gid -= (map.getSpriteSheet().numTiles() - 1);
+						}
 						map.meta()[x][y] = new MetaTile(gid);
 					}
 				}
@@ -116,9 +124,12 @@ public class MapLoader {
 				y++;
 			}
 			gid = Integer.parseInt(tile.attr("gid"));
-			if(layer < 2) {
+			if(layer < 3) {
 				map.layers()[layer][x][y] = new BasicTile(map.spriteSheet().get(gid), gid);
-			} else if (layer == 2) {
+			} else if (layer == 3) {
+				if(gid > 0) {
+					gid -= (map.getSpriteSheet().numTiles() - 1);
+				}
 				map.meta()[x][y] = new MetaTile(gid);
 			}
 			x++;

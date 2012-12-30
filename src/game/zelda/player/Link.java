@@ -275,7 +275,7 @@ public class Link extends AbstractLivingEntity {
 						item.consume(); // actually should just attempt to consume
 						if(item.consumed() && !wasConsumed) {
 							itemConsumed = true;
-							game.sleep(100);
+							game.sleep(300);
 						}
 					}
 				}

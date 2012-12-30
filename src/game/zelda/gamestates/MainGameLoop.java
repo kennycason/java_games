@@ -75,8 +75,9 @@ public class MainGameLoop extends AbstractGameLoop {
 		}
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, Game.SCREEN_WIDTH * game.zoom(), Game.SCREEN_HEIGHT * game.zoom());
-		game.map().drawBackground(g);
+		//game.map().drawBackground(g);
 		game.map().drawBottomLayer(g);
+		game.map().drawMiddleLater(g);
 		
 		for(AbstractItem item : game.map().items()) {
 			item.draw(g);
@@ -87,8 +88,7 @@ public class MainGameLoop extends AbstractGameLoop {
 		}
 		
 		game.link().draw(g);
-
-		// map.drawTopLayer(g);
+		game.map().drawTopLater(g);
 		menu.draw(g);
 		game.map().drawMetaLater(g); // doesn't really draw, just resets the positions
 		g.dispose();

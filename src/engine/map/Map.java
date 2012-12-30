@@ -52,7 +52,7 @@ public class Map {
 		this.height = height;
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;
-		layers = new BasicTile[2][width][height];
+		layers = new BasicTile[3][width][height];
 		meta = new MetaTile[width][height];
 		enemies = new LinkedList<AbstractEnemy>();
 		items = new LinkedList<AbstractItem>();
@@ -73,12 +73,16 @@ public class Map {
 		draw(g, 0);
 	}
 	
-	public void drawTopLater(Graphics2D g) {
+	public void drawMiddleLater(Graphics2D g) {
 		draw(g, 1);
+	}
+	
+	public void drawTopLater(Graphics2D g) {
+		draw(g, 2);
 	}
 
 	public void drawMetaLater(Graphics2D g) {
-		draw(g, 2);
+		draw(g, 3);
 	}
 
 	private void draw(Graphics2D g, int l) {
@@ -90,7 +94,7 @@ public class Map {
 				yOff = y * tileHeight + (int) offset.y();
 				if(xOff > -tileWidth && xOff < width * tileWidth && 
 						yOff > -tileHeight && yOff < height * tileHeight) {
-					if(l < 2) {
+					if(l < 3) {
 						if(layers[l][x][y].value() != 0) {
 							layers[l][x][y].draw(g, 
 									x * tileWidth + (int) offset.x(), 
