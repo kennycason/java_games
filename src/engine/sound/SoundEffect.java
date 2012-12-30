@@ -1,8 +1,8 @@
 package engine.sound;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -39,9 +39,9 @@ public class SoundEffect extends AbstractSound {
 		super(file);
 		// Set up an audio input stream piped from the sound file.
 		try {
+			InputStream is = getClass().getClassLoader().getResourceAsStream(file);
 			ByteArrayOutputStream baout = new ByteArrayOutputStream();
-			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(new File(file));
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(is);
 			format = audioInputStream.getFormat();
 
 			lines = SoundChannels.getInstance();

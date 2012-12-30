@@ -1,7 +1,7 @@
 package engine.sound;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -21,8 +21,9 @@ public class LoopingSound extends AbstractSound {
 	public LoopingSound(String file) {	
 		super(file);
 		try {
+			InputStream is = getClass().getClassLoader().getResourceAsStream(file);
 			clip = AudioSystem.getClip();
-			AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(file));
+			AudioInputStream inputStream = AudioSystem.getAudioInputStream(is);
 			// @TODO use below method to load
 	        // AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
 	        clip.open(inputStream);

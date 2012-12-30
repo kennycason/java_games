@@ -1,1 +1,0 @@
-Sounds effects from: http://noproblo.dayjo.org/ZeldaSounds/

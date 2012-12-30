@@ -14,12 +14,23 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
+
 public class SimpleSprite extends AbstractSprite {
 
 	private BufferedImage bi;
+	
+	private static final Logger LOGGER = Logger.getLogger(SimpleSprite.class.getName());
 
 	public SimpleSprite(String file) {
-		this(new File(file));
+		try {
+			bi = ImageIO.read(getClass().getClassLoader().getResourceAsStream(file));
+		} catch (IOException e) {
+			LOGGER.error("Can not Sprite: " + file);
+			e.printStackTrace();
+		}
+		spriteWidth = bi.getWidth();
+		spriteHeight = bi.getHeight();
 	}
 
 	public SimpleSprite(File file) {
