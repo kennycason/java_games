@@ -109,9 +109,6 @@ public class Link extends AbstractLivingEntity {
 		// handle enemy collisions
 		Iterator<AbstractEnemy> iter = game.map().enemies().iterator();
 		while (iter.hasNext()) {
-			if(life() <= 0){ 
-				lowHeartsSound.stop(); 
-			}
 			AbstractEnemy entity = iter.next();
 			if (rectangleCollide(entity)) {
 				hit(entity.damage());
@@ -292,6 +289,13 @@ public class Link extends AbstractLivingEntity {
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_ESCAPE)) {
 			game.gameState(GameStateEnum.END);
+		}
+	}
+	
+	public void life(double life) {
+		super.life(life);
+		if(life() > 3){ 
+			lowHeartsSound.stop(); 
 		}
 	}
 

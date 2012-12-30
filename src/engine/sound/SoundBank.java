@@ -34,5 +34,9 @@ public class SoundBank {
 	public int size() {
 		return resources.size();
 	}
+
+	public HashMap<String, ISound> all() {
+		return resources;
+	}
 	
 }

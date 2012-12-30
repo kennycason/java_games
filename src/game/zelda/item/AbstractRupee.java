@@ -1,6 +1,7 @@
 package game.zelda.item;
 
 import engine.entity.item.AbstractItem;
+import engine.sound.ISound;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
@@ -8,6 +9,8 @@ import engine.sprite.SpriteSheet;
 public abstract class AbstractRupee extends AbstractItem {
 	
 	protected int value;
+	
+	protected ISound sound;
 	
 	protected AbstractRupee(int value, int spriteNumber) {
 		super();
@@ -21,6 +24,7 @@ public abstract class AbstractRupee extends AbstractItem {
 	public void consume() {
 		game.link().rupees(game.link().rupees() + value);
 		consumed = true;
+		sound.play();
 	}
 
 }

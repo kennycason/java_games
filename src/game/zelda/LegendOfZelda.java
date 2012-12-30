@@ -63,14 +63,17 @@ public class LegendOfZelda extends Game {
 		SoundBank.getInstance().set("link_hurt", new Sound("sound/effects/Oracle_Link_Hurt.wav"));
 		SoundBank.getInstance().set("link_die", new Sound("sound/effects/Oracle_Link_Dying.wav"));
 		SoundBank.getInstance().set("link_low_life", new LoopingSound("sound/effects/Oracle_LowHealth.wav"));
+		SoundBank.getInstance().set("link_get_rupee", new Sound("sound/effects/Oracle_Get_Rupee.wav"));
+		SoundBank.getInstance().set("link_get_rupee5", new Sound("sound/effects/Oracle_Get_Rupee5.wav"));
+		SoundBank.getInstance().set("link_get_heart", new Sound("sound/effects/Oracle_Get_Heart.wav"));
+		SoundBank.getInstance().set("link_get_item", new Sound("sound/effects/Oracle_Get_Item.wav"));
+		SoundBank.getInstance().set("link_get_heart_container", new Sound("sound/effects/Oracle_HeartContainer.wav"));
 		
 		WeaponBank.getInstance().set("sword1", new SwordLevel1());
 		WeaponBank.getInstance().set("sword2", new SwordLevel2());
 		WeaponBank.getInstance().set("sword3", new SwordLevel3());
 		WeaponBank.getInstance().set("boomerang", new Boomerang());
 		WeaponBank.getInstance().set("bow", new BowAndArrow());
-		
-		SoundBank.getInstance().get("main_theme").play();
 		
 		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());
 		gameLoops.put(GameStateEnum.PAUSED, new PauseGameLoop());
@@ -107,6 +110,12 @@ public class LegendOfZelda extends Game {
 		map.enemies().add(new Octorok(10, 10));
 		map.enemies().add(new LikeLike(12, 19));
 		map.enemies().add(new LikeLike(16, 9));
+		
+		// stop all sounds
+		for(String soundId : SoundBank.getInstance().all().keySet()) {
+			SoundBank.getInstance().get(soundId).stop();
+		}
+		SoundBank.getInstance().get("main_theme").play();
 		
 		FullHeart heart = new FullHeart();
 		heart.locate(16 * 4, 16 * 10);
