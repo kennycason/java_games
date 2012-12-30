@@ -30,7 +30,7 @@ public class Link extends AbstractLivingEntity {
 	
 	private int accelerationRateAngled;
 
-	private int rupees = 208;
+	private int rupees = 0;
 	
 	private int maxRupees = 999;
 
@@ -82,8 +82,8 @@ public class Link extends AbstractLivingEntity {
 		face = FaceDirection.EAST;
 		spriteCurrent = spriteE;
 		invincibleTime = 500;
-		life = 5.5;
-		maxLife = 11;
+		life = 3;
+		maxLife = 4;
 		collisionOffset = 5;
 		deadSound = SoundBank.getInstance().get("link_die");
 		hitSound = SoundBank.getInstance().get("link_hurt");

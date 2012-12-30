@@ -103,6 +103,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	
 	public void life(double life) {
 		this.life = life;
+		if(this.life > maxLife) {
+			this.life = maxLife;
+		}
 	}
 	
 	public double maxLife() {
