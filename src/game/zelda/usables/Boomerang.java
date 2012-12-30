@@ -121,6 +121,7 @@ public class Boomerang extends AbstractWeapon {
 		for(AbstractItem item : game.map().items()) {
 			if(!item.mustTouch() && rectangleCollide(item)) {
 				item.consume();
+				returning = true;
 			}
 		}
 		// enemies
@@ -143,14 +144,14 @@ public class Boomerang extends AbstractWeapon {
 			}
 		} else {
 			double mX = 0, mY = 0;
-			if(game.link().x() < x()) {
+			if(game.link().x() - x() < -10) {
 				mX = -speed;
-			} else if(game.link().x() > x()) {
+			} else if(game.link().x() - x() > 10) {
 				mX = speed;
 			}
-			if(game.link().y() < y()) {
+			if(game.link().y() - y() < -10) {
 				mY = -speed;
-			} else if(game.link().y() > y()) {
+			} else if(game.link().y() - y() > 10) {
 				mY = speed;
 			} 
 			acceleration.set(mX, mY);

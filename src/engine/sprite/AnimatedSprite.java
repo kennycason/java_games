@@ -22,7 +22,7 @@ public class AnimatedSprite extends AbstractSprite {
 	private boolean oneCycle = false;
 	
 	private boolean doneCycling;
-
+	
 	public AnimatedSprite(String file, int width, int height, int animationSpeed) {
 		sprites = new SpriteSheet(file, width, height);
 		numFrames = sprites.numTiles();
@@ -129,6 +129,10 @@ public class AnimatedSprite extends AbstractSprite {
 		for(int i = 0; i < sprites.numTiles(); i++) {
 			sprites.get(i).addTransparency(rgb);
 		}
+	}
+
+	public boolean doneAnimating() {
+		return doneCycling;
 	}
 
 }

@@ -42,9 +42,9 @@ public class BowAndArrow extends AbstractWeapon {
 		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
 		
 		bow = entities.get(163);
-		arrowN = new AnimatedSprite(entities.getRange(362, 362), 0);
+		arrowN = new AnimatedSprite(entities.range(362, 362), 0);
 		arrowS = SpriteUtils.flipVertical(arrowN);
-		arrowE = new AnimatedSprite(entities.getRange(363, 363), 0);
+		arrowE = new AnimatedSprite(entities.range(363, 363), 0);
 		arrowW = SpriteUtils.flipVertical(arrowE);
 		
 		using = false;
@@ -106,6 +106,7 @@ public class BowAndArrow extends AbstractWeapon {
 				if (arrow.rectangleCollide(enemy)) {
 					enemy.hit(damage());
 					arrowIter.remove();
+					break;
 				}
 			}	
 			
@@ -145,7 +146,7 @@ public class BowAndArrow extends AbstractWeapon {
 			locate(x, y);
 			this.speedX = speedX;
 			this.speedY = speedY;
-			collisionOffset = 8;
+			collisionOffset = 10;
 		}
 		
 		public void handle() {

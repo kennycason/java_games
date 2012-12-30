@@ -1,19 +1,23 @@
 package game.zelda.enemy;
 
-import engine.ai.RandomAIStrategy;
+import engine.ai.AggressiveAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import game.zelda.item.RupeeBlue;
 
-public class LikeLike extends AbstractEnemy {
+public class RedTurtle extends AbstractEnemy {
 
-	public LikeLike(int x, int y) {
-		setAIStrategy(new RandomAIStrategy(this, 2500));
+	public RedTurtle(int x, int y) {
+		setAIStrategy(new AggressiveAIStrategy(this, 20, 0, 2, 500));
 		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
-		spriteCurrent = new AnimatedSprite(sheet.range(462,464), 230);
+		
+		SpriteSheet frames = new SpriteSheet(2, 16, 16);
+		frames.set(0, sheet.get(679));
+		frames.set(1, sheet.get(629));
+		spriteCurrent = new AnimatedSprite(frames, 230);
 		spriteCurrent.reverseCycle(true);
 		spriteE = spriteW = spriteN = spriteS = spriteCurrent;
 		locate(x * game.map().tileWidth(), y * game.map().tileHeight());
@@ -28,7 +32,7 @@ public class LikeLike extends AbstractEnemy {
 	public void handle() {
 		super.handle();
 		strategy.handle();
-		
+	
 	}
 
 }

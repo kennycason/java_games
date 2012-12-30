@@ -25,6 +25,16 @@ public abstract class AbstractEnemy extends AbstractLivingEntity {
 	}
 	
 	@Override
+	public void handle() {
+		if(invincible) {
+			if(System.currentTimeMillis() - lastTimeHit > invincibleTime) {
+				invincible = false;
+				flickerCount = 0;
+			}
+		}
+	}
+	
+	@Override
 	public void hit(double damage) {
 		super.hit(damage);
 		if(dead() && dropItems()) {

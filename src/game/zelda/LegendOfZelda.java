@@ -5,7 +5,7 @@ import java.awt.Font;
 import engine.Game;
 import engine.GameFactory;
 import engine.GameStateEnum;
-import engine.entity.weapon.WeaponBank;
+import engine.entity.weapon.UsableBank;
 import engine.font.FontBank;
 import engine.sound.LoopingSound;
 import engine.sound.Sound;
@@ -14,12 +14,15 @@ import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import game.zelda.enemy.LikeLike;
 import game.zelda.enemy.Octorok;
+import game.zelda.enemy.RedTurtle;
 import game.zelda.gamestates.MainGameLoop;
 import game.zelda.gamestates.PauseGameLoop;
 import game.zelda.item.FullHeart;
 import game.zelda.player.Link;
 import game.zelda.usables.Boomerang;
 import game.zelda.usables.BowAndArrow;
+import game.zelda.usables.MegatonHammer;
+import game.zelda.usables.Ocarina;
 import game.zelda.usables.SwordLevel1;
 import game.zelda.usables.SwordLevel2;
 import game.zelda.usables.SwordLevel3;
@@ -68,12 +71,17 @@ public class LegendOfZelda extends Game {
 		SoundBank.getInstance().set("link_get_heart", new Sound("sound/effects/Oracle_Get_Heart.wav"));
 		SoundBank.getInstance().set("link_get_item", new Sound("sound/effects/Oracle_Get_Item.wav"));
 		SoundBank.getInstance().set("link_get_heart_container", new Sound("sound/effects/Oracle_HeartContainer.wav"));
+		SoundBank.getInstance().set("tune_of_ages", new Sound("sound/effects/OOA_Harp_TuneOfAges.wav"));
 		
-		WeaponBank.getInstance().set("sword1", new SwordLevel1());
-		WeaponBank.getInstance().set("sword2", new SwordLevel2());
-		WeaponBank.getInstance().set("sword3", new SwordLevel3());
-		WeaponBank.getInstance().set("boomerang", new Boomerang());
-		WeaponBank.getInstance().set("bow", new BowAndArrow());
+		
+		
+		UsableBank.getInstance().set("sword1", new SwordLevel1());
+		UsableBank.getInstance().set("sword2", new SwordLevel2());
+		UsableBank.getInstance().set("sword3", new SwordLevel3());
+		UsableBank.getInstance().set("boomerang", new Boomerang());
+		UsableBank.getInstance().set("bow", new BowAndArrow());
+		UsableBank.getInstance().set("ocarina", new Ocarina());
+		UsableBank.getInstance().set("megaton", new MegatonHammer()); // still working on
 		
 		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());
 		gameLoops.put(GameStateEnum.PAUSED, new PauseGameLoop());
@@ -110,7 +118,9 @@ public class LegendOfZelda extends Game {
 		map.enemies().add(new Octorok(10, 10));
 		map.enemies().add(new LikeLike(12, 19));
 		map.enemies().add(new LikeLike(16, 9));
-		
+		map.enemies().add(new RedTurtle(15, 10));
+		map.enemies().add(new RedTurtle(14, 8));
+		map.enemies().add(new RedTurtle(11, 7));
 		// stop all sounds
 		for(String soundId : SoundBank.getInstance().all().keySet()) {
 			SoundBank.getInstance().get(soundId).stop();

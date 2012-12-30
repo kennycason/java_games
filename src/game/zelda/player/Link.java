@@ -9,7 +9,7 @@ import engine.GameStateEnum;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractUsableEntity;
-import engine.entity.weapon.WeaponBank;
+import engine.entity.weapon.UsableBank;
 import engine.keyboard.KeyBoard;
 import engine.math.Vector2D;
 import engine.sound.ISound;
@@ -49,23 +49,25 @@ public class Link extends AbstractLivingEntity {
 
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
 
-		spriteE = new AnimatedSprite(sheet.getRange(2, 3), 200);
+		spriteE = new AnimatedSprite(sheet.range(2, 3), 200);
 		spriteW = SpriteUtils.flipHorizontal(spriteE);
-		spriteN = new AnimatedSprite(sheet.getRange(4, 5), 200);
-		spriteS = new AnimatedSprite(sheet.getRange(0, 1), 200);
+		spriteN = new AnimatedSprite(sheet.range(4, 5), 200);
+		spriteS = new AnimatedSprite(sheet.range(0, 1), 200);
 		
-		attackE = new AnimatedSprite(sheet.getRange(6, 6), 0);
+		attackE = new AnimatedSprite(sheet.range(6, 6), 0);
 		attackW = SpriteUtils.flipHorizontal(spriteE);
-		attackN = new AnimatedSprite(sheet.getRange(51, 51), 0);
-		attackS = new AnimatedSprite(sheet.getRange(50, 50), 0);
+		attackN = new AnimatedSprite(sheet.range(51, 51), 0);
+		attackS = new AnimatedSprite(sheet.range(50, 50), 0);
 		
 		items = new AbstractUsableEntity[16];
-		items[0] = WeaponBank.getInstance().get("sword1");
-		items[1] = WeaponBank.getInstance().get("sword3");
-		items[2] = WeaponBank.getInstance().get("boomerang");
+		items[0] = UsableBank.getInstance().get("megaton");
+		items[1] = UsableBank.getInstance().get("sword3");
+		items[2] = UsableBank.getInstance().get("boomerang");
+		items[3] = UsableBank.getInstance().get("ocarina");
+		items[4] = UsableBank.getInstance().get("sword2");
 		
-		itemA = WeaponBank.getInstance().get("sword2");
-		itemB = WeaponBank.getInstance().get("bow");
+		itemA = UsableBank.getInstance().get("sword1");
+		itemB = UsableBank.getInstance().get("bow");
 		
 		locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
 
@@ -131,18 +133,6 @@ public class Link extends AbstractLivingEntity {
 			itemB().draw(g);
 		}
 		super.draw(g);
-	}
-
-
-	/*
-	 * used for keyboard handling
-	 */
-	private int offsetX() {
-		return (x + collisionOffset()) / game.map().tileWidth();
-	}
-
-	private int offsetY() {
-		return (y + collisionOffset()) / game.map().tileHeight(); 
 	}
 
 	public void keyBoard(KeyBoard kb) {

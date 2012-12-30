@@ -48,7 +48,7 @@ public class SpriteSheet implements ISpriteBankResource {
 		}
 	}
 	
-	public SpriteSheet getRange(int start, int end) {
+	public SpriteSheet range(int start, int end) {
 		int num = end - start + 1;
 		SpriteSheet sheet = new SpriteSheet(num, tileWidth(), tileHeight());
 		for(int i = 0; i < num; i++) {

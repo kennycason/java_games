@@ -13,7 +13,7 @@ import game.zelda.item.RupeeGreen;
 public class Octorok extends AbstractEnemy {
 
 	public Octorok(int x, int y) {
-		setAIStrategy(new RandomAIStrategy(game, this, 2500));
+		setAIStrategy(new RandomAIStrategy(this, 2500));
 		SpriteBank rsrcs = SpriteBank.getInstance();
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
 		SpriteSheet west = new SpriteSheet(2, 16, 16);
@@ -47,14 +47,9 @@ public class Octorok extends AbstractEnemy {
 
 	@Override
 	public void handle() {
+		super.handle();
 		strategy.handle();
 		
-		if(invincible) {
-			if(System.currentTimeMillis() - lastTimeHit > invincibleTime) {
-				invincible = false;
-				flickerCount = 0;
-			}
-		}
 	}
 
 	@Override

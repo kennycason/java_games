@@ -23,6 +23,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	protected AnimatedSprite spriteN;
 	protected AnimatedSprite spriteS;
 	
+	protected FaceDirection lastFace;
+	
 	/**
 	 * amount of damage this entity does
 	 */
@@ -115,6 +117,10 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 		return damage;
 	}
 	
+	public FaceDirection lastFace() {
+		return lastFace;
+	}
+	
 	public void hit(double damage) {
 		if(!invincible) {
 			hitSound.play();
@@ -152,6 +158,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	
 	@Override
 	public void face(FaceDirection face) {
+		lastFace = this.face;
 		this.face = face;
 		switch(face) {
 			case NORTH:

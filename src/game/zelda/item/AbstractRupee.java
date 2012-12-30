@@ -16,7 +16,7 @@ public abstract class AbstractRupee extends AbstractItem {
 		super();
 		this.value = value;
 		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
-		sprite = new AnimatedSprite(sheet.getRange(spriteNumber, spriteNumber), 0);
+		sprite = new AnimatedSprite(sheet.range(spriteNumber, spriteNumber), 0);
 		collisionOffset = 6;
 	}
 	

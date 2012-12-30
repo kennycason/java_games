@@ -2,6 +2,7 @@ package engine.ai;
 
 import engine.FaceDirection;
 import engine.Game;
+import engine.GameFactory;
 import engine.entity.AbstractLivingEntity;
 
 import java.util.Random;
@@ -26,8 +27,8 @@ public class RandomAIStrategy implements IAIStrategy {
 	
 	Random r = new Random();
 	
-	public RandomAIStrategy(Game game, AbstractLivingEntity entity, int moveDelay) {
-		this.game = game;
+	public RandomAIStrategy(AbstractLivingEntity entity, int moveDelay) {
+		this.game = GameFactory.get();
 		this.entity = entity;
 		this.moveDelay = moveDelay;
 	}
