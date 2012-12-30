@@ -8,6 +8,8 @@ public abstract class AbstractSound {
 	
 	protected final String file;
 	
+	protected SoundChannels channels;
+	
 	protected AbstractSound(String file) {
 		this.file = file;
 	}
@@ -19,6 +21,7 @@ public abstract class AbstractSound {
 	public abstract void stop();
 	
 	public abstract boolean playing();
+	
 	
 	public abstract void volume(int volume);
 	
