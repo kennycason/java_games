@@ -1,4 +1,4 @@
-package game.zelda.weapon;
+package game.zelda.usables;
 
 public class SwordLevel3 extends AbstractSword {
 

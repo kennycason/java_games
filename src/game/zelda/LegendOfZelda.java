@@ -18,11 +18,11 @@ import game.zelda.gamestates.MainGameLoop;
 import game.zelda.gamestates.PauseGameLoop;
 import game.zelda.item.FullHeart;
 import game.zelda.player.Link;
-import game.zelda.weapon.Boomerang;
-import game.zelda.weapon.BowAndArrow;
-import game.zelda.weapon.SwordLevel1;
-import game.zelda.weapon.SwordLevel2;
-import game.zelda.weapon.SwordLevel3;
+import game.zelda.usables.Boomerang;
+import game.zelda.usables.BowAndArrow;
+import game.zelda.usables.SwordLevel1;
+import game.zelda.usables.SwordLevel2;
+import game.zelda.usables.SwordLevel3;
 
 public class LegendOfZelda extends Game {
 

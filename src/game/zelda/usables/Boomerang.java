@@ -1,4 +1,4 @@
-package game.zelda.weapon;
+package game.zelda.usables;
 
 import java.awt.Graphics2D;
 import java.util.Iterator;
