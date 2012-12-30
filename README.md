@@ -3,7 +3,25 @@ Legend of Zelda
 By: Kenny Cason<br/>
 Zelda Game written in Java - Still a new project so it's definitely a work in progress.<br/>
 
-![Alt text](http://ken-soft.com/images/zelda/zelda3.png "Zelda Screenshot")
+
+<table>
+    <tr>
+        <td>
+            <img src="http://ken-soft.com/images/zelda/zelda3.png" width="400px"/>
+        </td>
+        <td>
+            <img src="http://ken-soft.com/images/zelda/zelda5.png" width="400px"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="http://ken-soft.com/images/zelda/zelda4.png" width="400px"/>
+        </td>
+        <td>
+            <img src="http://ken-soft.com/images/zelda/zelda6.png" width="400px"/>
+        </td>
+    </tr>
+</table>
 
 **Required Libraries**<br/>
 Java 1.7<br/>
