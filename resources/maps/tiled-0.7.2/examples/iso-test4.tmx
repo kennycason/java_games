@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="isometric" width="64" height="64" tilewidth="32" tileheight="16">
+ <tileset firstgid="1" source="water.tsx"/>
+ <!-- Layer data is compressed (GZip) binary data, encoded in Base64 -->
+ <layer name="Layer 0" width="64" height="64">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAO3DQQ0AAAwDoat/05OxDySsmqqqqqqqqqqqqqqqqqqqqvr6AFA+aDAAQAAA
+  </data>
+ </layer>
+ <layer name="Layer 1" width="64" height="64">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAAO3SMQqAMAxAUYeiZxC8/znVoeAiFhVKmvcgW4b+0GkCAAAAgPdK7wd0UG5mZHfNGW7Q2j7iHd60j3SDL/3Rb/C1XX9sT23zMVvDXlRPXcsxa8NeVH/8f/2xZe8/Ze+vMrdfZe+vsnYDAAAAAAAA9LAD/njXxQBAAAA=
+  </data>
+ </layer>
+</map>

@@ -1,0 +1,66 @@
+------------------------
+ TILED MAP EDITOR 0.7.x
+------------------------
+
+This is Tiled, a general purpose tiled map editor. Although this release is
+pretty capable and flexible, we don't expect it to be able to do enough for
+most people at the moment. We need your feedback!
+
+
+Website:     http://mapeditor.org/
+Bugtracker:  http://bugs.mapeditor.org/
+Mercurial:   http://hg.mapeditor.org/
+
+-----------------
+ CURRENT FEATURES
+-----------------
+
+- Multilayer, layers can be changed around dynamically
+- Multiple orientations (orthographic and isometric at the moment)
+- Objects can be placed anywhere on the map
+- Arbitrary custom properties can be set on the maps, layers, objects and tiles
+- Tiles can be taller than the default tile height
+- Easy to use drawing operations
+- Universal XML-based map and tileset file formats
+- Can embed tiles in the map or tileset file
+- Highly portable and free software
+- Maps may include tiles from multiple tilesets
+- Ability to write custom Map reader/writer plugins
+
+---------
+ AUTHORS
+---------
+
+- Adam Turk       <aturk@biggeruniverse.com>
+- Bjorn Lindeijer <bjorn@lindeijer.nl>
+
+-----------
+TRANSLATORS
+-----------
+
+- Nader Akhres (French)
+- Bjorn Lindeijer (Dutch)
+- ElvenProgrammer (Italian)
+- Matthias Hartmann (German)
+- Alexandra Puente (Spanish)
+
+-----------
+ THANKS TO
+-----------
+
+(In no particular order)
+- Frode Lindeijer for the design of the logo
+- Eean Cook for various contributions
+- Andreas Mross for Hexagonal map implementation
+- Ahmed Mohombe for many good suggestions and notes on implementation
+- Rickard Isaksson for an improved image loader
+- Kevin Kelley for the base64 encoder/decoder we use
+- GNOME and GIMP for their magnificent icons
+- Nephilim for suggesting layer opacity
+- Rainer Deyke for useful suggestions and many code contributions
+- Jerome Blouin for some meticulous performance testing
+- Hendrik Brummermann for improving error reporting on map loading
+- Nader Akhres for the JSON map writer plugin
+- William C. Bubel for the Lua map writer plugin
+- Matthias Kievernagel for a nice HexMapView
+- Olivier Beaton for the DTD and Schema files describing the TMX format
