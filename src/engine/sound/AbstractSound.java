@@ -2,7 +2,7 @@ package engine.sound;
 
 public abstract class AbstractSound {
 	
-	protected int volume = 0;
+	protected int volume = 50;
 	
 	protected boolean loaded = false;
 	
