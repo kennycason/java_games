@@ -31,9 +31,9 @@ public class Link extends AbstractLivingEntity {
 
 	private int rupees = 208;
 
-	private int itemA;
+	private AbstractUsableEntity itemA;
 
-	private int itemB;
+	private AbstractUsableEntity itemB;
 	
 	private AbstractUsableEntity[] items;
 
@@ -59,26 +59,13 @@ public class Link extends AbstractLivingEntity {
 		attackN = new AnimatedSprite(sheet.getRange(51, 51), 0);
 		attackS = new AnimatedSprite(sheet.getRange(50, 50), 0);
 		
-		itemA = 4;
-		itemB = 2;
-		
 		items = new AbstractUsableEntity[16];
 		items[0] = WeaponBank.getInstance().get("sword1");
-		items[1] = WeaponBank.getInstance().get("sword2");
-		items[2] = WeaponBank.getInstance().get("sword3");
-		items[3] = WeaponBank.getInstance().get("boomerang");
-		items[4] = WeaponBank.getInstance().get("boomerang");
-		items[5] = WeaponBank.getInstance().get("boomerang");
-		items[6] = WeaponBank.getInstance().get("boomerang");
-		items[7] = WeaponBank.getInstance().get("sword3");
-		items[8] = WeaponBank.getInstance().get("boomerang");
-		items[9] = WeaponBank.getInstance().get("boomerang");
-		items[10] = WeaponBank.getInstance().get("boomerang");
-		items[11] = WeaponBank.getInstance().get("sword1");
-		items[12] = WeaponBank.getInstance().get("sword2");
-		items[13] = WeaponBank.getInstance().get("sword3");
-		items[14] = WeaponBank.getInstance().get("boomerang");
-		items[15] = WeaponBank.getInstance().get("boomerang");
+		items[1] = WeaponBank.getInstance().get("sword3");
+		items[2] = WeaponBank.getInstance().get("boomerang");
+		
+		itemA = WeaponBank.getInstance().get("sword2");
+		itemB = WeaponBank.getInstance().get("bow");
 		
 		locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
 
@@ -104,8 +91,12 @@ public class Link extends AbstractLivingEntity {
 			game.gameState(GameStateEnum.DEAD);
 			lowHeartsSound.stop();
 		}
-		itemA().handle();
-		itemB().handle();
+		if(itemA() != null) {
+			itemA().handle();
+		}
+		if(itemB() != null) {
+			itemB().handle();
+		}
 
 		// handle invincibility (after getting hit)
 		if (invincible) {
@@ -136,8 +127,12 @@ public class Link extends AbstractLivingEntity {
 
 	@Override
 	public void draw(Graphics2D g) {
-		itemA().draw(g);
-		itemB().draw(g);
+		if(itemA() != null) {
+			itemA().draw(g);
+		}
+		if(itemB() != null) {
+			itemB().draw(g);
+		}
 		super.draw(g);
 	}
 
@@ -277,12 +272,12 @@ public class Link extends AbstractLivingEntity {
 		}
 
 		if (kb.isKeyPressed(KeyEvent.VK_A)) {
-			if (!itemA().using() && !itemB().using()) {
+			if (itemB() != null && !itemA().using() && !itemB().using()) {
 				itemB().use();
 			}
 		}
 		if (kb.isKeyPressed(KeyEvent.VK_S)) {
-			if (!itemA().using() && !itemB().using()) {
+			if (itemA() != null && !itemA().using() && !itemB().using()) {
 				itemA().use();
 			}
 		}
@@ -292,24 +287,27 @@ public class Link extends AbstractLivingEntity {
 				game.gameState(GameStateEnum.PAUSED);
 			}
 		}
+		if (kb.isKeyPressed(KeyEvent.VK_R)) {
+			game.gameState(GameStateEnum.TITLE_SCREEN);
+		}
 		if (kb.isKeyPressed(KeyEvent.VK_ESCAPE)) {
 			game.gameState(GameStateEnum.END);
 		}
 	}
 
 	public AbstractUsableEntity itemA() {
-		return items[itemA];
+		return itemA;
 	}
 
-	public void itemA(int itemA) {
+	public void itemA(AbstractUsableEntity itemA) {
 		this.itemA = itemA;
 	}
 	
 	public AbstractUsableEntity itemB() {
-		return items[itemB];
+		return itemB;
 	}
 
-	public void itemB(int itemB) {
+	public void itemB(AbstractUsableEntity itemB) {
 		this.itemB = itemB;
 	}
 	

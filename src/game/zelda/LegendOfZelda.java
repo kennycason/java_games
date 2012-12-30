@@ -19,6 +19,7 @@ import game.zelda.gamestates.PauseGameLoop;
 import game.zelda.item.FullHeart;
 import game.zelda.player.Link;
 import game.zelda.weapon.Boomerang;
+import game.zelda.weapon.BowAndArrow;
 import game.zelda.weapon.SwordLevel1;
 import game.zelda.weapon.SwordLevel2;
 import game.zelda.weapon.SwordLevel3;
@@ -67,7 +68,8 @@ public class LegendOfZelda extends Game {
 		WeaponBank.getInstance().set("sword2", new SwordLevel2());
 		WeaponBank.getInstance().set("sword3", new SwordLevel3());
 		WeaponBank.getInstance().set("boomerang", new Boomerang());
-
+		WeaponBank.getInstance().set("bow", new BowAndArrow());
+		
 		SoundBank.getInstance().get("main_theme").play();
 		
 		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());

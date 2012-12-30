@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import engine.AbstractGameLoop;
 import engine.Game;
 import engine.GameStateEnum;
+import engine.entity.weapon.AbstractUsableEntity;
 import engine.font.FontBank;
 import game.zelda.TopMenu;
 
@@ -20,6 +21,8 @@ public class PauseGameLoop extends AbstractGameLoop {
 	private int cursorY;
 	
 	private long cursorLastMoved;
+	
+	private long itemSelected;
 
 	public PauseGameLoop() {
 		super();
@@ -31,14 +34,15 @@ public class PauseGameLoop extends AbstractGameLoop {
 
 	@Override
 	public void run() {
-		if (System.currentTimeMillis() - lastRefresh >= refreshInterval) {
+		long currentTime = System.currentTimeMillis();
+		if (currentTime - lastRefresh >= refreshInterval) {
 			if (game.keyboard().isKeyPressed(KeyEvent.VK_SPACE)) {
-				if(System.currentTimeMillis() - game.gameLoops().get(GameStateEnum.PAUSED).transitionTime() >= 1000) {
+				if(currentTime - game.gameLoops().get(GameStateEnum.PAUSED).transitionTime() >= 1000) {
 					game.gameLoops().get(GameStateEnum.MAIN).reset();
 					game.gameState(GameStateEnum.MAIN);
 				}
 			}
-			if(System.currentTimeMillis() - cursorLastMoved > 150) {
+			if(currentTime - cursorLastMoved > 150) {
 				if (game.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
 					cursorY--;
 					if(cursorY < 0) {
@@ -65,14 +69,23 @@ public class PauseGameLoop extends AbstractGameLoop {
 					cursorLastMoved = System.currentTimeMillis();
 				}
 			}
-			if (game.keyboard().isKeyPressed(KeyEvent.VK_A)) {
-				game.link().itemB(cursorX + cursorY * 4);
-			} 
-			
-			if (game.keyboard().isKeyPressed(KeyEvent.VK_S)) {
-				game.link().itemA(cursorX + cursorY * 4);
+			if(currentTime - itemSelected > 450) {
+				if (game.keyboard().isKeyPressed(KeyEvent.VK_A)) {
+					int item = cursorX + cursorY * 4;
+					AbstractUsableEntity old = game.link().itemB();
+					game.link().itemB(game.link().items()[item]);
+					game.link().items()[item] = old;
+					itemSelected = System.currentTimeMillis();
+				} 
+				
+				if (game.keyboard().isKeyPressed(KeyEvent.VK_S)) {
+					int item = cursorX + cursorY * 4;
+					AbstractUsableEntity old = game.link().itemA();
+					game.link().itemA(game.link().items()[item]);
+					game.link().items()[item] = old;
+					itemSelected = System.currentTimeMillis();
+				}
 			}
-			
 			
 			// paint everything
 			draw(game.screen().bufferedImage());
