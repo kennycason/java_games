@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.KeyboardFocusManager;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import engine.map.Map;
 import engine.map.MapLoader;
 import engine.sprite.SimpleSprite;
 import game.zelda.player.Link;
+import engine.strings.Strings;
 
 public abstract class Game extends JPanel {
 
@@ -44,6 +46,9 @@ public abstract class Game extends JPanel {
 	protected GameStateEnum gameState;
 	
 	protected HashMap<GameStateEnum, AbstractGameLoop> gameLoops;
+	
+	public static Locale locale;
+	public static Strings strings;
 
 	protected Game() {
 		super(true);
@@ -58,6 +63,9 @@ public abstract class Game extends JPanel {
 		screenPanel.setDoubleBuffered(true);
 		this.add(screenPanel);
 		
+		locale = new Locale("en");
+		strings = new Strings(locale);
+		
 		keyboard = new KeyBoard();
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new DefaultKeyEventDispatcher(keyboard));
@@ -71,7 +79,7 @@ public abstract class Game extends JPanel {
 	
 	public void start() {
 		JFrame frame = new JFrame();
-		frame.setTitle("Legend of Zelda");
+		frame.setTitle(strings.gameTitle());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
 		frame.pack();
