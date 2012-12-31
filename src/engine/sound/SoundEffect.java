@@ -2,7 +2,7 @@ package engine.sound;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -39,9 +39,11 @@ public class SoundEffect extends AbstractSound {
 		super(file);
 		// Set up an audio input stream piped from the sound file.
 		try {
-			InputStream is = getClass().getClassLoader().getResourceAsStream(file);
+			// below causes bug per: http://stackoverflow.com/questions/9659842/java-exception-reading-stream-from-resource-wav
+			//InputStream is = getClass().getClassLoader().getResourceAsStream(file);
+			URL url = this.getClass().getClassLoader().getResource(file);
 			ByteArrayOutputStream baout = new ByteArrayOutputStream();
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(is);
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
 			format = audioInputStream.getFormat();
 
 			lines = SoundChannels.getInstance();
