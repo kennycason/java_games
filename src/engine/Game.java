@@ -1,5 +1,6 @@
 package engine;
 
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.KeyboardFocusManager;
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 
 import engine.entity.weapon.UsableBank;
 import engine.font.FontBank;
+import engine.il8n.StringBank;
 import engine.keyboard.DefaultKeyEventDispatcher;
 import engine.keyboard.KeyBoard;
 import engine.map.Map;
@@ -21,7 +23,6 @@ import engine.map.MapLoader;
 import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteBank;
-import engine.strings.Strings;
 import game.zelda.player.Link;
 
 public abstract class Game extends JPanel {
@@ -32,9 +33,7 @@ public abstract class Game extends JPanel {
 
 	public static final int SCREEN_HEIGHT = 240;
 	
-	public static Locale locale;
-	
-	public static Strings strings;
+	public static StringBank strings;
 	
 	public static SoundBank sounds;
 	
@@ -43,6 +42,8 @@ public abstract class Game extends JPanel {
 	public static FontBank fonts;
 	
 	public static UsableBank usables;
+	
+	protected Locale locale;
 	
 	protected int zoom = 2;
 
@@ -75,9 +76,8 @@ public abstract class Game extends JPanel {
 		screenPanel.setIcon(new ImageIcon(screen.bufferedImage()));
 		screenPanel.setDoubleBuffered(true);
 		this.add(screenPanel);
-		
-		locale = new Locale("en");
-		strings = new Strings(locale);
+		locale = new Locale("cn");
+		strings = new StringBank(locale);
 		sprites = new SpriteBank();
 		sounds = new SoundBank();
 		fonts = new FontBank();

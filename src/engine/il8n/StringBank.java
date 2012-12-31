@@ -1,13 +1,14 @@
-package engine.strings;
+package engine.il8n;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class Strings {
-	protected final ResourceBundle texts;
+public class StringBank {
+	
+	private final ResourceBundle texts;
 
-	public Strings(Locale locale) {
-		texts = ResourceBundle.getBundle("properties/texts", locale);
+	public StringBank(Locale locale) {
+		texts = ResourceBundle.getBundle("properties/texts", locale, new Utf8Control());
 	}
 
 	//Overloading to allow default parameter
@@ -15,7 +16,7 @@ public class Strings {
 		return get(key, (Object[])null);
 	}
 	
-	public String get(String key, Object... o){
+	public String get(String key, Object ... o){
 		if(o == null){
 			return texts.getString(key);
 		} else {
