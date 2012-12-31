@@ -13,7 +13,6 @@ import engine.entity.weapon.AbstractWeapon;
 import engine.math.Vector2D;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 
@@ -39,7 +38,7 @@ public class BowAndArrow extends AbstractWeapon {
 	
 	public BowAndArrow() {
 		super();
-		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		bow = entities.get(163);
 		arrowN = new AnimatedSprite(entities.range(362), 0);
@@ -52,7 +51,7 @@ public class BowAndArrow extends AbstractWeapon {
 		numArrows = 30;
 		damage = 2;
 		collisionOffset = 6;
-		//sound = SoundBank.getInstance().get("boomerang");
+		//sound = Game.sounds.get("boomerang");
 		arrows = new LinkedList<Arrow>();
 	}
 	

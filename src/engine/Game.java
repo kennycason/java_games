@@ -12,13 +12,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import engine.entity.weapon.UsableBank;
+import engine.font.FontBank;
 import engine.keyboard.DefaultKeyEventDispatcher;
 import engine.keyboard.KeyBoard;
 import engine.map.Map;
 import engine.map.MapLoader;
+import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
-import game.zelda.player.Link;
+import engine.sprite.SpriteBank;
 import engine.strings.Strings;
+import game.zelda.player.Link;
 
 public abstract class Game extends JPanel {
 
@@ -27,6 +31,18 @@ public abstract class Game extends JPanel {
 	public static final int SCREEN_WIDTH = 240;
 
 	public static final int SCREEN_HEIGHT = 240;
+	
+	public static Locale locale;
+	
+	public static Strings strings;
+	
+	public static SoundBank sounds;
+	
+	public static SpriteBank sprites;
+	
+	public static FontBank fonts;
+	
+	public static UsableBank usables;
 	
 	protected int zoom = 2;
 
@@ -46,9 +62,6 @@ public abstract class Game extends JPanel {
 	protected GameStateEnum gameState;
 	
 	protected HashMap<GameStateEnum, AbstractGameLoop> gameLoops;
-	
-	public static Locale locale;
-	public static Strings strings;
 
 	protected Game() {
 		super(true);
@@ -65,6 +78,10 @@ public abstract class Game extends JPanel {
 		
 		locale = new Locale("en");
 		strings = new Strings(locale);
+		sprites = new SpriteBank();
+		sounds = new SoundBank();
+		fonts = new FontBank();
+		usables = new UsableBank();
 		
 		keyboard = new KeyBoard();
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();

@@ -3,12 +3,11 @@ package game.zelda.usables;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 
+import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractWeapon;
 import engine.sound.AbstractSound;
-import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 
@@ -29,7 +28,7 @@ public class MegatonHammer extends AbstractWeapon {
 		super();
 		damage = 2;
 		using = false;
-		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		spriteN = new AnimatedSprite(entities.range(772, 774), 50);
 		spriteN.oneCycle(true);
@@ -39,7 +38,7 @@ public class MegatonHammer extends AbstractWeapon {
 		spriteE.oneCycle(true);
 		spriteW = SpriteUtils.flipHorizontal(spriteE);
 		spriteW.oneCycle(true);
-		swingSound = SoundBank.getInstance().get("sword_slash1");
+		swingSound = Game.sounds.get("sword_slash1");
 	}
 	
 	@Override

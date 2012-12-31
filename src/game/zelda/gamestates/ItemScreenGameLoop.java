@@ -9,9 +9,7 @@ import engine.AbstractGameLoop;
 import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.weapon.AbstractUsableEntity;
-import engine.font.FontBank;
 import engine.sound.AbstractSound;
-import engine.sound.SoundBank;
 import game.zelda.TopMenu;
 
 public class ItemScreenGameLoop extends AbstractGameLoop {
@@ -36,8 +34,8 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 
 		cursorX = 0;
 		cursorY = 0;
-		mouseSelect = SoundBank.getInstance().get("menu_select");
-		mouseCursor = SoundBank.getInstance().get("menu_cursor");
+		mouseSelect = Game.sounds.get("menu_select");
+		mouseCursor = Game.sounds.get("menu_cursor");
 	}
 
 	@Override
@@ -126,7 +124,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 		g.fillRect(10, 185, Game.SCREEN_WIDTH - 20, 30);
 
 		g.setColor(Color.BLACK);
-		g.setFont(FontBank.getInstance().get("menu_smaller"));
+		g.setFont(Game.fonts.get("menu_smaller"));
 		int x = 30;
 		int y = 45;
 		for (int i = 0; i < game.link().items().length; i++) {
@@ -143,7 +141,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 						y + 17);
 			}
 		}
-		g.setFont(FontBank.getInstance().get("menu_large"));
+		g.setFont(Game.fonts.get("menu_large"));
 		g.drawString("[   ]", (cursorX * 50) + 28, (cursorY * 33) + 60);
 
 		menu.draw(g);

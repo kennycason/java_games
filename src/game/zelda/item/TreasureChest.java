@@ -1,10 +1,9 @@
 package game.zelda.item;
 
+import engine.Game;
 import engine.entity.item.AbstractItem;
 import engine.sound.AbstractSound;
-import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 
 public class TreasureChest extends AbstractItem {
@@ -25,12 +24,12 @@ public class TreasureChest extends AbstractItem {
 		walkable = false;
 		disappearAfterConsume = false;
 		this.contents = contents;
-		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		sprite = new AnimatedSprite(sheet.range(377), 0);
 		locate(x * sprite.width(), y * sprite.height());
 		collisionOffset = 0;
 		open = false;
-		openSound = SoundBank.getInstance().get("open_chest");
+		openSound = Game.sounds.get("open_chest");
 	}
 	
 	@Override

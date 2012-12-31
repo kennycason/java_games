@@ -6,20 +6,11 @@ import org.apache.log4j.Logger;
 
 public class SoundBank {
 	
-	private static SoundBank INSTANCE = null;
-
 	private HashMap<String, AbstractSound> resources = new HashMap<String, AbstractSound>();
 	
 	private final static Logger LOGGER = Logger.getLogger(SoundBank.class.getName()); 
 	
-	private SoundBank() {
-	}
-	
-	public static SoundBank getInstance() {
-		if(INSTANCE == null) {
-			INSTANCE = new SoundBank();
-		}
-		return INSTANCE;
+	public SoundBank() {
 	}
 	
 	public void set(String key, AbstractSound sound) {

@@ -12,7 +12,6 @@ import engine.entity.AbstractEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.sound.LoopingSound;
-import engine.sound.SoundBank;
 import game.zelda.TopMenu;
 
 public class MainGameLoop extends AbstractGameLoop {
@@ -24,7 +23,7 @@ public class MainGameLoop extends AbstractGameLoop {
 	public MainGameLoop() {
 		super();
 		menu = new TopMenu();
-		sound = (LoopingSound) SoundBank.getInstance().get("main_theme");
+		sound = (LoopingSound) Game.sounds.get("main_theme");
 	}
 
 	@Override

@@ -5,8 +5,6 @@ import java.awt.Graphics2D;
 
 import engine.Game;
 import engine.GameFactory;
-import engine.font.FontBank;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import game.zelda.item.EntityItemSpriteResourceNumber;
 
@@ -21,7 +19,7 @@ public class TopMenu {
 	
 	public TopMenu() {
 		game = GameFactory.get();
-		entities8x8 = (SpriteSheet) SpriteBank.getInstance().get("entities8x8");
+		entities8x8 = (SpriteSheet) Game.sprites.get("entities8x8");
 	}
 	
 	public void draw(Graphics2D g) {
@@ -29,23 +27,23 @@ public class TopMenu {
 		g.fillRect(0, 0, Game.SCREEN_WIDTH, 24);
 		
 		g.setColor(Color.BLACK);
-		g.setFont(FontBank.getInstance().get("menu_small"));
+		g.setFont(Game.fonts.get("menu_small"));
 	    g.drawString("B", 0, 10);
-		g.setFont(FontBank.getInstance().get("menu_large"));
+		g.setFont(Game.fonts.get("menu_large"));
 	    g.drawString("[   ]",10, 19);
 	    if(game.link().itemB() != null) {
 		    game.link().itemB().menuDraw(g, 13, 3);
-		    g.setFont(FontBank.getInstance().get("menu_smaller"));
+		    g.setFont(Game.fonts.get("menu_smaller"));
 		    g.drawString(game.link().itemB().menuDisplayName(), 28, 20);
 	    }
 	    
-		g.setFont(FontBank.getInstance().get("menu_small"));
+		g.setFont(Game.fonts.get("menu_small"));
 	    g.drawString("A", 55, 10);
-		g.setFont(FontBank.getInstance().get("menu_large"));
+		g.setFont(Game.fonts.get("menu_large"));
 	    g.drawString("[   ]", 65, 19);
 	    if(game.link().itemA() != null) {
 		    game.link().itemA().menuDraw(g, 69, 3);
-		    g.setFont(FontBank.getInstance().get("menu_smaller"));
+		    g.setFont(Game.fonts.get("menu_smaller"));
 		    g.drawString(game.link().itemA().menuDisplayName(), 85, 20);
 	    }
 	    
@@ -55,7 +53,7 @@ public class TopMenu {
 	
 	private void drawRupees(Graphics2D g) {
 		entities8x8.get(EntityItemSpriteResourceNumber.MENU_RUPEE).draw(g, 110, 2);
-		g.setFont(FontBank.getInstance().get("menu_small"));
+		g.setFont(Game.fonts.get("menu_small"));
 	    g.drawString(String.valueOf(game.link().rupees()), 110, 22);
 	}
 

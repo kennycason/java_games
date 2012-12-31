@@ -3,13 +3,12 @@ package game.zelda.usables;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 
+import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractWeapon;
 import engine.sound.AbstractSound;
-import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 
@@ -33,7 +32,7 @@ public abstract class AbstractSword extends AbstractWeapon {
 	protected AbstractSword(int entityNumber, int damage) {
 		super();
 		this.damage = damage;
-		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		spriteN = new SimpleSprite(entities.get(entityNumber));
 		spriteN2 = SpriteUtils.rotate(spriteN, Math.PI / 4);
@@ -44,7 +43,7 @@ public abstract class AbstractSword extends AbstractWeapon {
 		spriteW = SpriteUtils.flipHorizontal(spriteE);
 		spriteW2 = SpriteUtils.rotate(spriteW, Math.PI / 4);	
 		sprite = spriteN;
-		swingSound = SoundBank.getInstance().get("sword_slash1");
+		swingSound = Game.sounds.get("sword_slash1");
 	}
 	
 	@Override

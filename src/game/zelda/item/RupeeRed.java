@@ -1,13 +1,13 @@
 package game.zelda.item;
 
-import engine.sound.SoundBank;
+import engine.Game;
 
 
 public class RupeeRed extends AbstractRupee {
 
 	public RupeeRed() {
 		super(20, 420);
-		sound = SoundBank.getInstance().get("link_get_rupee5");
+		sound = Game.sounds.get("link_get_rupee5");
 	}
 
 }

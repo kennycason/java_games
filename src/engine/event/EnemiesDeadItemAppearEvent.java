@@ -1,8 +1,8 @@
 package engine.event;
 
+import engine.Game;
 import engine.entity.item.AbstractItem;
 import engine.sound.AbstractSound;
-import engine.sound.SoundBank;
 
 
 public class EnemiesDeadItemAppearEvent extends AbstractEnemiesDeadEvent {
@@ -14,7 +14,7 @@ public class EnemiesDeadItemAppearEvent extends AbstractEnemiesDeadEvent {
 	public EnemiesDeadItemAppearEvent(AbstractItem item) {
 		super();
 		this.item = item;
-		sound = SoundBank.getInstance().get("secret");
+		sound = Game.sounds.get("secret");
 	}
 
 	@Override

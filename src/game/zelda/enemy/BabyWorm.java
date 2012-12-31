@@ -3,11 +3,11 @@ package game.zelda.enemy;
 import java.awt.Graphics2D;
 
 import engine.FaceDirection;
+import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.AbstractSimpleEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 import game.zelda.item.Heart;
@@ -22,7 +22,7 @@ public class BabyWorm extends AbstractEnemy {
 	
 	public BabyWorm(int x, int y) {
 		setAIStrategy(new RandomAIStrategy(this, 2500));
-		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		
 		spriteW = new AnimatedSprite(sheet.range(561, 561), 0);
 		spriteE = SpriteUtils.flipHorizontal(spriteW);

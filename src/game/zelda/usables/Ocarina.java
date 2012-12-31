@@ -3,11 +3,10 @@ package game.zelda.usables;
 import java.awt.Graphics2D;
 
 import engine.FaceDirection;
+import engine.Game;
 import engine.entity.weapon.AbstractUsableEntity;
 import engine.sound.AbstractSound;
-import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 
 public class Ocarina extends AbstractUsableEntity {
@@ -22,12 +21,12 @@ public class Ocarina extends AbstractUsableEntity {
 	
 	public Ocarina() {
 		super();
-		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		sprite = entities.get(361);
 		
 		using = false;
-		sound = SoundBank.getInstance().get("tune_of_ages");
+		sound = Game.sounds.get("tune_of_ages");
 	}
 	
 	public void draw(Graphics2D g) {

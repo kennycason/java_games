@@ -1,10 +1,10 @@
 package game.zelda.enemy;
 
 import engine.FaceDirection;
+import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 import game.zelda.item.Heart;
@@ -14,8 +14,7 @@ public class Octorok extends AbstractEnemy {
 
 	public Octorok(int x, int y) {
 		setAIStrategy(new RandomAIStrategy(this, 2500));
-		SpriteBank rsrcs = SpriteBank.getInstance();
-		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
+		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		SpriteSheet west = new SpriteSheet(2, 16, 16);
 		SpriteSheet south = new SpriteSheet(2, 16, 16);
 		

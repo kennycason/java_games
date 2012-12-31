@@ -6,20 +6,11 @@ import org.apache.log4j.Logger;
 
 public class SpriteBank {
 	
-	private static SpriteBank INSTANCE = null;
-
 	private HashMap<String, ISpriteBankResource> resources = new HashMap<String, ISpriteBankResource>();
 	
 	private final static Logger LOGGER = Logger.getLogger(SpriteBank.class.getName());
 	
-	private SpriteBank() {
-	}
-	
-	public static SpriteBank getInstance() {
-		if(INSTANCE == null) {
-			INSTANCE = new SpriteBank();
-		}
-		return INSTANCE;
+	public SpriteBank() {
 	}
 	
 	public void set(String key, ISpriteBankResource sprite) {

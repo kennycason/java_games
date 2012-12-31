@@ -1,9 +1,9 @@
 package game.zelda.item;
 
+import engine.Game;
 import engine.entity.item.AbstractItem;
 import engine.sound.AbstractSound;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 
 public abstract class AbstractRupee extends AbstractItem {
@@ -15,8 +15,8 @@ public abstract class AbstractRupee extends AbstractItem {
 	protected AbstractRupee(int value, int spriteNumber) {
 		super();
 		this.value = value;
-		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
-		sprite = new AnimatedSprite(sheet.range(spriteNumber, spriteNumber), 0);
+		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
+		sprite = new AnimatedSprite(sheet.range(spriteNumber), 0);
 		collisionOffset = 2;
 	}
 	

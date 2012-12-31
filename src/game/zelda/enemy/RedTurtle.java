@@ -1,5 +1,6 @@
 package game.zelda.enemy;
 
+import engine.Game;
 import engine.ai.AggressiveAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
 import engine.sprite.AnimatedSprite;
@@ -11,7 +12,7 @@ public class RedTurtle extends AbstractEnemy {
 
 	public RedTurtle(int x, int y) {
 		setAIStrategy(new AggressiveAIStrategy(this, 20, 0, 2, 500));
-		SpriteBank rsrcs = SpriteBank.getInstance();
+		SpriteBank rsrcs = Game.sprites;
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
 		
 		SpriteSheet frames = new SpriteSheet(2, 16, 16);

@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import engine.Game;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.item.AbstractItem;
-import engine.sound.SoundBank;
 
 public abstract class AbstractEnemy extends AbstractLivingEntity {
 
@@ -18,8 +18,8 @@ public abstract class AbstractEnemy extends AbstractLivingEntity {
 	
 	public AbstractEnemy() {
 		super();
-		hitSound = SoundBank.getInstance().get("enemy_hit");
-		deadSound = SoundBank.getInstance().get("enemy_die");
+		hitSound = Game.sounds.get("enemy_hit");
+		deadSound = Game.sounds.get("enemy_die");
 		dropItems = new LinkedList<AbstractItem>();
 		invincibleTime = 400;
 	}

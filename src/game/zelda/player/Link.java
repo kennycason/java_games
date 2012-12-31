@@ -5,18 +5,16 @@ import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
 import engine.FaceDirection;
+import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractUsableEntity;
-import engine.entity.weapon.UsableBank;
 import engine.keyboard.KeyBoard;
 import engine.math.Vector2D;
 import engine.sound.LoopingSound;
-import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 
@@ -50,7 +48,7 @@ public class Link extends AbstractLivingEntity {
 	public Link() {
 		super();
 
-		SpriteSheet sheet = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 
 		spriteE = new AnimatedSprite(sheet.range(2, 3), 200);
 		spriteW = SpriteUtils.flipHorizontal(spriteE);
@@ -63,14 +61,14 @@ public class Link extends AbstractLivingEntity {
 		attackS = new AnimatedSprite(sheet.range(50, 50), 0);
 		
 		items = new AbstractUsableEntity[16];
-		items[0] = UsableBank.getInstance().get("megaton");
-		items[1] = UsableBank.getInstance().get("sword1");
-		items[2] = UsableBank.getInstance().get("boomerang");
-		items[3] = UsableBank.getInstance().get("ocarina");
-		items[4] = UsableBank.getInstance().get("sword2");
+		items[0] = Game.usables.get("megaton");
+		items[1] = Game.usables.get("sword1");
+		items[2] = Game.usables.get("boomerang");
+		items[3] = Game.usables.get("ocarina");
+		items[4] = Game.usables.get("sword2");
 		
-		itemA = UsableBank.getInstance().get("bow");
-		itemB = UsableBank.getInstance().get("sword3");
+		itemA = Game.usables.get("bow");
+		itemB = Game.usables.get("sword3");
 		
 		locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
 
@@ -85,9 +83,9 @@ public class Link extends AbstractLivingEntity {
 		life = 3;
 		maxLife = 4;
 		collisionOffset = 5;
-		deadSound = SoundBank.getInstance().get("link_die");
-		hitSound = SoundBank.getInstance().get("link_hurt");
-		lowHeartsSound = (LoopingSound)SoundBank.getInstance().get("link_low_life");
+		deadSound = Game.sounds.get("link_die");
+		hitSound = Game.sounds.get("link_hurt");
+		lowHeartsSound = (LoopingSound)Game.sounds.get("link_low_life");
 	}
 
 	@Override

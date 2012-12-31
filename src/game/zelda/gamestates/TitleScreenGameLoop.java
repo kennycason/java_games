@@ -11,13 +11,10 @@ import engine.GameStateEnum;
 import engine.event.EnemiesDeadItemAppearEvent;
 import engine.event.EnemyDeployEvent;
 import engine.event.TimedEnemyDeployEvent;
-import engine.font.FontBank;
 import engine.map.MapLoader;
 import engine.sound.LoopingSound;
-import engine.sound.SoundBank;
 import engine.sound.SoundChannels;
 import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteBank;
 import game.zelda.enemy.LikeLike;
 import game.zelda.enemy.Octorok;
 import game.zelda.enemy.RedTurtle;
@@ -32,7 +29,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 	
 	public TitleScreenGameLoop() {
 		super();
-		sound = (LoopingSound) SoundBank.getInstance().get("main_theme");
+		sound = (LoopingSound) Game.sounds.get("main_theme");
 	}
 
 	@Override
@@ -62,9 +59,9 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		}
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT);
-		((SimpleSprite) SpriteBank.getInstance().get("title_screen")).draw(g, 0, 0);
+		((SimpleSprite) Game.sprites.get("title_screen")).draw(g, 0, 0);
 		g.setColor(Color.BLACK);
-		g.setFont(FontBank.getInstance().get("menu_large"));
+		g.setFont(Game.fonts.get("menu_large"));
 		g.drawString("Press Space", 50, 200);
 		g.dispose();
 	}
@@ -106,9 +103,9 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		game.link(new Link());
 		
 		// stop all looping sounds
-		for(String soundId : SoundBank.getInstance().all().keySet()) {
-			if(SoundBank.getInstance().get(soundId) instanceof LoopingSound) {
-				((LoopingSound) SoundBank.getInstance().get(soundId)).stop();
+		for(String soundId : Game.sounds.all().keySet()) {
+			if(Game.sounds.get(soundId) instanceof LoopingSound) {
+				((LoopingSound) Game.sounds.get(soundId)).stop();
 			}
 		}
 		SoundChannels.getInstance().stopAll();

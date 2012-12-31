@@ -4,14 +4,13 @@ import java.awt.Graphics2D;
 import java.util.Iterator;
 
 import engine.FaceDirection;
+import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractWeapon;
 import engine.math.Vector2D;
 import engine.sound.LoopingSound;
-import engine.sound.SoundBank;
 import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteBank;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 
@@ -35,7 +34,7 @@ public class Boomerang extends AbstractWeapon {
 	
 	public Boomerang() {
 		super();
-		SpriteSheet entities = (SpriteSheet) SpriteBank.getInstance().get("entities");
+		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		SpriteSheet sheet = new SpriteSheet(8, 16, 16);
 		sheet.set(0, entities.get(411));
@@ -55,7 +54,7 @@ public class Boomerang extends AbstractWeapon {
 		distance = 16 * 5;
 		damage = 1;
 		collisionOffset = 4;
-		sound = (LoopingSound) SoundBank.getInstance().get("boomerang");
+		sound = (LoopingSound) Game.sounds.get("boomerang");
 	}
 	
 	public void draw(Graphics2D g) {
