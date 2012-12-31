@@ -26,8 +26,6 @@ public class LoopingSound extends AbstractSound {
 			URL url = this.getClass().getClassLoader().getResource(file);
 			clip = AudioSystem.getClip();
 			AudioInputStream inputStream = AudioSystem.getAudioInputStream(url);
-			// @TODO use below method to load
-	        // AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResourceAsStream(file));
 	        clip.open(inputStream);
 	        loaded = true;
 	        volume(volume);
