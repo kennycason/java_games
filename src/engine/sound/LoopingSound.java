@@ -10,10 +10,6 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-/**
- * @author kenny
- *
- */
 public class LoopingSound extends AbstractSound {
 	
 	private Clip clip;

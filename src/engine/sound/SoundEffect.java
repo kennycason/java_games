@@ -14,15 +14,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.apache.log4j.Logger;
 
-/**
- * http://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
- * http
- * ://docs.oracle.com/javase/1.4.2/docs/guide/sound/programmer_guide/chapter4
- * .html
- * 
- * @author kenny
- * 
- */
 public class SoundEffect extends AbstractSound {
 
 	private static final int BUFFER_SIZE = 64 * 1024; // 64 KB
