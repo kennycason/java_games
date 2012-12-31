@@ -11,21 +11,21 @@ public class Strings {
 		texts = ResourceBundle.getBundle("properties/texts", locale);
 	}
 
-	public String getStatic(String property) {
-		return texts.getString(property);
-	}
-
-	public String sword() {
-		return texts.getString("sword");
+	//Overloading to allow default parameter
+	public String get(String key){
+		return get(key, (Object[])null);
 	}
 	
-	public String gameTitle() {
-		return texts.getString("title");
+	public String get(String key, Object... o){
+		if(o == null){
+			return texts.getString(key);
+		} else {
+			String str = texts.getString(key);
+		    for(int i = 0; i < o.length; i++) {
+		    	str = str.replace("{" + i + "}", o[i].toString());
+		    }
+		    return str;
+		}
 	}
-	
-	public String swordFound(int level) {
-		return MessageFormat.format(texts.getString("swordFound"), level);
-	}
-
 
 }

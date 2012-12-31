@@ -79,7 +79,7 @@ public abstract class Game extends JPanel {
 	
 	public void start() {
 		JFrame frame = new JFrame();
-		frame.setTitle(strings.gameTitle());
+		frame.setTitle(strings.get("title"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
 		frame.pack();
