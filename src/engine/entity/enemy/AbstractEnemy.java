@@ -4,13 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import engine.entity.item.AbstractItem;
 import engine.Game;
 import engine.entity.AbstractLivingEntity;
-import engine.entity.item.IItem;
 
-public abstract class AbstractEnemy extends AbstractLivingEntity implements IEnemy {
+public abstract class AbstractEnemy extends AbstractLivingEntity {
 
-	protected List<IItem> dropItems;
+	protected List<AbstractItem> dropItems;
 	
 	protected int dropItemProbability = 100;
 	
@@ -20,7 +20,7 @@ public abstract class AbstractEnemy extends AbstractLivingEntity implements IEne
 		super();
 		hitSound = Game.sounds.get("enemy_hit");
 		deadSound = Game.sounds.get("enemy_die");
-		dropItems = new LinkedList<IItem>();
+		dropItems = new LinkedList<AbstractItem>();
 		invincibleTime = 400;
 	}
 	
@@ -38,7 +38,7 @@ public abstract class AbstractEnemy extends AbstractLivingEntity implements IEne
 	public void hit(double damage) {
 		super.hit(damage);
 		if(dead() && dropItems()) {
-			for(IItem item : dropItems) {
+			for(AbstractItem item : dropItems) {
 				item.locate(x() + -width() / 2 + random.nextInt(width()), y() + -height() / 2 + random.nextInt(height()));
 				item.justDropped();
 			}
