@@ -8,7 +8,7 @@ import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.weapon.AbstractWeapon;
-import engine.math.Vector2D;
+import engine.math.PositionVector;
 import engine.sound.LoopingSound;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteSheet;
@@ -20,13 +20,15 @@ public class Boomerang extends AbstractWeapon {
 	
 	private boolean using;
 	
-	private Vector2D acceleration = new Vector2D();
+	private PositionVector move = new PositionVector();
 	
-	private double speed;
+	private int speed;
+	
+	private int speedAngled;
 	
 	private double distance;
 	
-	private Vector2D start;
+	private PositionVector start;
 	
 	private boolean returning = false;
 	
@@ -48,9 +50,10 @@ public class Boomerang extends AbstractWeapon {
 		sprite = new AnimatedSprite(sheet, 70);
 		
 		using = false;
-		acceleration = new Vector2D();
-		start = new Vector2D();
+		move = new PositionVector();
+		start = new PositionVector();
 		speed = 8;
+		speedAngled = 6;
 		distance = 16 * 5;
 		damage = 1;
 		collisionOffset = 4;
@@ -78,32 +81,28 @@ public class Boomerang extends AbstractWeapon {
 		start.y(y);
 		switch(game.link().face()) {
 			case NORTH:
-				acceleration.set(0, -speed);
+				move.set(0, -speed);
 				break;
 			case EAST:
-				acceleration.set(speed, 0);
+				move.set(speed, 0);
 				break;
 			case SOUTH:
-				acceleration.set(0, speed);
+				move.set(0, speed);
 				break;
 			case WEST:
-				acceleration.set(-speed, 0);
+				move.set(-speed, 0);
 				break;
 			case NORTH_EAST:
-				acceleration.set(speed - 1, -(speed - 1));
-				acceleration = acceleration.unit().multiply(speed);
+				move.set(speedAngled, -speedAngled);
 				break;
 			case SOUTH_EAST:
-				acceleration.set(speed - 1, speed - 1);
-				acceleration = acceleration.unit().multiply(speed);
+				move.set(speedAngled, speed - 1);
 				break;
 			case SOUTH_WEST:
-				acceleration.set(-(speed - 1), speed - 1);
-				acceleration = acceleration.unit().multiply(speed);
+				move.set(-speedAngled, speedAngled);
 				break;
 			case NORTH_WEST:
-				acceleration.set(-(speed - 1), -(speed - 1));
-				acceleration = acceleration.unit().multiply(speed);
+				move.set(-speedAngled, -speedAngled);
 				break;
 		}
 	}
@@ -119,7 +118,7 @@ public class Boomerang extends AbstractWeapon {
 		// items
 		for(AbstractItem item : game.map().items()) {
 			if(!item.mustTouch() && rectangleCollide(item)) {
-				item.consume();
+				item.locate(x() + sprite.width() / 2 - item.width() / 2, y() + sprite.height() / 2 - item.height() / 2);
 				returning = true;
 			}
 		}
@@ -134,15 +133,15 @@ public class Boomerang extends AbstractWeapon {
 		}
 		
 		if(!returning) {
-			x += acceleration.x();
-			y += acceleration.y();
+			x += move.x();
+			y += move.y();
 			
 			double dist = Math.sqrt(Math.pow(x - start.x(), 2) + Math.pow(y - start.y(), 2));
 			if(dist > distance) {
 				returning = true;
 			}
 		} else {
-			double mX = 0, mY = 0;
+			int mX = 0, mY = 0;
 			if(game.link().x() - x() < -4) {
 				mX = -speed;
 			} else if(game.link().x() - x() > 4) {
@@ -153,9 +152,9 @@ public class Boomerang extends AbstractWeapon {
 			} else if(game.link().y() - y() > 4) {
 				mY = speed;
 			} 
-			acceleration.set(mX, mY);
-			x += acceleration.x();
-			y += acceleration.y();
+			move.set(mX, mY);
+			x += move.x();
+			y += move.y();
 			if(rectangleCollide(game.link())) {
 				using = false;
 				sound.stop();
@@ -173,6 +172,11 @@ public class Boomerang extends AbstractWeapon {
 	
 	public void face(FaceDirection face) {
 		
+	}
+
+	@Override
+	public void reset() {
+		using = false;
 	}
 
 	@Override

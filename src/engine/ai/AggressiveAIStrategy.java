@@ -5,6 +5,7 @@ import java.util.Random;
 import engine.Game;
 import engine.GameFactory;
 import engine.entity.AbstractLivingEntity;
+import engine.math.PositionVector;
 
 public class AggressiveAIStrategy implements IAIStrategy {
 	
@@ -22,9 +23,7 @@ public class AggressiveAIStrategy implements IAIStrategy {
 
 	private int moveSpeed = 2;
 	
-	private int moveSpeedX;
-	
-	private int moveSpeedY;
+	private PositionVector move;
 	
 	private int movingDir = -1;
 	
@@ -39,112 +38,79 @@ public class AggressiveAIStrategy implements IAIStrategy {
 		this.aggressionMoveDelay = aggressionMoveDelay;
 		this.moveDelay = moveDelay;
 		this.moveSpeed = moveSpeed;
+		move = new PositionVector();
 	}
 	
 	@Override
 	public void handle() {
 		if(moving) {
-			entity.locate(entity.x() + moveSpeedX, entity.y() + moveSpeedY);
+			move = game.map().move(entity, move);
+			entity.locate(entity.x() + move.x(), entity.y() + move.y());
 			moving = false;
 		} else {
 			double dist = Math.sqrt(Math.pow(entity.x() - game.link().x(), 2) + Math.pow(entity.x() - game.link().y(), 2));
 			if(dist <= aggressionRange) {
 				if(System.currentTimeMillis() - lastMoved > aggressionMoveDelay) { // move
 					moving = true;
+					move.set(0, 0);
 					lastMoved = System.currentTimeMillis();	
 					if(game.link().x() - entity.x() < -4) {
-						moveSpeedX = -moveSpeed;
+						move.x(-moveSpeed);
 					} else if(game.link().x() - entity.x() > 4) {
-						moveSpeedX = moveSpeed;
+						move.x(moveSpeed);
 					} else {
-						moveSpeedX = 0;
+						move.x(0);
 					}
 					if(game.link().y() - entity.y() < -4) {
-						moveSpeedY = -moveSpeed;
+						move.y(-moveSpeed);
 					} else if(game.link().y() - entity.y() > 4) {
-						moveSpeedY = moveSpeed;
+						move.y(moveSpeed);
 					} else {
-						moveSpeedY = 0;
+						move.y(0);
 					}
 				}
 			} else {
 				if(System.currentTimeMillis() - lastMoved > moveDelay) { // move
 					moving = true;
-					System.out.println("moveDelay: " + moveDelay);
+					// System.out.println("moveDelay: " + moveDelay);
 					lastMoved = System.currentTimeMillis();			
 					movingDir = r.nextInt(16);
 					switch(movingDir) {
 						case 0:	// north
-							moveSpeedX = 0; moveSpeedY = -moveSpeed;
+							move.set(0, -moveSpeed);
 							break;
 						case 1:	// east
-							moveSpeedX = moveSpeed; moveSpeedY = 0;
+							move.set(moveSpeed, 0);
 							break;
 						case 2:	// south
-							moveSpeedX = 0; moveSpeedY = moveSpeed;
+							move.set(0, moveSpeed);
 							break;
 						case 3:	// west
-							moveSpeedX = -moveSpeed; moveSpeedY = 0;
+							move.set(-moveSpeed, 0);
 							break;
 						case 4:	// north east
-							moveSpeedX = moveSpeed; moveSpeedY = -moveSpeed;
+							move.set(moveSpeed, -moveSpeed);
 							break;
 						case 5:	// south east
-							moveSpeedX = moveSpeed; moveSpeedY = moveSpeed;
+							move.set(moveSpeed, moveSpeed);
 							break;
 						case 6:	// south west
-							moveSpeedX = moveSpeed; moveSpeedY = moveSpeed;
+							move.set(-moveSpeed, moveSpeed);
 							break;
 						case 7:	// north west
-							moveSpeedX = -moveSpeed; moveSpeedY = -moveSpeed;
+							move.set(-moveSpeed, -moveSpeed);
 							break;
 					}
 					if(movingDir >= 8 && movingDir <= 12) {
 						
 					} else {
-						moveSpeedX = 0;
-						moveSpeedY = 0;
+						move.set(0, 0);
 					}					
 					
 				} else {
 					moving = false;
 				}
 				
-			}
-			// now check for collision
-			if(moving) {
-				int offX = entity.offsetX();
-				int offY = entity.offsetY();	
-				if(moveSpeedX < 0) {
-					if(game.map().collide(entity, offX - 1, offY - 1, moveSpeedX, moveSpeedY) ||
-						game.map().collide(entity, offX - 1, offY, moveSpeedX, moveSpeedY) ||
-						game.map().collide(entity, offX - 1, offY + 1, moveSpeedX, moveSpeedY)
-						) {
-						moveSpeedX = 0;
-					}
-				} else if(moveSpeedX > 0) {
-					if(game.map().collide(entity, offX + 1, offY - 1, moveSpeedX, moveSpeedY) ||
-						game.map().collide(entity, offX + 1, offY, moveSpeedX, moveSpeedY) ||
-						game.map().collide(entity, offX + 1, offY + 1, moveSpeedX, moveSpeedY)
-						) {
-						moveSpeedX = 0;
-					}
-				}
-				if(moveSpeedY < 0) {
-					if(game.map().collide(entity, offX - 1, offY - 1, moveSpeedX, moveSpeedY) ||
-						game.map().collide(entity, offX, offY - 1, moveSpeedX, moveSpeedY) ||
-						game.map().collide(entity, offX + 1, offY - 1, moveSpeedX, moveSpeedY)
-						) {
-						moveSpeedY = 0;
-					}
-				} else if(moveSpeedY > 0) {
-					if(game.map().collide(entity, offX - 1, offY + 1, moveSpeedX, moveSpeedY) ||
-						game.map().collide(entity, offX, offY + 1, moveSpeedX, moveSpeedY) ||
-						game.map().collide(entity, offX + 1, offY + 1, moveSpeedX, moveSpeedY)
-						) {
-						moveSpeedY = 0;
-					}
-				}	
 			}
 					
 		}

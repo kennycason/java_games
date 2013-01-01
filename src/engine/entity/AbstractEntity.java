@@ -40,6 +40,10 @@ public abstract class AbstractEntity extends AbstractCollidable {
 	
 	public abstract void handle();
 	
+	public void reset() {
+		
+	}
+	
 	public FaceDirection face() {
 		return face;
 	}

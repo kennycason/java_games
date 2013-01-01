@@ -10,7 +10,7 @@ import engine.Game;
 import engine.entity.AbstractSimpleEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.weapon.AbstractWeapon;
-import engine.math.Vector2D;
+import engine.math.PositionVector;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteSheet;
@@ -138,7 +138,7 @@ public class BowAndArrow extends AbstractWeapon {
 
 	private class Arrow extends AbstractSimpleEntity {
 		
-		private Vector2D acceleration = new Vector2D();
+		private PositionVector acceleration = new PositionVector();
 		
 		private int speedX;
 		

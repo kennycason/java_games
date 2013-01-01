@@ -22,6 +22,14 @@ public abstract class AbstractCollidable {
 	public int y() {
 		return y;
 	}
+	
+	public void x(int x) {
+		this.x = x;
+	}
+	
+	public void y(int y) {
+		this.y = y;
+	}
 
 	public void locate(int x, int y) {
 		this.x = x;

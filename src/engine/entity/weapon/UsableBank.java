@@ -16,5 +16,9 @@ public class UsableBank {
 	public AbstractUsableEntity get(String resource) {
 		return resources.get(resource);
 	}
+
+	public HashMap<String, AbstractUsableEntity> all() {
+		return resources;
+	}
 	
 }

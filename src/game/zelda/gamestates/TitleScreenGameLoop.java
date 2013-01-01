@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import engine.AbstractGameLoop;
 import engine.Game;
 import engine.GameStateEnum;
+import engine.entity.weapon.AbstractUsableEntity;
 import engine.event.EnemiesDeadItemAppearEvent;
 import engine.event.EnemyDeployEvent;
 import engine.event.TimedEnemyDeployEvent;
@@ -84,9 +85,9 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());
 
 		game.map().events().add(new EnemyDeployEvent(new LikeLike(4, 7)));
-		game.map().events().add(new EnemyDeployEvent(new Octorok(10, 10)));
-		game.map().events().add(new EnemyDeployEvent(new LikeLike(13, 19)));
-		game.map().events().add(new EnemyDeployEvent(new LikeLike(16, 9)));
+		game.map().events().add(new EnemyDeployEvent(new Octorok(9, 10)));
+		game.map().events().add(new EnemyDeployEvent(new LikeLike(12, 19)));
+		game.map().events().add(new EnemyDeployEvent(new LikeLike(19, 9)));
 		game.map().events().add(new EnemyDeployEvent(new RedTurtle(15, 10)));
 		
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 10), 10000));
@@ -109,6 +110,11 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 			}
 		}
 		SoundChannels.getInstance().stopAll();
+		
+		for(String key : Game.usables.all().keySet()) {
+			AbstractUsableEntity entity = Game.usables.get(key);
+			entity.reset();
+		}
 	}
 
 }

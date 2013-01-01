@@ -6,10 +6,11 @@ import java.util.List;
 
 import engine.Game;
 import engine.entity.AbstractCollidable;
+import engine.entity.AbstractEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.event.EventQueue;
-import engine.math.Vector2D;
+import engine.math.PositionVector;
 import engine.sprite.SimpleSprite;
 
 /**
@@ -32,7 +33,7 @@ public class Map {
 
 	private int tileHeight;
 	
-	private Vector2D offset; // on screen
+	private PositionVector offset; // on screen
 	
 	private int entityOffset = 8;
 
@@ -47,7 +48,7 @@ public class Map {
     private EventQueue events;
     
 	public Map(int width, int height, int tileWidth, int tileHeight) {
-		offset = new Vector2D();
+		offset = new PositionVector();
 		this.width = width;
 		this.height = height;
 		this.tileWidth = tileWidth;
@@ -63,8 +64,8 @@ public class Map {
 		for (int y = -bg.height(); y <= Game.SCREEN_HEIGHT / bg.height() + bg.height(); y++) {
 			for (int x = -bg.width(); x <= Game.SCREEN_WIDTH / bg.width() + bg.width(); x++) {
 				bg.draw(g, 
-						x * bg.width() + (int) offset.x() % bg.width(), 
-						y * bg.height() + (int) offset.y() % bg.height());
+						x * bg.width() + offset.x() % bg.width(), 
+						y * bg.height() + offset.y() % bg.height());
 			}
 		}
 	}
@@ -90,52 +91,101 @@ public class Map {
 		int yOff = 0;
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				xOff = x * tileWidth + (int) offset.x();
-				yOff = y * tileHeight + (int) offset.y();
+				xOff = x * tileWidth + offset.x();
+				yOff = y * tileHeight + offset.y();
 				if(xOff > -tileWidth && xOff < width * tileWidth && 
 						yOff > -tileHeight && yOff < height * tileHeight) {
 					if(l < 3) {
 						if(layers[l][x][y].value() != 0) {
 							layers[l][x][y].draw(g, 
-									x * tileWidth + (int) offset.x(), 
-									y * tileHeight + (int) offset.y());
+									x * tileWidth + offset.x(), 
+									y * tileHeight + offset.y());
 						}
 					} else {
-					//	if(meta[x][y].value() != 0) {
-							meta[x][y].draw(g, 
-									x * tileWidth + (int) offset.x(), 
-									y * tileHeight + (int) offset.y());
-					//	}
+						meta[x][y].draw(g, 
+								x * tileWidth + offset.x(), 
+								y * tileHeight + offset.y());
 					}
 				}
 			}
 		}
 	}
 	
-	/**
-	 * what a mess :P
-	 * @param collidable
-	 * @param offX
-	 * @param offY
-	 * @param xShift
-	 * @param yShift
-	 * @return
-	 */
-	public boolean collide(AbstractCollidable collidable,int offX, int offY, int xShift, int yShift) {
+	public boolean collide(AbstractCollidable collidable, int offX, int offY, PositionVector move) {
 		if(offX < 0 || offY < 0 || offX >= width || offY >= height) {
 			return true;
 		}
-		if(meta[offX][offY].value() > 0) {
-			meta[offX][offY].locate(meta[offX][offY].x() - xShift - (int)offset().x(), meta[offX][offY].y() - yShift - (int)offset().y());
+		if(meta[offX][offY].value() == MetaTilesNumber.COLLISION) {
+			meta[offX][offY].locate(meta[offX][offY].x() - (int)move.x() - (int)offset().x(), meta[offX][offY].y() - (int)move.y() - (int)offset().y());
 			boolean collide = meta[offX][offY].rectangleCollide(collidable);
-			meta[offX][offY].locate(meta[offX][offY].x() + xShift + (int)offset().x(), meta[offX][offY].y() + yShift + (int)offset().y());
+			meta[offX][offY].locate(meta[offX][offY].x() + (int)move.x() + (int)offset().x(), meta[offX][offY].y() + (int)move.y() + (int)offset().y());
 			return collide;
 		} else {
 			return false;
 		}
 	}
 	
-	public Vector2D offset() {
+	public PositionVector move(AbstractEntity entity, PositionVector move) {
+		if(move.x() == 0 && move.y() == 0) {
+			return move;
+		}
+		int x = entity.offsetX();
+		int y = entity.offsetY();
+		boolean collide = false;
+		if(move.x() > 0) {
+			if(x + 1 < width()) {
+				if(y - 1 >= 0) {
+					collide |= collide(entity, x + 1, y - 1, move);
+				}
+
+				collide |= collide(entity, x + 1, y, move);
+				if(y + 1 < height()) {
+					collide |= collide(entity, x + 1, y - 1, move);
+				}
+			}
+		} else if(move.x() < 0) {
+			if(x - 1 >= 0) {
+				if(y - 1 >= 0) {
+					collide |= collide(entity, x - 1, y - 1, move);
+				}
+				collide |= collide(entity, x - 1, y, move);
+				if(y + 1 < height()) {
+					collide |= collide(entity, x - 1, y + 1, move);
+				}
+			}
+		}
+		if(collide) {
+			move.x(0);
+		}		
+		collide = false;
+		if(move.y() > 0) {
+			if(y + 1 < height()) {
+				if(x - 1 >= 0) {
+					collide |= collide(entity, x - 1, y + 1, move);
+				}
+				collide |= collide(entity, x, y + 1, move);
+				if(x + 1 < width()) {
+					collide |= collide(entity, x + 1, y + 1, move);
+				}
+			}
+		} else if(move.y() < 0) {
+			if(x - 1 >= 0) {
+				if(y - 1 >= 0) {
+					collide |= collide(entity, x - 1, y - 1, move);
+				}
+				collide |= collide(entity, x, y - 1, move);
+				if(x + 1 < width()) {
+					collide |= collide(entity, x + 1, y - 1, move);
+				}
+			}
+		}
+		if(collide) {
+			move.y(0);
+		}
+		return move;
+	}
+	
+	public PositionVector offset() {
 		return offset;
 	}
 
