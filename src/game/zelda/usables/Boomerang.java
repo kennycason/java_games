@@ -7,7 +7,7 @@ import engine.FaceDirection;
 import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
-import engine.entity.weapon.AbstractWeapon;
+import engine.entity.usable.AbstractWeapon;
 import engine.math.PositionVector;
 import engine.sound.LoopingSound;
 import engine.sprite.AnimatedSprite;
@@ -33,6 +33,8 @@ public class Boomerang extends AbstractWeapon {
 	private boolean returning = false;
 	
 	private LoopingSound sound;
+	
+	private AbstractItem pickedUpItem;
 	
 	public Boomerang() {
 		super();
@@ -71,6 +73,7 @@ public class Boomerang extends AbstractWeapon {
 		if(using) {
 			return;
 		}
+		pickedUpItem = null;
 		sound.play();
 		using = true;
 		returning = false;
@@ -116,11 +119,18 @@ public class Boomerang extends AbstractWeapon {
 			return;
 		}
 		// items
-		for(AbstractItem item : game.map().items()) {
-			if(!item.mustTouch() && rectangleCollide(item)) {
-				item.locate(x() + sprite.width() / 2 - item.width() / 2, y() + sprite.height() / 2 - item.height() / 2);
-				returning = true;
+		if(pickedUpItem == null) {
+			for(AbstractItem item : game.map().items()) {
+				if(!item.mustTouch() && rectangleCollide(item)) {
+					if(!item.isJustDropped()) {
+						pickedUpItem = item;
+						returning = true;
+						break;
+					}
+				}
 			}
+		} else {
+			pickedUpItem.locate(x() + sprite.width() / 2 - pickedUpItem.width() / 2, y() + sprite.height() / 2 - pickedUpItem.height() / 2);
 		}
 		// enemies
 		Iterator<AbstractEnemy> iter = game.map().enemies().iterator();
@@ -156,6 +166,9 @@ public class Boomerang extends AbstractWeapon {
 			x += move.x();
 			y += move.y();
 			if(rectangleCollide(game.link())) {
+				if(pickedUpItem != null) {
+					pickedUpItem.consume();
+				}
 				using = false;
 				sound.stop();
 			}

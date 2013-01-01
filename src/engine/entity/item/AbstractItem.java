@@ -31,6 +31,11 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	
 	@Override
 	public void handle() {
+		if(justDropped) {
+			if(System.currentTimeMillis() - droppedTime > 500) {
+				justDropped = false;
+			}
+		}
 		if(walkable) {
 			if(rectangleCollide(game.link())) {
 				consume();
@@ -61,6 +66,10 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	public void justDropped() {
 		justDropped = true;
 		droppedTime = System.currentTimeMillis();
+	}
+	
+	public boolean isJustDropped() {
+		return justDropped;
 	}
 	
 	@Override
