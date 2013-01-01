@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import engine.entity.weapon.UsableBank;
+import engine.entity.usable.UsableBank;
 import engine.font.FontBank;
 import engine.il8n.StringBank;
 import engine.keyboard.DefaultKeyEventDispatcher;

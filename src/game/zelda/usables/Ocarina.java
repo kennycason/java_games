@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import engine.FaceDirection;
 import engine.Game;
-import engine.entity.weapon.AbstractUsableEntity;
+import engine.entity.usable.AbstractUsableEntity;
 import engine.sound.AbstractSound;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteSheet;

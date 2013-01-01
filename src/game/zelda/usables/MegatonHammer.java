@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
-import engine.entity.weapon.AbstractWeapon;
+import engine.entity.usable.AbstractWeapon;
 import engine.sound.AbstractSound;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteSheet;

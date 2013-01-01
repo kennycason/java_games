@@ -9,7 +9,7 @@ import engine.FaceDirection;
 import engine.Game;
 import engine.entity.AbstractSimpleEntity;
 import engine.entity.enemy.AbstractEnemy;
-import engine.entity.weapon.AbstractWeapon;
+import engine.entity.usable.AbstractWeapon;
 import engine.math.PositionVector;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SimpleSprite;

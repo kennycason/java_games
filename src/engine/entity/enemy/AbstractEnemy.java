@@ -6,11 +6,11 @@ import java.util.Random;
 
 import engine.Game;
 import engine.entity.AbstractLivingEntity;
-import engine.entity.item.AbstractItem;
+import engine.entity.item.IItem;
 
-public abstract class AbstractEnemy extends AbstractLivingEntity {
+public abstract class AbstractEnemy extends AbstractLivingEntity implements IEnemy {
 
-	protected List<AbstractItem> dropItems;
+	protected List<IItem> dropItems;
 	
 	protected int dropItemProbability = 100;
 	
@@ -20,7 +20,7 @@ public abstract class AbstractEnemy extends AbstractLivingEntity {
 		super();
 		hitSound = Game.sounds.get("enemy_hit");
 		deadSound = Game.sounds.get("enemy_die");
-		dropItems = new LinkedList<AbstractItem>();
+		dropItems = new LinkedList<IItem>();
 		invincibleTime = 400;
 	}
 	
@@ -38,7 +38,7 @@ public abstract class AbstractEnemy extends AbstractLivingEntity {
 	public void hit(double damage) {
 		super.hit(damage);
 		if(dead() && dropItems()) {
-			for(AbstractItem item : dropItems) {
+			for(IItem item : dropItems) {
 				item.locate(x() + -width() / 2 + random.nextInt(width()), y() + -height() / 2 + random.nextInt(height()));
 				item.justDropped();
 			}

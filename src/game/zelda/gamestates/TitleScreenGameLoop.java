@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import engine.AbstractGameLoop;
 import engine.Game;
 import engine.GameStateEnum;
-import engine.entity.weapon.AbstractUsableEntity;
+import engine.entity.usable.AbstractUsableEntity;
 import engine.event.EnemiesDeadItemAppearEvent;
 import engine.event.EnemyDeployEvent;
 import engine.event.TimedEnemyDeployEvent;

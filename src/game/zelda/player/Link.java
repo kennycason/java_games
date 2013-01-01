@@ -9,7 +9,7 @@ import engine.GameStateEnum;
 import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
-import engine.entity.weapon.AbstractUsableEntity;
+import engine.entity.usable.AbstractUsableEntity;
 import engine.keyboard.KeyBoard;
 import engine.math.PositionVector;
 import engine.sound.LoopingSound;
