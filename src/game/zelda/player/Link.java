@@ -1,7 +1,6 @@
 package game.zelda.player;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
 import engine.FaceDirection;
@@ -17,6 +16,7 @@ import engine.sound.LoopingSound;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
+import game.zelda.Buttons;
 
 public class Link extends AbstractLivingEntity {
 
@@ -139,48 +139,48 @@ public class Link extends AbstractLivingEntity {
 	public void keyBoard(KeyBoard kb) {
 		move.set(0, 0);
 		// handle angles first
-		if (kb.isKeyPressed(KeyEvent.VK_RIGHT) && kb.isKeyPressed(KeyEvent.VK_UP)) {
+		if (kb.isKeyPressed(Buttons.RIGHT) && kb.isKeyPressed(Buttons.UP)) {
 			move.set(moveRateDiag,-moveRateDiag); 
-			if (kb.keyPressedTime(KeyEvent.VK_RIGHT) < kb.keyPressedTime(KeyEvent.VK_UP)) {
+			if (kb.keyPressedTime(Buttons.RIGHT) < kb.keyPressedTime(Buttons.UP)) {
 				face(FaceDirection.EAST);
 			} else {
 				face(FaceDirection.NORTH);
 			}
 			face = FaceDirection.NORTH_EAST;
-		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT) && kb.isKeyPressed(KeyEvent.VK_DOWN)) {
+		} else if (kb.isKeyPressed(Buttons.RIGHT) && kb.isKeyPressed(Buttons.DOWN)) {
 			move.set(moveRateDiag, moveRateDiag); 
-			if (kb.keyPressedTime(KeyEvent.VK_RIGHT) < kb.keyPressedTime(KeyEvent.VK_DOWN)) {
+			if (kb.keyPressedTime(Buttons.RIGHT) < kb.keyPressedTime(Buttons.DOWN)) {
 				face(FaceDirection.EAST);
 			} else {
 				face(FaceDirection.SOUTH);
 			}
 			face = FaceDirection.SOUTH_EAST;
-		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT) && kb.isKeyPressed(KeyEvent.VK_UP)) {
+		} else if (kb.isKeyPressed(Buttons.LEFT) && kb.isKeyPressed(Buttons.UP)) {
 			move.set(-moveRateDiag, -moveRateDiag); 
-			if (kb.keyPressedTime(KeyEvent.VK_LEFT) < kb.keyPressedTime(KeyEvent.VK_UP)) {
+			if (kb.keyPressedTime(Buttons.LEFT) < kb.keyPressedTime(Buttons.UP)) {
 				face(FaceDirection.WEST);
 			} else {
 				face(FaceDirection.NORTH);
 			}
 			face = FaceDirection.NORTH_WEST;
-		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)&& kb.isKeyPressed(KeyEvent.VK_DOWN)) {
+		} else if (kb.isKeyPressed(Buttons.LEFT)&& kb.isKeyPressed(Buttons.DOWN)) {
 			move.set(-moveRateDiag, moveRateDiag);
-			if (kb.keyPressedTime(KeyEvent.VK_LEFT) < kb.keyPressedTime(KeyEvent.VK_DOWN)) {
+			if (kb.keyPressedTime(Buttons.LEFT) < kb.keyPressedTime(Buttons.DOWN)) {
 				face(FaceDirection.WEST);
 			} else {
 				face(FaceDirection.SOUTH);
 			}
 			face = FaceDirection.SOUTH_WEST;
-		} else if (kb.isKeyPressed(KeyEvent.VK_RIGHT)) {
+		} else if (kb.isKeyPressed(Buttons.RIGHT)) {
 			move.set(accelerationRate, 0);
 			face(FaceDirection.EAST);
-		} else if (kb.isKeyPressed(KeyEvent.VK_LEFT)) {
+		} else if (kb.isKeyPressed(Buttons.LEFT)) {
 			move.set(-accelerationRate, 0);
 			face(FaceDirection.WEST);
-		} else if (kb.isKeyPressed(KeyEvent.VK_UP)) {
+		} else if (kb.isKeyPressed(Buttons.UP)) {
 			move.set(0, -accelerationRate);
 			face(FaceDirection.NORTH);
-		} else if (kb.isKeyPressed(KeyEvent.VK_DOWN)) {
+		} else if (kb.isKeyPressed(Buttons.DOWN)) {
 			move.set(0, accelerationRate);
 			face(FaceDirection.SOUTH);
 		}
@@ -194,12 +194,12 @@ public class Link extends AbstractLivingEntity {
 			y += move.y();
 		}
 
-		if (kb.isKeyPressed(KeyEvent.VK_A)) {
+		if (kb.isKeyPressed(Buttons.ITEM_B)) {
 			if (itemB() != null && !itemA().using() && !itemB().using()) {
 				itemB().use();
 			}
 		}
-		if (kb.isKeyPressed(KeyEvent.VK_S)) {
+		if (kb.isKeyPressed(Buttons.ITEM_A)) {
 			boolean itemConsumed = false;
 			if (face() == FaceDirection.NORTH) {
 				for (AbstractItem item : game.map().items()) {
@@ -220,25 +220,25 @@ public class Link extends AbstractLivingEntity {
 				}
 			}
 		}
-		if (kb.isKeyPressed(KeyEvent.VK_SPACE)) {
+		if (kb.isKeyPressed(Buttons.START)) {
 			if (System.currentTimeMillis()
 					- game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
 				game.gameLoops().get(GameStateEnum.ITEM_SCREEN).start();
 				game.gameState(GameStateEnum.ITEM_SCREEN);
 			}
 		}
-		if (kb.isKeyPressed(KeyEvent.VK_P)) {
+		if (kb.isKeyPressed(Buttons.PAUSE)) {
 			if (System.currentTimeMillis()
 					- game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
 				game.gameLoops().get(GameStateEnum.PAUSED).start();
 				game.gameState(GameStateEnum.PAUSED);
 			}
 		}
-		if (kb.isKeyPressed(KeyEvent.VK_R)) {
+		if (kb.isKeyPressed(Buttons.RESET)) {
 			game.gameLoops().get(GameStateEnum.MAIN).end();
 			game.gameState(GameStateEnum.TITLE_SCREEN);
 		}
-		if (kb.isKeyPressed(KeyEvent.VK_ESCAPE)) {
+		if (kb.isKeyPressed(Buttons.ESCAPE)) {
 			game.gameState(GameStateEnum.END);
 		}
 	}
@@ -316,18 +316,5 @@ public class Link extends AbstractLivingEntity {
 	public AbstractUsableEntity[] items() {
 		return items;
 	}
-
-	// // use local overrides to test offsetX/Y
-	// public int offsetX() {
-	// int off = super.offsetX();
-	// System.out.println("link offset X: " + off);
-	// return off;
-	// }
-	//
-	// public int offsetY() {
-	// int off = super.offsetY();
-	// System.out.println("link offset Y: " + off);
-	// return off;
-	// }
 
 }

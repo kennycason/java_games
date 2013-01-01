@@ -2,7 +2,6 @@ package game.zelda.gamestates;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import engine.AbstractGameLoop;
@@ -16,6 +15,7 @@ import engine.map.MapLoader;
 import engine.sound.LoopingSound;
 import engine.sound.SoundChannels;
 import engine.sprite.SimpleSprite;
+import game.zelda.Buttons;
 import game.zelda.enemy.LikeLike;
 import game.zelda.enemy.Octorok;
 import game.zelda.enemy.RedTurtle;
@@ -37,7 +37,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 	public void run() {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastRefresh >= refreshInterval) {
-			if (game.keyboard().isKeyPressed(KeyEvent.VK_SPACE)) {
+			if (game.keyboard().isKeyPressed(Buttons.START)) {
 				if(currentTime - game.gameLoops().get(GameStateEnum.TITLE_SCREEN).transitionTime() >= 500) {
 					end();
 					newGame();

@@ -2,7 +2,6 @@ package game.zelda.gamestates;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import engine.AbstractGameLoop;
@@ -10,6 +9,7 @@ import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.weapon.AbstractUsableEntity;
 import engine.sound.AbstractSound;
+import game.zelda.Buttons;
 import game.zelda.TopMenu;
 
 public class ItemScreenGameLoop extends AbstractGameLoop {
@@ -42,7 +42,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 	public void run() {
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - lastRefresh >= refreshInterval) {
-			if (game.keyboard().isKeyPressed(KeyEvent.VK_SPACE)) {
+			if (game.keyboard().isKeyPressed(Buttons.START)) {
 				if (currentTime
 						- game.gameLoops().get(GameStateEnum.ITEM_SCREEN)
 								.transitionTime() >= 1000) {
@@ -52,28 +52,28 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 				}
 			}
 			if (currentTime - cursorLastMoved > 150) {
-				if (game.keyboard().isKeyPressed(KeyEvent.VK_UP)) {
+				if (game.keyboard().isKeyPressed(Buttons.UP)) {
 					cursorY--;
 					if (cursorY < 0) {
 						cursorY = 0;
 					}
 					mouseCursor.play();
 					cursorLastMoved = System.currentTimeMillis();
-				} else if (game.keyboard().isKeyPressed(KeyEvent.VK_DOWN)) {
+				} else if (game.keyboard().isKeyPressed(Buttons.DOWN)) {
 					cursorY++;
 					if (cursorY > 3) {
 						cursorY = 3;
 					}
 					mouseCursor.play();
 					cursorLastMoved = System.currentTimeMillis();
-				} else if (game.keyboard().isKeyPressed(KeyEvent.VK_LEFT)) {
+				} else if (game.keyboard().isKeyPressed(Buttons.LEFT)) {
 					cursorX--;
 					if (cursorX < 0) {
 						cursorX = 0;
 					}
 					mouseCursor.play();
 					cursorLastMoved = System.currentTimeMillis();
-				} else if (game.keyboard().isKeyPressed(KeyEvent.VK_RIGHT)) {
+				} else if (game.keyboard().isKeyPressed(Buttons.RIGHT)) {
 					cursorX++;
 					if (cursorX > 3) {
 						cursorX = 3;
@@ -83,7 +83,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 				}
 			}
 			if (currentTime - itemSelected > 450) {
-				if (game.keyboard().isKeyPressed(KeyEvent.VK_A)) {
+				if (game.keyboard().isKeyPressed(Buttons.ITEM_B)) {
 					int item = cursorX + cursorY * 4;
 					AbstractUsableEntity old = game.link().itemB();
 					game.link().itemB(game.link().items()[item]);
@@ -92,7 +92,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 					mouseSelect.play();
 				}
 
-				if (game.keyboard().isKeyPressed(KeyEvent.VK_S)) {
+				if (game.keyboard().isKeyPressed(Buttons.ITEM_A)) {
 					int item = cursorX + cursorY * 4;
 					AbstractUsableEntity old = game.link().itemA();
 					game.link().itemA(game.link().items()[item]);
