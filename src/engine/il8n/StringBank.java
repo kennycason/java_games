@@ -8,7 +8,7 @@ public class StringBank {
 	private final ResourceBundle texts;
 
 	public StringBank(Locale locale) {
-		texts = ResourceBundle.getBundle("properties/texts", locale, new Utf8Control());
+		texts = ResourceBundle.getBundle("il8n/texts", locale, new Utf8Control());
 	}
 
 	//Overloading to allow default parameter

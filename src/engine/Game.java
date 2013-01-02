@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import engine.config.ConfigBank;
 import engine.entity.usable.UsableBank;
 import engine.font.FontBank;
 import engine.il8n.StringBank;
@@ -33,6 +34,8 @@ public abstract class Game extends JPanel {
 
 	public static final int SCREEN_HEIGHT = 240;
 	
+	public static Locale locale;
+	
 	public static StringBank strings;
 	
 	public static SoundBank sounds;
@@ -43,7 +46,7 @@ public abstract class Game extends JPanel {
 	
 	public static UsableBank usables;
 	
-	protected Locale locale;
+	public static ConfigBank config;
 	
 	protected int zoom = 2;
 
@@ -76,7 +79,13 @@ public abstract class Game extends JPanel {
 		screenPanel.setIcon(new ImageIcon(screen.bufferedImage()));
 		screenPanel.setDoubleBuffered(true);
 		this.add(screenPanel);
-		locale = new Locale("cn");
+		
+		config = new ConfigBank();
+		if(config.contains("locale")) {
+			locale = new Locale(config.getString("locale"));
+		} else {
+			locale = new Locale("en");
+		}
 		strings = new StringBank(locale);
 		sprites = new SpriteBank();
 		sounds = new SoundBank();
