@@ -99,7 +99,9 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new RupeeGold(), 25, 11)));
 		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new HeartPiece(), 26, 11)));
 		game.map().items().add(new FullHeart(4, 10));
-		game.map().items().add(new HeartPiece(7, 12));
+		game.map().items().add(new HeartPiece(9, 3));
+		game.map().items().add(new HeartPiece(10, 3));
+		game.map().items().add(new HeartPiece(11, 3));
 		game.map().items().add(new TreasureChest(new FullHeart(), 2, 8));		
 		
 		game.link(new Link());

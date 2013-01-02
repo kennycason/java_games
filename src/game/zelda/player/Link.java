@@ -314,7 +314,7 @@ public class Link extends AbstractLivingEntity {
 	}
 
 	public void rupees(int rupees) {
-		if (rupees < maxRupees) {
+		if (rupees > maxRupees) {
 			rupees = maxRupees;
 		}
 		this.rupees = rupees;

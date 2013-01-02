@@ -17,7 +17,7 @@ public class HeartPiece extends AbstractItem {
 	public HeartPiece(int x, int y) {
 		super();
 		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
-		sprite = new AnimatedSprite(sheet.range(357), 0);
+		sprite = new AnimatedSprite(sheet.range(157), 0);
 		locate(x * sprite.width(), y * sprite.height());
 		collisionOffset = 1;
 		mustTouch = true;
