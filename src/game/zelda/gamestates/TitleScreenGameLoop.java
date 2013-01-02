@@ -10,12 +10,14 @@ import engine.GameStateEnum;
 import engine.entity.usable.AbstractUsableEntity;
 import engine.event.EnemiesDeadItemAppearEvent;
 import engine.event.EnemyDeployEvent;
+import engine.event.TimedDialogDeployEvent;
 import engine.event.TimedEnemyDeployEvent;
 import engine.map.tiled.TiledMapLoader;
 import engine.sound.LoopingSound;
 import engine.sound.SoundChannels;
 import engine.sprite.SimpleSprite;
 import game.zelda.Buttons;
+import game.zelda.dialog.ZeldaDialog;
 import game.zelda.enemy.LikeLike;
 import game.zelda.enemy.Octorok;
 import game.zelda.enemy.RedTurtle;
@@ -83,6 +85,8 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		TiledMapLoader loader = new TiledMapLoader();
 
 		game.map(loader.load("maps/real.tmx"));
+		
+		game.map().events().add(new TimedDialogDeployEvent(new ZeldaDialog("This is a test message."), 500));
 
 		game.map().events().add(new EnemyDeployEvent(new LikeLike(4, 7)));
 		game.map().events().add(new EnemyDeployEvent(new Octorok(9, 10)));

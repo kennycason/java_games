@@ -71,7 +71,7 @@ public class MainGameLoop extends AbstractGameLoop {
 			g.scale(game.zoom(), game.zoom());
 		}
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, Game.SCREEN_WIDTH * game.zoom(), Game.SCREEN_HEIGHT * game.zoom());
+		g.fillRect(0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT);
 		//game.map().drawBackground(g);
 		game.map().drawBottomLayer(g);
 		game.map().drawMiddleLater(g);
