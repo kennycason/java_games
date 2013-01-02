@@ -22,6 +22,7 @@ public class LinkFallingMetaEvent extends AbstractEvent {
 		if(game.map().metaLayer()[game.link().mapX()][game.link().mapY()].value() == MetaTilesNumber.HOLE) {
 			return true;
 		}
+		happened = true;
 		return false;
 	}
 

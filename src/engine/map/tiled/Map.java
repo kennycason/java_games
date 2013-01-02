@@ -174,19 +174,19 @@ public class Map {
 		}
 	}
 	
-	public boolean metaCollide(AbstractCollidable collidable, int offX, int offY) {
-		if(offX < 0 || offY < 0 || offX >= width || offY >= height) {
-			return false;
-		}
-		if(metaLayer[offX][offY].value() > 0) {
-			metaLayer[offX][offY].locate(metaLayer[offX][offY].x() - (int)offset().x(), metaLayer[offX][offY].y() - (int)offset().y());
-			boolean collide = metaLayer[offX][offY].rectangleCollide(collidable);
-			metaLayer[offX][offY].locate(metaLayer[offX][offY].x() + (int)offset().x(), metaLayer[offX][offY].y() + (int)offset().y());
-			return collide;
-		} else {
-			return false;
-		}
-	}
+//	public boolean metaCollide(AbstractCollidable collidable, int offX, int offY) {
+//		if(offX < 0 || offY < 0 || offX >= width || offY >= height) {
+//			return false;
+//		}
+//		if(metaLayer[offX][offY].value() > 0) {
+//			metaLayer[offX][offY].locate(metaLayer[offX][offY].x() - (int)offset().x(), metaLayer[offX][offY].y() - (int)offset().y());
+//			boolean collide = metaLayer[offX][offY].rectangleCollide(collidable);
+//			metaLayer[offX][offY].locate(metaLayer[offX][offY].x() + (int)offset().x(), metaLayer[offX][offY].y() + (int)offset().y());
+//			return collide;
+//		} else {
+//			return false;
+//		}
+//	}
 	
 	public void handleMetaEvents(AbstractCollidable entity) {
 		int x = entity.mapX();
@@ -197,7 +197,6 @@ public class Map {
 				events.add(new LinkFallingMetaEvent());
 				break;
 		}
-		events.add(new LinkFallingMetaEvent());
 //		if(metaEvents.containsKey(metaLayer[x][y].value())) {
 //			IEvent event = metaEvents.get(metaLayer[x][y].value());
 //			if(event.ready()) {
