@@ -21,6 +21,13 @@ Zelda Game written in Java - Still a new project so it's definitely a work in pr
             <img src="http://ken-soft.com/images/zelda/zelda6.png" width="400px"/>
         </td>
     </tr>
+    <tr>
+        <td>
+            <img src="http://ken-soft.com/images/zelda/zelda9.png" width="400px"/>
+        </td>
+        <td>
+        </td>
+    </tr>
 </table>
 
 **Required Libraries**<br/>
