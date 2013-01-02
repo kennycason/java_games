@@ -18,7 +18,7 @@ Zelda Game written in Java - Still a new project so it's definitely a work in pr
             <img src="http://ken-soft.com/images/zelda/zelda7.png" width="400px"/>
         </td>
         <td>
-            <img src="http://ken-soft.com/images/zelda/zelda6.png" width="400px"/>
+            <img src="http://ken-soft.com/images/zelda/zelda11.png" width="400px"/>
         </td>
     </tr>
     <tr>
@@ -26,6 +26,7 @@ Zelda Game written in Java - Still a new project so it's definitely a work in pr
             <img src="http://ken-soft.com/images/zelda/zelda9.png" width="400px"/>
         </td>
         <td>
+            <img src="http://ken-soft.com/images/zelda/zelda10.png" width="400px"/>
         </td>
     </tr>
 </table>
