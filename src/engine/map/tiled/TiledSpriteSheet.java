@@ -1,4 +1,4 @@
-package engine.map;
+package engine.map.tiled;
 
 import engine.sprite.SimpleSprite;
 

@@ -1,14 +1,14 @@
-package engine.map;
+package engine.map.tiled;
 
 import java.awt.Graphics2D;
 
 import engine.sprite.SimpleSprite;
 
-public class BasicTile extends AbstractTile {
+public class RenderTile extends AbstractTile {
 
 	private SimpleSprite sprite;
 	
-	public BasicTile(SimpleSprite sprite, int value) {
+	public RenderTile(SimpleSprite sprite, int value) {
 		super(value);
 		this.sprite = sprite;
 	}

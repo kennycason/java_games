@@ -3,7 +3,7 @@ package engine.entity.item;
 import java.awt.Graphics2D;
 
 import engine.entity.AbstractSimpleEntity;
-import engine.map.MetaTilesNumber;
+import engine.map.tiled.MetaTilesNumber;
 
 public abstract class AbstractItem extends AbstractSimpleEntity {
 
@@ -41,7 +41,7 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 				consume();
 			}
 		} else {
-			game.map().meta()[offsetX()][offsetY()].value(MetaTilesNumber.COLLISION);
+			game.map().collisionLayer()[offsetX()][offsetY()].value(MetaTilesNumber.COLLISION);
 		}
 	}
 	

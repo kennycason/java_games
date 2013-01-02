@@ -1,10 +1,10 @@
-package engine.map;
+package engine.map.tiled;
 
 import java.awt.Graphics2D;
 
-public class MetaTile extends AbstractTile {
+public class CollisionTile extends AbstractTile {
 
-	public MetaTile(int value) {
+	public CollisionTile(int value) {
 		super(value);
 		locate(-1, -1);
 	}

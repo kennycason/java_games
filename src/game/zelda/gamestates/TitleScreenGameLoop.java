@@ -11,7 +11,7 @@ import engine.entity.usable.AbstractUsableEntity;
 import engine.event.EnemiesDeadItemAppearEvent;
 import engine.event.EnemyDeployEvent;
 import engine.event.TimedEnemyDeployEvent;
-import engine.map.MapLoader;
+import engine.map.tiled.TiledMapLoader;
 import engine.sound.LoopingSound;
 import engine.sound.SoundChannels;
 import engine.sprite.SimpleSprite;
@@ -79,7 +79,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 	}
 	
 	public void newGame() { 
-		MapLoader loader = new MapLoader();
+		TiledMapLoader loader = new TiledMapLoader();
 
 		game.map(loader.load("maps/real.tmx"));
 		game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());

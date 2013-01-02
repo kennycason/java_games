@@ -26,7 +26,7 @@ public class SimpleSprite extends AbstractSprite {
 		try {
 			bi = ImageIO.read(getClass().getClassLoader().getResourceAsStream(file));
 		} catch (IOException e) {
-			LOGGER.error("Can not Sprite: " + file);
+			LOGGER.error("Can not read Sprite file: " + file);
 			e.printStackTrace();
 		}
 		spriteWidth = bi.getWidth();
@@ -37,7 +37,7 @@ public class SimpleSprite extends AbstractSprite {
 		try {
 			bi = ImageIO.read(file);
 		} catch (IOException e) {
-			System.out.println("Can not read file: " + file);
+			LOGGER.error("Can not read Sprite file: " + file);
 			e.printStackTrace();
 		}
 		spriteWidth = bi.getWidth();

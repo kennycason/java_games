@@ -1,8 +1,9 @@
-package engine.map;
+package engine.map.tiled;
 
 import java.io.InputStream;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,13 +18,19 @@ import engine.utils.ZLibUtils;
  * @author destructo
  * 
  */
-public class MapLoader {
+public class TiledMapLoader {
 
 	private int width;
 
 	private int height;
 
 	private Map map;
+	
+	private final static Logger LOGGER = Logger.getLogger(TiledMapLoader.class);
+	
+	public TiledMapLoader() {
+		
+	}
 
 	public Map load(String file) {
 
@@ -56,13 +63,20 @@ public class MapLoader {
 		for (Element layer : layers) {
 			int layerNumber = -1;
 			if ("bottom".equals(layer.attr("name"))) {
+				LOGGER.trace("Loading Bottom Layer");
 				layerNumber = 0;
 			} else if ("middle".equals(layer.attr("name"))) {
+				LOGGER.trace("Loading Middle Layer");
 				layerNumber = 1;
 			} else if ("top".equals(layer.attr("name"))) {
+				LOGGER.trace("Loading Top Layer");
 				layerNumber = 2;
-			} else if ("meta".equals(layer.attr("name"))) {
+			} else if ("collision".equals(layer.attr("name"))) {
+				LOGGER.trace("Loading Collision Layer");
 				layerNumber = 3;
+			} else if ("meta".equals(layer.attr("name"))) {
+				LOGGER.trace("Loading Meta Layer");
+				layerNumber = 4;
 			}
 			Element data = layer.select("data").first();
 			String encoding = data.attr("encoding");
@@ -95,26 +109,36 @@ public class MapLoader {
 					}
 					gid = Integer.parseInt(xs[x]);
 					if (layer < 3) {
-						map.layers()[layer][x][y] = new BasicTile(map
+						map.renderLayers()[layer][x][y] = new RenderTile(map
 								.spriteSheet().get(gid), gid);
 					} else if (layer == 3) {
 						if (gid > 0) {
 							gid -= (map.getSpriteSheet().numTiles() - 1);
 						}
-						map.meta()[x][y] = new MetaTile(gid);
+						map.collisionLayer()[x][y] = new CollisionTile(gid);
+					} else if (layer == 4) {
+						if (gid > 0) {
+							gid -= (map.getSpriteSheet().numTiles() - 1);
+						}
+						map.metaLayer()[x][y] = new MetaTile(gid);
 					}
 				}
 			} else { // standard row
 				for (int x = 0; x < xs.length; x++) {
 					gid = Integer.parseInt(xs[x]);
 					if (layer < 3) {
-						map.layers()[layer][x][y] = new BasicTile(map
+						map.renderLayers()[layer][x][y] = new RenderTile(map
 								.spriteSheet().get(gid), gid);
 					} else if (layer == 3) {
 						if (gid > 0) {
 							gid -= (map.getSpriteSheet().numTiles() - 1);
 						}
-						map.meta()[x][y] = new MetaTile(gid);
+						map.collisionLayer()[x][y] = new CollisionTile(gid);
+					} else if (layer == 4) {
+						if (gid > 0) {
+							gid -= (map.getSpriteSheet().numTiles() - 1);
+						}
+						map.metaLayer()[x][y] = new MetaTile(gid);
 					}
 				}
 			}
@@ -133,13 +157,18 @@ public class MapLoader {
 			}
 			gid = Integer.parseInt(tile.attr("gid"));
 			if (layer < 3) {
-				map.layers()[layer][x][y] = new BasicTile(map.spriteSheet()
+				map.renderLayers()[layer][x][y] = new RenderTile(map.spriteSheet()
 						.get(gid), gid);
 			} else if (layer == 3) {
 				if (gid > 0) {
 					gid -= (map.getSpriteSheet().numTiles() - 1);
 				}
-				map.meta()[x][y] = new MetaTile(gid);
+				map.collisionLayer()[x][y] = new CollisionTile(gid);
+			} else if (layer == 4) {
+				if (gid > 0) {
+					gid -= (map.getSpriteSheet().numTiles() - 1);
+				}
+				map.metaLayer()[x][y] = new MetaTile(gid);
 			}
 			x++;
 			i++;

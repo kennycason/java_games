@@ -58,9 +58,6 @@ public class SoundEffect extends AbstractSound {
 		} catch (IOException e) {
 			e.printStackTrace();
 			loaded = false;
-			// } catch (LineUnavailableException e) {
-			// e.printStackTrace();
-			// loaded = false;
 		}
 	}
 

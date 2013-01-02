@@ -1,4 +1,4 @@
-package engine.map;
+package engine.map.tiled;
 
 import java.awt.Graphics2D;
 import java.util.LinkedList;
@@ -20,11 +20,25 @@ import engine.sprite.SimpleSprite;
  */
 public class Map {
 	
-	//private int[][][] layers;
-	private BasicTile[][][] layers;
+	/**
+	 * three layers for render:
+	 * bottom - everything under player/entitiees
+	 * middle - misc. rendering, typically used for tiles that can change during game play, i.e. a locked door, or grass that can be cut
+	 * top layer - everything on top of player/entities, cross walks, tops of tree, tops of buildings
+	 */
+	private RenderTile[][][] renderLayers;
 	
-	private MetaTile[][] meta;
-
+	/**
+	 * simple layer solely for collision
+	 */
+	private CollisionTile[][] collisionLayer;
+	
+	/**
+	 * specialized layer for representing a wide variety of cases, 
+	 *  i.e. lava, swamp, cuttable grass, bombable door, door, hole, warp, etc
+	 */
+	private MetaTile[][] metaLayer;
+	
 	private int width;
 
 	private int height;
@@ -39,7 +53,7 @@ public class Map {
 
 	private TiledSpriteSheet spriteSheet;
 
-    private SimpleSprite bg = new SimpleSprite("sprites/map/Sand.bmp");
+    private SimpleSprite bg;
     
     private List<AbstractEnemy> enemies;
     
@@ -47,25 +61,30 @@ public class Map {
 	
     private EventQueue events;
     
+    // private final static Logger LOGGER = Logger.getLogger(Map.class);
+    
 	public Map(int width, int height, int tileWidth, int tileHeight) {
 		offset = new PositionVector();
 		this.width = width;
 		this.height = height;
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;
-		layers = new BasicTile[3][width][height];
-		meta = new MetaTile[width][height];
+		renderLayers = new RenderTile[3][width][height];
+		collisionLayer = new CollisionTile[width][height];
+		metaLayer = new MetaTile[width][height];
 		enemies = new LinkedList<AbstractEnemy>();
 		items = new LinkedList<AbstractItem>();
 		events = new EventQueue();
 	}
 	
 	public void drawBackground(Graphics2D g) {
-		for (int y = -bg.height(); y <= Game.SCREEN_HEIGHT / bg.height() + bg.height(); y++) {
-			for (int x = -bg.width(); x <= Game.SCREEN_WIDTH / bg.width() + bg.width(); x++) {
-				bg.draw(g, 
-						x * bg.width() + offset.x() % bg.width(), 
-						y * bg.height() + offset.y() % bg.height());
+		if(bg != null) {
+			for (int y = -bg.height(); y <= Game.SCREEN_HEIGHT / bg.height() + bg.height(); y++) {
+				for (int x = -bg.width(); x <= Game.SCREEN_WIDTH / bg.width() + bg.width(); x++) {
+					bg.draw(g, 
+							x * bg.width() + offset.x() % bg.width(), 
+							y * bg.height() + offset.y() % bg.height());
+				}
 			}
 		}
 	}
@@ -96,15 +115,23 @@ public class Map {
 				if(xOff > -tileWidth && xOff < width * tileWidth && 
 						yOff > -tileHeight && yOff < height * tileHeight) {
 					if(l < 3) {
-						if(layers[l][x][y].value() != 0) {
-							layers[l][x][y].draw(g, 
+						if(renderLayers[l][x][y].value() != 0) {
+							renderLayers[l][x][y].draw(g, 
 									x * tileWidth + offset.x(), 
 									y * tileHeight + offset.y());
 						}
 					} else {
-						meta[x][y].draw(g, 
+						collisionLayer[x][y].draw(g, 
 								x * tileWidth + offset.x(), 
 								y * tileHeight + offset.y());
+					}
+				} else { // just locate tiles for collision, but don't draw them
+					if(l < 3) {
+//						if(layers[l][x][y].value() != 0) {
+//							layers[l][x][y].locate(x * tileWidth + offset.x(), y * tileHeight + offset.y());
+//						}
+					} else {
+						collisionLayer[x][y].locate(x * tileWidth + offset.x(), y * tileHeight + offset.y());
 					}
 				}
 			}
@@ -115,10 +142,10 @@ public class Map {
 		if(offX < 0 || offY < 0 || offX >= width || offY >= height) {
 			return true;
 		}
-		if(meta[offX][offY].value() == MetaTilesNumber.COLLISION) {
-			meta[offX][offY].locate(meta[offX][offY].x() - (int)move.x() - (int)offset().x(), meta[offX][offY].y() - (int)move.y() - (int)offset().y());
-			boolean collide = meta[offX][offY].rectangleCollide(collidable);
-			meta[offX][offY].locate(meta[offX][offY].x() + (int)move.x() + (int)offset().x(), meta[offX][offY].y() + (int)move.y() + (int)offset().y());
+		if(collisionLayer[offX][offY].value() == MetaTilesNumber.COLLISION) {
+			collisionLayer[offX][offY].locate(collisionLayer[offX][offY].x() - (int)move.x() - (int)offset().x(), collisionLayer[offX][offY].y() - (int)move.y() - (int)offset().y());
+			boolean collide = collisionLayer[offX][offY].rectangleCollide(collidable);
+			collisionLayer[offX][offY].locate(collisionLayer[offX][offY].x() + (int)move.x() + (int)offset().x(), collisionLayer[offX][offY].y() + (int)move.y() + (int)offset().y());
 			return collide;
 		} else {
 			return false;
@@ -198,7 +225,7 @@ public class Map {
 	}
 
 	public int metaLayer(int x, int y) {
-		return meta[x][y].value();
+		return collisionLayer[x][y].value();
 	}
 
 	public boolean isWalkable(int x, int y) {
@@ -239,12 +266,20 @@ public class Map {
 		return spriteSheet;
 	}
 
-	public MetaTile[][] meta() {
-		return meta;
+	public CollisionTile[][] collisionLayer() {
+		return collisionLayer;
+	}
+	
+	public MetaTile[][] metaLayer() {
+		return metaLayer;
 	}
 
-	public BasicTile[][][] layers() {
-		return layers;
+	public RenderTile[][][] renderLayers() {
+		return renderLayers;
+	}
+	
+	public void setBackground(SimpleSprite bg) {
+		this.bg = bg;
 	}
 	
 	public List<AbstractEnemy> enemies() {

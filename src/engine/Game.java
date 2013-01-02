@@ -18,8 +18,8 @@ import engine.font.FontBank;
 import engine.il8n.StringBank;
 import engine.keyboard.DefaultKeyEventDispatcher;
 import engine.keyboard.KeyBoard;
-import engine.map.Map;
-import engine.map.MapLoader;
+import engine.map.tiled.Map;
+import engine.map.tiled.TiledMapLoader;
 import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteBank;
@@ -58,7 +58,7 @@ public abstract class Game extends JPanel {
 	
 	protected Map map;
 	
-	protected MapLoader loader;
+	protected TiledMapLoader loader;
 	
 	protected GameStateEnum gameState;
 	
@@ -89,7 +89,7 @@ public abstract class Game extends JPanel {
 		this.setFocusable(true);
 		this.requestFocusInWindow();
 		
-		loader = new MapLoader();
+		loader = new TiledMapLoader();
 		gameState = GameStateEnum.TITLE_SCREEN;
 		gameLoops = new HashMap<GameStateEnum, AbstractGameLoop>();
 	}

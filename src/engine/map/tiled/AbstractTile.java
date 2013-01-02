@@ -1,10 +1,10 @@
-package engine.map;
+package engine.map.tiled;
 
 import java.awt.Graphics2D;
 
 import engine.entity.AbstractCollidable;
 
-public abstract class AbstractTile extends AbstractCollidable {
+public abstract class AbstractTile extends AbstractCollidable implements ITile {
 	
 	protected int value;
 	
@@ -13,10 +13,12 @@ public abstract class AbstractTile extends AbstractCollidable {
 		collisionOffset = 0;
 	}
 	
+	@Override
 	public int value() {
 		return value;
 	}
 	
+	@Override
 	public void value(int value) {
 		this.value = value;
 	}

@@ -31,6 +31,8 @@ public class AggressiveAIStrategy implements IAIStrategy {
 	
 	Random r = new Random();
 	
+	// private final static Logger LOGGER = Logger.getLogger(AggressiveAIStrategy.class);
+	
 	public AggressiveAIStrategy(AbstractLivingEntity entity, int moveDelay, int aggressionMoveDelay, int moveSpeed, int aggressionRange) {
 		this.game = GameFactory.get();
 		this.entity = entity;
@@ -72,7 +74,6 @@ public class AggressiveAIStrategy implements IAIStrategy {
 			} else {
 				if(System.currentTimeMillis() - lastMoved > moveDelay) { // move
 					moving = true;
-					// System.out.println("moveDelay: " + moveDelay);
 					lastMoved = System.currentTimeMillis();			
 					movingDir = r.nextInt(16);
 					switch(movingDir) {
@@ -106,7 +107,6 @@ public class AggressiveAIStrategy implements IAIStrategy {
 					} else {
 						move.set(0, 0);
 					}					
-					
 				} else {
 					moving = false;
 				}
