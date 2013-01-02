@@ -35,7 +35,7 @@ public class TreasureChest extends AbstractItem {
 	@Override
 	public void consume() {
 		if(!open) {
-			if(game.link().offsetX() == offsetX() && game.link().offsetY() == offsetY() + 1) {
+			if(game.link().mapX() == mapX() && game.link().mapY() == mapY() + 1) {
 				consumed = true;
 				openSound.play();
 				open = true;

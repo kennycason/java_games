@@ -18,4 +18,13 @@ public abstract class AbstractSprite extends AbstractCollidable implements ISpri
 		return spriteHeight;
 	}
 	
+	@Override
+	public int mapX() {
+		return 0;
+	}
+
+	@Override
+	public int mapY() {
+		return 0;
+	}
 }

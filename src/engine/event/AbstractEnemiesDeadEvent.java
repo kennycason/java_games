@@ -1,6 +1,5 @@
 package engine.event;
 
-
 public abstract class AbstractEnemiesDeadEvent extends AbstractEvent {
 	
 	public AbstractEnemiesDeadEvent() {
@@ -10,7 +9,7 @@ public abstract class AbstractEnemiesDeadEvent extends AbstractEvent {
 	@Override
 	public boolean ready() {
 		// still more enemies to come!
-		for(AbstractEvent event : game.map().events().all()) {
+		for(IEvent event : game.map().events().all()) {
 			if(event instanceof IEnemyEvent) {
 				return false;
 			}

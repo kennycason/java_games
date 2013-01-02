@@ -30,10 +30,6 @@ public class BowAndArrow extends AbstractWeapon {
 	
 	private int numArrows;
 
-	// private ISound sound;
-	
-	private boolean using;
-	
 	private long lastShotTime;
 	
 	public BowAndArrow() {

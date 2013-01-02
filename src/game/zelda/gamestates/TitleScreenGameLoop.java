@@ -20,6 +20,7 @@ import game.zelda.enemy.LikeLike;
 import game.zelda.enemy.Octorok;
 import game.zelda.enemy.RedTurtle;
 import game.zelda.item.FullHeart;
+import game.zelda.item.HeartPiece;
 import game.zelda.item.RupeeGold;
 import game.zelda.item.TreasureChest;
 import game.zelda.player.Link;
@@ -82,7 +83,6 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		TiledMapLoader loader = new TiledMapLoader();
 
 		game.map(loader.load("maps/real.tmx"));
-		game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());
 
 		game.map().events().add(new EnemyDeployEvent(new LikeLike(4, 7)));
 		game.map().events().add(new EnemyDeployEvent(new Octorok(9, 10)));
@@ -96,9 +96,10 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(5, 14), 10000));
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(7, 14), 10000));
 		
-		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new RupeeGold(), 2, 10)));
-		
+		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new RupeeGold(), 25, 11)));
+		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new HeartPiece(), 26, 11)));
 		game.map().items().add(new FullHeart(4, 10));
+		game.map().items().add(new HeartPiece(7, 12));
 		game.map().items().add(new TreasureChest(new FullHeart(), 2, 8));		
 		
 		game.link(new Link());
@@ -115,6 +116,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 			AbstractUsableEntity entity = Game.usables.get(key);
 			entity.reset();
 		}
+		
 	}
 
 }

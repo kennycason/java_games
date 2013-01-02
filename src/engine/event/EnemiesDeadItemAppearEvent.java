@@ -18,7 +18,7 @@ public class EnemiesDeadItemAppearEvent extends AbstractEnemiesDeadEvent {
 	}
 
 	@Override
-	public void deploy() {
+	public void trigger() {
 		sound.play();
 		game.map().items().add(item);
 		happened = true;

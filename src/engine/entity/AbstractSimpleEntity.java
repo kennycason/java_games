@@ -31,5 +31,9 @@ public abstract class AbstractSimpleEntity extends AbstractEntity {
 		this.face = face;
 	}
 	
+	public AnimatedSprite sprite() {
+		return sprite;
+	}
+	
 }
 

@@ -7,6 +7,7 @@ import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.usable.AbstractWeapon;
+import engine.map.tiled.MetaTilesNumber;
 import engine.sound.AbstractSound;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteSheet;
@@ -28,6 +29,8 @@ public abstract class AbstractSword extends AbstractWeapon {
 	protected SimpleSprite sprite;
 	
 	protected AbstractSound swingSound;
+	
+	protected AbstractSound cutSound;
 
 	protected AbstractSword(int entityNumber, int damage) {
 		super();
@@ -44,12 +47,25 @@ public abstract class AbstractSword extends AbstractWeapon {
 		spriteW2 = SpriteUtils.rotate(spriteW, Math.PI / 4);	
 		sprite = spriteN;
 		swingSound = Game.sounds.get("sword_slash1");
+		cutSound = Game.sounds.get("bush_cut");
 	}
 	
 	@Override
 	public void draw(Graphics2D g) {
 		if(phase > 0) {
 			sprite.draw(g, renderX(), renderY());
+			// collide with cuttable
+			int offX = game.link().mapX();
+			int offY = game.link().mapY();
+			cut(offX - 1, offY - 1); 
+			cut(offX, offY - 1); 
+			cut(offX + 1, offY - 1);
+			cut(offX - 1, offY); 
+			cut(offX, offY); 
+			cut(offX + 1, offY);
+			cut(offX - 1, offY + 1); 
+			cut(offX, offY + 1); 
+			cut(offX + 1, offY + 1);
 		}
 	}
 
@@ -118,6 +134,19 @@ public abstract class AbstractSword extends AbstractWeapon {
 					phase = 0;
 					game.link().face(game.link().face());
 				}
+			}
+		}
+	}
+	
+	private void cut(int x, int y) {
+		if(x < 0 || y < 0 || x >= game.map().width() || y >= game.map().height()) {
+			return;
+		}
+		if(game.map().metaLayer()[x][y].value() == MetaTilesNumber.CUTTABLE) {
+			if(game.map().renderLayers()[1][x][y].rectangleCollide(sprite)) {
+				game.map().renderLayers()[1][x][y].value(0);
+				game.map().metaLayer()[x][y].value(0);
+				cutSound.play();
 			}
 		}
 	}

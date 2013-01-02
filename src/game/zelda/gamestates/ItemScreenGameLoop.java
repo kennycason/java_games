@@ -4,17 +4,22 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import game.zelda.item.BossKey;
+import game.zelda.item.SmallKey;
 import engine.AbstractGameLoop;
 import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.usable.AbstractUsableEntity;
 import engine.sound.AbstractSound;
+import engine.sprite.SpriteSheet;
 import game.zelda.Buttons;
 import game.zelda.TopMenu;
 
 public class ItemScreenGameLoop extends AbstractGameLoop {
 
 	private TopMenu menu;
+	
+	private Color lightBlue;
 
 	private int cursorX;
 
@@ -27,15 +32,27 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 	private AbstractSound mouseCursor;
 	
 	private AbstractSound mouseSelect;
+	
+	private SpriteSheet heartPieces;
+	
+	private BossKey bossKey = new BossKey();
+	
+	private SmallKey smallKey = new SmallKey();
 
 	public ItemScreenGameLoop() {
 		super();
 		menu = new TopMenu();
-
 		cursorX = 0;
 		cursorY = 0;
 		mouseSelect = Game.sounds.get("menu_select");
 		mouseCursor = Game.sounds.get("menu_cursor");
+		heartPieces = new SpriteSheet(4, 16, 16);
+		SpriteSheet entities = (SpriteSheet)Game.sprites.get("entities");
+		heartPieces.set(0, entities.get(15));
+		heartPieces.set(1, entities.get(16));
+		heartPieces.set(2, entities.get(17));
+		heartPieces.set(3, entities.get(18));
+		lightBlue = new Color(0xCCF2FF);
 	}
 
 	@Override
@@ -117,11 +134,8 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 		}
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT);
-		g.setColor(Color.WHITE);
+		g.setColor(lightBlue);
 		g.fillRect(10, 34, Game.SCREEN_WIDTH - 20, Game.SCREEN_HEIGHT - 100);
-
-		g.setColor(Color.WHITE);
-		g.fillRect(10, 185, Game.SCREEN_WIDTH - 20, 30);
 
 		g.setColor(Color.BLACK);
 		g.setFont(Game.fonts.get("menu_smaller"));
@@ -144,6 +158,19 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 		g.setFont(Game.fonts.get("menu_large"));
 		g.drawString("[   ]", (cursorX * 50) + 28, (cursorY * 33) + 60);
 
+		
+		// lower menu.
+		g.setColor(lightBlue);
+		g.fillRect(10, 185, Game.SCREEN_WIDTH - 20, 30);
+		heartPieces.get(game.link().heartPieces()).draw(g, 18, 192);
+		if(game.link().bossKey()) {
+			bossKey.sprite().draw(g, 43, 192);
+		}
+		smallKey.sprite().draw(g, 68, 191);
+		g.setFont(Game.fonts.get("menu_smaller"));
+		g.setColor(Color.BLACK);
+		g.drawString("x" + game.link().smallKeys(), 83, 206);
+		
 		menu.draw(g);
 		g.dispose();
 	}

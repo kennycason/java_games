@@ -23,6 +23,16 @@ public abstract class AbstractTile extends AbstractCollidable implements ITile {
 		this.value = value;
 	}
 	
+	@Override
+	public int mapX() {
+		return 0;
+	}
+
+	@Override
+	public int mapY() {
+		return 0;
+	}
+	
 	public abstract void draw(Graphics2D g, int x, int y);
 
 }

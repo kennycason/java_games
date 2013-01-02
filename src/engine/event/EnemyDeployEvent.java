@@ -12,7 +12,7 @@ public class EnemyDeployEvent extends AbstractEvent implements IEnemyEvent {
 	}
 
 	@Override
-	public void deploy() {
+	public void trigger() {
 		game.map().enemies().add(enemy);
 	}
 

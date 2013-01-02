@@ -6,12 +6,12 @@ import java.util.List;
 
 import engine.Game;
 import engine.entity.AbstractCollidable;
-import engine.entity.AbstractEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.event.EventQueue;
 import engine.math.PositionVector;
 import engine.sprite.SimpleSprite;
+import game.zelda.map.meta.LinkFallingMetaEvent;
 
 /**
  * A simplified Map
@@ -39,6 +39,13 @@ public class Map {
 	 */
 	private MetaTile[][] metaLayer;
 	
+	/**
+	 * the players initial starting X, Y position
+	 */
+	private int startX;
+	
+	private int startY;
+	
 	private int width;
 
 	private int height;
@@ -58,8 +65,10 @@ public class Map {
     private List<AbstractEnemy> enemies;
     
     private List<AbstractItem> items;
-	
+    
     private EventQueue events;
+    
+    //private HashMap<Integer, IEvent> metaEvents;
     
     // private final static Logger LOGGER = Logger.getLogger(Map.class);
     
@@ -74,7 +83,12 @@ public class Map {
 		metaLayer = new MetaTile[width][height];
 		enemies = new LinkedList<AbstractEnemy>();
 		items = new LinkedList<AbstractItem>();
+		//metaEvents = new HashMap<Integer, IEvent>();
 		events = new EventQueue();
+		startX = 0;
+		startY = 0;
+		// look to decouple this later, still experimenting with a good way of handling map events
+		//metaEvents.put(MetaTilesNumber.HOLE, new LinkFallingMetaEvent());
 	}
 	
 	public void drawBackground(Graphics2D g) {
@@ -101,7 +115,7 @@ public class Map {
 		draw(g, 2);
 	}
 
-	public void drawMetaLater(Graphics2D g) {
+	public void drawMetaLaters(Graphics2D g) {
 		draw(g, 3);
 	}
 
@@ -121,7 +135,10 @@ public class Map {
 									y * tileHeight + offset.y());
 						}
 					} else {
-						collisionLayer[x][y].draw(g, 
+						collisionLayer[x][y].locate(
+								x * tileWidth + offset.x(), 
+								y * tileHeight + offset.y());
+						metaLayer[x][y].locate(
 								x * tileWidth + offset.x(), 
 								y * tileHeight + offset.y());
 					}
@@ -131,7 +148,12 @@ public class Map {
 //							layers[l][x][y].locate(x * tileWidth + offset.x(), y * tileHeight + offset.y());
 //						}
 					} else {
-						collisionLayer[x][y].locate(x * tileWidth + offset.x(), y * tileHeight + offset.y());
+						collisionLayer[x][y].locate(
+								x * tileWidth + offset.x(), 
+								y * tileHeight + offset.y());
+						metaLayer[x][y].locate(
+								x * tileWidth + offset.x(), 
+								y * tileHeight + offset.y());
 					}
 				}
 			}
@@ -140,7 +162,7 @@ public class Map {
 	
 	public boolean collide(AbstractCollidable collidable, int offX, int offY, PositionVector move) {
 		if(offX < 0 || offY < 0 || offX >= width || offY >= height) {
-			return true;
+			return false; // really need to solve this issue
 		}
 		if(collisionLayer[offX][offY].value() == MetaTilesNumber.COLLISION) {
 			collisionLayer[offX][offY].locate(collisionLayer[offX][offY].x() - (int)move.x() - (int)offset().x(), collisionLayer[offX][offY].y() - (int)move.y() - (int)offset().y());
@@ -152,12 +174,44 @@ public class Map {
 		}
 	}
 	
-	public PositionVector move(AbstractEntity entity, PositionVector move) {
+	public boolean metaCollide(AbstractCollidable collidable, int offX, int offY) {
+		if(offX < 0 || offY < 0 || offX >= width || offY >= height) {
+			return false;
+		}
+		if(metaLayer[offX][offY].value() > 0) {
+			metaLayer[offX][offY].locate(metaLayer[offX][offY].x() - (int)offset().x(), metaLayer[offX][offY].y() - (int)offset().y());
+			boolean collide = metaLayer[offX][offY].rectangleCollide(collidable);
+			metaLayer[offX][offY].locate(metaLayer[offX][offY].x() + (int)offset().x(), metaLayer[offX][offY].y() + (int)offset().y());
+			return collide;
+		} else {
+			return false;
+		}
+	}
+	
+	public void handleMetaEvents(AbstractCollidable entity) {
+		int x = entity.mapX();
+		int y = entity.mapY();
+		// System.out.println("meta event: " + metaLayer[x][y].value());
+		switch(metaLayer[x][y].value()) {
+			case MetaTilesNumber.HOLE:
+				events.add(new LinkFallingMetaEvent());
+				break;
+		}
+		events.add(new LinkFallingMetaEvent());
+//		if(metaEvents.containsKey(metaLayer[x][y].value())) {
+//			IEvent event = metaEvents.get(metaLayer[x][y].value());
+//			if(event.ready()) {
+//				event.trigger();
+//			}
+//		}
+	}
+
+	public PositionVector move(AbstractCollidable entity, PositionVector move) {
 		if(move.x() == 0 && move.y() == 0) {
 			return move;
 		}
-		int x = entity.offsetX();
-		int y = entity.offsetY();
+		int x = entity.mapX();
+		int y = entity.mapY();
 		boolean collide = false;
 		if(move.x() > 0) {
 			if(x + 1 < width()) {
@@ -224,7 +278,7 @@ public class Map {
 		this.spriteSheet = spriteSheet;
 	}
 
-	public int metaLayer(int x, int y) {
+	public int collisionLayer(int x, int y) {
 		return collisionLayer[x][y].value();
 	}
 
@@ -232,7 +286,7 @@ public class Map {
 		if(x < 0 || y < 0 || x >= width || y >= height) {
 			return false;
 		}
-		if(metaLayer(x, y) != MetaTilesNumber.COLLISION) {
+		if(collisionLayer(x, y) != MetaTilesNumber.COLLISION) {
 			return true;
 		}
 		return false;
@@ -240,6 +294,22 @@ public class Map {
 	
 	public int entityOffset() {
 		return entityOffset;
+	}
+	
+	public void startX(int startX) {
+		this.startX = startX;
+	}
+	
+	public int startX() {
+		return startX;
+	}
+	
+	public void startY(int startY) {
+		this.startY = startY;
+	}
+	
+	public int startY() {
+		return startY;
 	}
 	
 	public int tileWidth() {

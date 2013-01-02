@@ -7,6 +7,8 @@ import engine.entity.AbstractEntity;
 
 public abstract class AbstractUsableEntity extends AbstractEntity {
 	
+	protected boolean using;
+	
 	public AbstractUsableEntity() {
 		super();
 	}

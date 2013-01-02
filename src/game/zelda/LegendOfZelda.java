@@ -15,6 +15,7 @@ import game.zelda.gamestates.PausedScreenGameLoop;
 import game.zelda.gamestates.TitleScreenGameLoop;
 import game.zelda.usables.Boomerang;
 import game.zelda.usables.BowAndArrow;
+import game.zelda.usables.Bracelet;
 import game.zelda.usables.MegatonHammer;
 import game.zelda.usables.Ocarina;
 import game.zelda.usables.SwordLevel1;
@@ -62,6 +63,7 @@ public class LegendOfZelda extends Game {
 		Game.sounds.set("enemy_die", new SoundEffect("sounds/effects/Oracle_Enemy_Die.wav"));
 		Game.sounds.set("link_hurt", new SoundEffect("sounds/effects/Oracle_Link_Hurt.wav"));
 		Game.sounds.set("link_die", new SoundEffect("sounds/effects/Oracle_Link_Dying.wav"));
+		Game.sounds.set("link_fall", new SoundEffect("sounds/effects/Oracle_Link_Fall.wav"));
 		Game.sounds.set("link_low_life", new LoopingSound("sounds/effects/Oracle_LowHealth.wav"));
 		Game.sounds.set("link_get_rupee", new SoundEffect("sounds/effects/Oracle_Get_Rupee.wav"));
 		Game.sounds.set("link_get_rupee5", new SoundEffect("sounds/effects/Oracle_Get_Rupee5.wav"));
@@ -73,6 +75,8 @@ public class LegendOfZelda extends Game {
 		Game.sounds.set("secret", new SoundEffect("sounds/effects/Oracle_Secret.wav"));
 		Game.sounds.set("menu_cursor", new SoundEffect("sounds/effects/Oracle_Menu_Cursor.wav"));
 		Game.sounds.set("menu_select", new SoundEffect("sounds/effects/Oracle_Menu_Select.wav"));	
+		Game.sounds.set("rock_shatter", new SoundEffect("sounds/effects/Oracle_Rock_Shatter.wav"));	
+		Game.sounds.set("bush_cut", new SoundEffect("sounds/effects/Oracle_Bush_Cut.wav"));	
 		
 		Game.usables.set("sword1", new SwordLevel1());
 		Game.usables.set("sword2", new SwordLevel2());
@@ -80,7 +84,8 @@ public class LegendOfZelda extends Game {
 		Game.usables.set("boomerang", new Boomerang());
 		Game.usables.set("bow", new BowAndArrow());
 		Game.usables.set("ocarina", new Ocarina());
-		Game.usables.set("megaton", new MegatonHammer()); // still working on
+		Game.usables.set("megaton", new MegatonHammer()); // still need to finess the graphics
+		Game.usables.set("bracelet", new Bracelet());
 		
 		gameLoops.put(GameStateEnum.TITLE_SCREEN, new TitleScreenGameLoop());
 		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());
@@ -112,6 +117,7 @@ public class LegendOfZelda extends Game {
 					gameLoops.get(GameStateEnum.PAUSED).run();
 					break;		
 				case DEAD:
+					gameLoops.get(GameStateEnum.MAIN).end();
 					gameState = GameStateEnum.TITLE_SCREEN;
 					break;
 				case END:

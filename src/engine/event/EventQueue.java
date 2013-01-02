@@ -4,35 +4,41 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class EventQueue {
 	
-	private List<AbstractEvent> events;
+	private List<IEvent> events;
 	
 	public EventQueue() {
-		events = new LinkedList<AbstractEvent>();
+		events = new LinkedList<IEvent>();
 	}
 	
-	public void add(AbstractEvent event) {
+	public void add(IEvent event) {
 		events.add(event);
 	}
 	
-	public void add(List<AbstractEvent> events) {
+	public void add(List<IEvent> events) {
 		this.events.addAll(events);
 	}
 	
-	public List<AbstractEvent> all() {
+	public List<IEvent> all() {
 		return events;
 	}
 	
 	public void handle() {
-		Iterator<AbstractEvent> iter = events.iterator();
+		//
+		Iterator<IEvent> iter = events.iterator();
 		while(iter.hasNext()) {
-			AbstractEvent event = iter.next();
+			IEvent event = iter.next();
 			if(event.ready()) {
-				event.deploy();
+				event.trigger();
 				iter.remove();
 			}
 		}
+	}
+
+	public int size() {
+		return events.size();
 	}
 
 }

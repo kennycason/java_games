@@ -156,7 +156,7 @@ public class TiledMapLoader {
 				y++;
 			}
 			gid = Integer.parseInt(tile.attr("gid"));
-			if (layer < 3) {
+			if (layer < 3) { 
 				map.renderLayers()[layer][x][y] = new RenderTile(map.spriteSheet()
 						.get(gid), gid);
 			} else if (layer == 3) {
@@ -177,10 +177,10 @@ public class TiledMapLoader {
 	}
 
 	private void buildLayerFromGZIP(int layer, String data) {
-		System.out.println("gzip");
-		System.out.println(data);
-		System.out.println(Base64Coder.decode(data));
-		System.out.println(ZLibUtils.inflate(Base64Coder.decode(data)));
+		LOGGER.error("gzip loader not programmed yet");
+		LOGGER.error(data);
+		LOGGER.error(Base64Coder.decode(data));
+		LOGGER.error(ZLibUtils.inflate(Base64Coder.decode(data)));
 		// @TOOD
 
 	}

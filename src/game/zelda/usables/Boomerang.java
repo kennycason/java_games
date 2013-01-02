@@ -13,13 +13,12 @@ import engine.sound.LoopingSound;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
+import game.zelda.Buttons;
 
 public class Boomerang extends AbstractWeapon {
 	
 	private AnimatedSprite sprite;
-	
-	private boolean using;
-	
+
 	private PositionVector move = new PositionVector();
 	
 	private int speed;
@@ -82,31 +81,41 @@ public class Boomerang extends AbstractWeapon {
 		y = game.link().y();
 		start.x(x);
 		start.y(y);
-		switch(game.link().face()) {
-			case NORTH:
-				move.set(0, -speed);
-				break;
-			case EAST:
-				move.set(speed, 0);
-				break;
-			case SOUTH:
-				move.set(0, speed);
-				break;
-			case WEST:
-				move.set(-speed, 0);
-				break;
-			case NORTH_EAST:
-				move.set(speedAngled, -speedAngled);
-				break;
-			case SOUTH_EAST:
-				move.set(speedAngled, speed - 1);
-				break;
-			case SOUTH_WEST:
-				move.set(-speedAngled, speedAngled);
-				break;
-			case NORTH_WEST:
-				move.set(-speedAngled, -speedAngled);
-				break;
+		if (game.keyboard().isKeyPressed(Buttons.RIGHT)
+				&& game.keyboard().isKeyPressed(Buttons.UP)) {
+			move.set(speedAngled, -speedAngled);
+		} else if (game.keyboard().isKeyPressed(Buttons.RIGHT)
+				&& game.keyboard().isKeyPressed(Buttons.DOWN)) {
+			move.set(speedAngled, speedAngled);
+		} else if (game.keyboard().isKeyPressed(Buttons.LEFT)
+				&& game.keyboard().isKeyPressed(Buttons.DOWN)) {
+			move.set(-speedAngled, speedAngled);
+		} else if (game.keyboard().isKeyPressed(Buttons.LEFT)
+				&& game.keyboard().isKeyPressed(Buttons.UP)) {
+			move.set(-speedAngled, -speedAngled);
+		} else if (game.keyboard().isKeyPressed(Buttons.UP)) {
+			move.set(0, -speed);
+		} else if (game.keyboard().isKeyPressed(Buttons.RIGHT)) {
+			move.set(speed, 0);
+		} else if (game.keyboard().isKeyPressed(Buttons.DOWN)) {
+			move.set(0, speed);
+		} else if (game.keyboard().isKeyPressed(Buttons.LEFT)) {
+			move.set(-speed, 0);
+		} else {
+			switch(game.link().face()) {
+				case NORTH:
+					move.set(0, -speed);
+					break;
+				case EAST:
+					move.set(speed, 0);
+					break;
+				case SOUTH:
+					move.set(0, speed);
+					break;
+				case WEST:
+					move.set(-speed, 0);
+					break;
+			}	
 		}
 	}
 	
@@ -190,6 +199,7 @@ public class Boomerang extends AbstractWeapon {
 	@Override
 	public void reset() {
 		using = false;
+		sound.stop();
 	}
 
 	@Override

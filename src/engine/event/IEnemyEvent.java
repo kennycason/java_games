@@ -1,5 +1,5 @@
 package engine.event;
 
-public interface IEnemyEvent {
+public interface IEnemyEvent extends IEvent {
 
 }

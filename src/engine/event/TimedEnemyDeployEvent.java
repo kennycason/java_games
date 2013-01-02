@@ -2,7 +2,7 @@ package engine.event;
 
 import engine.entity.enemy.AbstractEnemy;
 
-public class TimedEnemyDeployEvent extends AbstractTimedDeployableEvent implements IEnemyEvent {
+public class TimedEnemyDeployEvent extends AbstractTimedDeployableEvent {
 	
 	protected AbstractEnemy enemy;
 	
@@ -12,7 +12,7 @@ public class TimedEnemyDeployEvent extends AbstractTimedDeployableEvent implemen
 	}
 
 	@Override
-	public void deploy() {
+	public void trigger() {
 		game.map().enemies().add(enemy);
 	}
 

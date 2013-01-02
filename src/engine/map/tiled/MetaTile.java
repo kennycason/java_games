@@ -1,22 +1,28 @@
 package engine.map.tiled;
 
+import java.awt.Graphics2D;
 
-public class MetaTile implements ITile {
 
-	private int value;
+public class MetaTile extends AbstractTile {
 
 	public MetaTile(int value) {
-		this.value = value;
+		super(value);
+		collisionOffset = 0;
 	}
 
 	@Override
-	public int value() {
-		return value;
+	public int width() {
+		return 16;
 	}
-	
+
 	@Override
-	public void value(int value) {
-		this.value = value;
+	public int height() {
+		return 16;
 	}
-	
+
+	@Override
+	public void draw(Graphics2D g, int x, int y) {
+		locate(x, y);		
+	}
+
 }

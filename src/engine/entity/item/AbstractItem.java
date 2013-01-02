@@ -41,7 +41,7 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 				consume();
 			}
 		} else {
-			game.map().collisionLayer()[offsetX()][offsetY()].value(MetaTilesNumber.COLLISION);
+			game.map().collisionLayer()[mapX()][mapY()].value(MetaTilesNumber.COLLISION);
 		}
 	}
 	

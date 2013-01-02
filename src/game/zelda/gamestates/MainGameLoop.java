@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import engine.AbstractGameLoop;
 import engine.Game;
-import engine.GameStateEnum;
 import engine.entity.AbstractEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
@@ -28,14 +27,12 @@ public class MainGameLoop extends AbstractGameLoop {
 
 	@Override
 	public void run() {
-		if(game.link().dead()){ 
-			end();
-			game.gameState(GameStateEnum.DEAD);
-		}
-		
+	
 		if(System.currentTimeMillis() - lastRefresh >= refreshInterval) {
 			// handle game logic
-			game.link().keyBoard(game.keyboard());
+			if(game.link().canMove()) {
+				game.link().keyBoard(game.keyboard());
+			}
 			game.link().handle();
 			
 			// enemies
@@ -56,7 +53,8 @@ public class MainGameLoop extends AbstractGameLoop {
 					itemIter.remove();
 				}
 			}
-			// map event
+			
+			// handle map events
 			game.map().events().handle();
 			
 			// paint everything
@@ -89,7 +87,7 @@ public class MainGameLoop extends AbstractGameLoop {
 		game.link().draw(g);
 		game.map().drawTopLater(g);
 		menu.draw(g);
-		game.map().drawMetaLater(g); // doesn't really draw, just resets the positions
+		game.map().drawMetaLaters(g); // doesn't really draw, just resets the positions
 		g.dispose();
 	}
 	

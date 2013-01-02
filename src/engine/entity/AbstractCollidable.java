@@ -36,12 +36,28 @@ public abstract class AbstractCollidable {
 		this.y = y;
 	}
 	
+	/**
+	 * x position in tiled map array
+	 * @return
+	 */
+	public abstract int mapX();
+	
+	/**
+	 * y position in tiled map array
+	 * @return
+	 */
+	public abstract int mapY();
+	
 	public abstract int width();
 	
 	public abstract int height();
 	
 	public int collisionOffset() {
 		return collisionOffset;
+	}
+	
+	public void collisionOffset(int collisionOffset) {
+		this.collisionOffset = collisionOffset;
 	}
 	
 	public boolean rectangleCollide(AbstractCollidable entity) {

@@ -67,9 +67,15 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	 */
 	protected boolean dead = false;
 	
+	protected boolean canMove = true;
+	
+	protected boolean falling = false;
+	
 	protected AbstractSound hitSound;
 	
 	protected AbstractSound deadSound;
+	
+	protected AbstractSound fallSound;
 	
 	public AbstractLivingEntity() {
 		super();
@@ -124,13 +130,23 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 		return lastFace;
 	}
 	
+	
+	public void fall() {
+		canMove = false;
+		falling = true;
+		fallSound.play();
+	}
+
+	public boolean falling() {
+		return falling;
+	}
+	
 	public void hit(double damage) {
 		if(!invincible) {
 			hitSound.play();
 			life -= damage;
 			if(life <= 0) {
 				dead = true;
-				deadSound.play();
 			}
 			invincible = true;
 			lastTimeHit = System.currentTimeMillis();

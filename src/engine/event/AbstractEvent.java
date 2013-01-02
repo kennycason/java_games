@@ -3,7 +3,7 @@ package engine.event;
 import engine.Game;
 import engine.GameFactory;
 
-public abstract class AbstractEvent {
+public abstract class AbstractEvent implements IEvent {
 
 	protected Game game;
 	
@@ -13,10 +13,6 @@ public abstract class AbstractEvent {
 		happened = false;
 		game = GameFactory.get();
 	}
-	
-	public abstract void deploy();
-	
-	public abstract boolean ready();
 	
 	public boolean happened() {
 		return happened;

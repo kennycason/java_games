@@ -6,6 +6,7 @@ import java.util.Iterator;
 import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.usable.AbstractWeapon;
+import engine.map.tiled.MetaTilesNumber;
 import engine.sound.AbstractSound;
 import engine.sprite.AnimatedSprite;
 import engine.sprite.SpriteSheet;
@@ -22,8 +23,8 @@ public class MegatonHammer extends AbstractWeapon {
 	
 	private AbstractSound swingSound;
 	
-	private boolean using = false;
-
+	private AbstractSound crushSound;
+	
 	public MegatonHammer() {
 		super();
 		damage = 2;
@@ -32,13 +33,18 @@ public class MegatonHammer extends AbstractWeapon {
 		
 		spriteN = new AnimatedSprite(entities.range(772, 774), 50);
 		spriteN.oneCycle(true);
+		spriteN.collisionOffset(2);
 		spriteS = new AnimatedSprite(entities.range(672, 674), 50);
 		spriteS.oneCycle(true);
+		spriteS.collisionOffset(2);
 		spriteE = new AnimatedSprite(entities.range(722, 724), 50);
 		spriteE.oneCycle(true);
+		spriteE.collisionOffset(2);
 		spriteW = SpriteUtils.flipHorizontal(spriteE);
 		spriteW.oneCycle(true);
+		spriteW.collisionOffset(2);
 		swingSound = Game.sounds.get("sword_slash1");
+		crushSound = Game.sounds.get("rock_shatter");
 	}
 	
 	@Override
@@ -47,6 +53,18 @@ public class MegatonHammer extends AbstractWeapon {
 			return;
 		}
 		sprite.draw(g, renderX(), renderY());
+		// collide with rocks
+		int offX = game.link().mapX();
+		int offY = game.link().mapY();
+		smash(offX - 1, offY - 1); 
+		smash(offX, offY - 1); 
+		smash(offX + 1, offY - 1);
+		smash(offX - 1, offY); 
+		smash(offX, offY); 
+		smash(offX + 1, offY);
+		smash(offX - 1, offY + 1); 
+		smash(offX, offY + 1); 
+		smash(offX + 1, offY + 1);
 	}
 
 	@Override
@@ -78,22 +96,36 @@ public class MegatonHammer extends AbstractWeapon {
 		switch (game.link().face()) {
 			case NORTH:
 				sprite = spriteN;
-				locate(game.link().x(), game.link().y() - 9);
+				locate(game.link().x() - 2, game.link().y() - 9);
 				break;
 			case EAST:
 				sprite = spriteE;
-				locate(game.link().x() + 13, game.link().y());
+				locate(game.link().x() + 12, game.link().y() + 2);
 				break;
 			case SOUTH:
 				sprite = spriteS;
-				locate(game.link().x(), game.link().y() + 11);
+				locate(game.link().x() - 2, game.link().y() + 9);
 				break;
 			case WEST:
 				sprite = spriteW;
-				locate(game.link().x() + -12, game.link().y() );
+				locate(game.link().x() + -12, game.link().y() + 2);
 				break;
 		}
 		sprite.reset();
+	}
+	
+	private void smash(int x, int y) {
+		if(x < 0 || y < 0 || x >= game.map().width() || y >= game.map().height()) {
+			return;
+		}
+		if(game.map().metaLayer()[x][y].value() == MetaTilesNumber.ROCK) {
+			if(game.map().renderLayers()[1][x][y].rectangleCollide(sprite)) {
+				game.map().renderLayers()[1][x][y].value(0);
+				game.map().metaLayer()[x][y].value(0);
+				game.map().collisionLayer()[x][y].value(0);
+				crushSound.play();
+			}
+		}
 	}
 	
 	@Override

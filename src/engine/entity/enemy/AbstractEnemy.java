@@ -37,12 +37,15 @@ public abstract class AbstractEnemy extends AbstractLivingEntity {
 	@Override
 	public void hit(double damage) {
 		super.hit(damage);
-		if(dead() && dropItems()) {
-			for(AbstractItem item : dropItems) {
-				item.locate(x() + -width() / 2 + random.nextInt(width()), y() + -height() / 2 + random.nextInt(height()));
-				item.justDropped();
+		if(dead()) {
+			deadSound.play();
+			if(dropItems()) {
+				for(AbstractItem item : dropItems) {
+					item.locate(x() + -width() / 2 + random.nextInt(width()), y() + -height() / 2 + random.nextInt(height()));
+					item.justDropped();
+				}
+				game.map().items().addAll(dropItems);
 			}
-			game.map().items().addAll(dropItems);
 		}
 	}
 

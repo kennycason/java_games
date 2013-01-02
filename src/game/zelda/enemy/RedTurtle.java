@@ -11,7 +11,7 @@ import game.zelda.item.RupeeBlue;
 public class RedTurtle extends AbstractEnemy {
 
 	public RedTurtle(int x, int y) {
-		setAIStrategy(new AggressiveAIStrategy(this, 20, 0, 2, 500));
+		setAIStrategy(new AggressiveAIStrategy(this, 20, 0, 2, 400));
 		SpriteBank rsrcs = Game.sprites;
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
 		

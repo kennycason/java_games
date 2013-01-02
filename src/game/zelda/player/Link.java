@@ -23,14 +23,23 @@ public class Link extends AbstractLivingEntity {
 	private PositionVector mapPosition; // position in the map grid
 
 	protected PositionVector move = new PositionVector(0, 0);
-
-	private int accelerationRate;
+	
+	private int moveRate;
 
 	private int moveRateDiag;
 
 	private int rupees = 0;
 
 	private int maxRupees = 999;
+	
+	private int heartPieces = 0;
+	
+	/**
+	 * keys will be stored on a dungeon basis in future
+	 */
+	private int smallKeys = 5;
+	
+	private boolean bossKey = true;
 
 	private AbstractUsableEntity itemA;
 
@@ -66,15 +75,20 @@ public class Link extends AbstractLivingEntity {
 		items[2] = Game.usables.get("boomerang");
 		items[3] = Game.usables.get("ocarina");
 		items[4] = Game.usables.get("sword2");
-
+		items[5] = Game.usables.get("bracelet");
+		
 		itemA = Game.usables.get("bow");
 		itemB = Game.usables.get("sword3");
 
+		//game.map().startX(6 * game.map().tileWidth());
+		//game.map().startX(12 * game.map().tileHeight());
+		// game.map().locate(AbstractLivingEntity entity)
 		locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
+		game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());
 
 		mapPosition = new PositionVector();
 		move = new PositionVector();
-		accelerationRate = 4; // for horizontal & vertical directions
+		moveRate = 4; // for horizontal & vertical directions
 		moveRateDiag = 3; // for moving diagonally ~4.2 pixels
 
 		face = FaceDirection.EAST;
@@ -85,15 +99,39 @@ public class Link extends AbstractLivingEntity {
 		collisionOffset = 5;
 		deadSound = Game.sounds.get("link_die");
 		hitSound = Game.sounds.get("link_hurt");
+		fallSound = Game.sounds.get("link_fall");
 		lowHeartsSound = (LoopingSound) Game.sounds.get("link_low_life");
 	}
 
 	@Override
 	public void handle() {
-		if (dead()) {
-			game.gameState(GameStateEnum.DEAD);
+		if (dead) {
 			lowHeartsSound.stop();
+			deadSound.play();
+			game.sleep(2000);
+			game.gameState(GameStateEnum.DEAD);
+			return;
 		}
+		
+		if(falling()) {
+			System.out.println("fall");
+			// do some animations
+			falling = false;
+			canMove = true;
+			fallSound.play();
+			if (itemA() != null) {
+				itemA().reset();
+			}
+			if (itemB() != null) {
+				itemB().reset();
+			}
+			game.sleep(1500);
+			game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());
+			locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
+			// locate(game.map().startX(), game.map().startY());
+			hit(1);
+		}
+		
 		if (itemA() != null) {
 			itemA().handle();
 		}
@@ -115,11 +153,6 @@ public class Link extends AbstractLivingEntity {
 			AbstractEnemy entity = iter.next();
 			if (rectangleCollide(entity)) {
 				hit(entity.damage());
-				if (life() <= 3 && maxLife() > 6) {
-					if (!lowHeartsSound.playing()) {
-						lowHeartsSound.play();
-					}
-				}
 			}
 		}
 
@@ -135,61 +168,60 @@ public class Link extends AbstractLivingEntity {
 		}
 		super.draw(g);
 	}
-
+	
 	public void keyBoard(KeyBoard kb) {
 		move.set(0, 0);
 		// handle angles first
-		if (kb.isKeyPressed(Buttons.RIGHT) && kb.isKeyPressed(Buttons.UP)) {
-			move.set(moveRateDiag,-moveRateDiag); 
-			if (kb.keyPressedTime(Buttons.RIGHT) < kb.keyPressedTime(Buttons.UP)) {
+		if(canMove) {
+			if (kb.isKeyPressed(Buttons.RIGHT) && kb.isKeyPressed(Buttons.UP)) {
+				move.set(moveRateDiag,-moveRateDiag); 
+				if (kb.keyPressedTime(Buttons.RIGHT) < kb.keyPressedTime(Buttons.UP)) {
+					face(FaceDirection.EAST);
+				} else {
+					face(FaceDirection.NORTH);
+				}
+			} else if (kb.isKeyPressed(Buttons.RIGHT) && kb.isKeyPressed(Buttons.DOWN)) {
+				move.set(moveRateDiag, moveRateDiag); 
+				if (kb.keyPressedTime(Buttons.RIGHT) < kb.keyPressedTime(Buttons.DOWN)) {
+					face(FaceDirection.EAST);
+				} else {
+					face(FaceDirection.SOUTH);
+				}
+			} else if (kb.isKeyPressed(Buttons.LEFT) && kb.isKeyPressed(Buttons.UP)) {
+				move.set(-moveRateDiag, -moveRateDiag); 
+				if (kb.keyPressedTime(Buttons.LEFT) < kb.keyPressedTime(Buttons.UP)) {
+					face(FaceDirection.WEST);
+				} else {
+					face(FaceDirection.NORTH);
+				}
+			} else if (kb.isKeyPressed(Buttons.LEFT)&& kb.isKeyPressed(Buttons.DOWN)) {
+				move.set(-moveRateDiag, moveRateDiag);
+				if (kb.keyPressedTime(Buttons.LEFT) < kb.keyPressedTime(Buttons.DOWN)) {
+					face(FaceDirection.WEST);
+				} else {
+					face(FaceDirection.SOUTH);
+				}
+			} else if (kb.isKeyPressed(Buttons.RIGHT)) {
+				move.set(moveRate, 0);
 				face(FaceDirection.EAST);
-			} else {
+			} else if (kb.isKeyPressed(Buttons.LEFT)) {
+				move.set(-moveRate, 0);
+				face(FaceDirection.WEST);
+			} else if (kb.isKeyPressed(Buttons.UP)) {
+				move.set(0, -moveRate);
 				face(FaceDirection.NORTH);
-			}
-			face = FaceDirection.NORTH_EAST;
-		} else if (kb.isKeyPressed(Buttons.RIGHT) && kb.isKeyPressed(Buttons.DOWN)) {
-			move.set(moveRateDiag, moveRateDiag); 
-			if (kb.keyPressedTime(Buttons.RIGHT) < kb.keyPressedTime(Buttons.DOWN)) {
-				face(FaceDirection.EAST);
-			} else {
+			} else if (kb.isKeyPressed(Buttons.DOWN)) {
+				move.set(0, moveRate);
 				face(FaceDirection.SOUTH);
 			}
-			face = FaceDirection.SOUTH_EAST;
-		} else if (kb.isKeyPressed(Buttons.LEFT) && kb.isKeyPressed(Buttons.UP)) {
-			move.set(-moveRateDiag, -moveRateDiag); 
-			if (kb.keyPressedTime(Buttons.LEFT) < kb.keyPressedTime(Buttons.UP)) {
-				face(FaceDirection.WEST);
-			} else {
-				face(FaceDirection.NORTH);
-			}
-			face = FaceDirection.NORTH_WEST;
-		} else if (kb.isKeyPressed(Buttons.LEFT)&& kb.isKeyPressed(Buttons.DOWN)) {
-			move.set(-moveRateDiag, moveRateDiag);
-			if (kb.keyPressedTime(Buttons.LEFT) < kb.keyPressedTime(Buttons.DOWN)) {
-				face(FaceDirection.WEST);
-			} else {
-				face(FaceDirection.SOUTH);
-			}
-			face = FaceDirection.SOUTH_WEST;
-		} else if (kb.isKeyPressed(Buttons.RIGHT)) {
-			move.set(accelerationRate, 0);
-			face(FaceDirection.EAST);
-		} else if (kb.isKeyPressed(Buttons.LEFT)) {
-			move.set(-accelerationRate, 0);
-			face(FaceDirection.WEST);
-		} else if (kb.isKeyPressed(Buttons.UP)) {
-			move.set(0, -accelerationRate);
-			face(FaceDirection.NORTH);
-		} else if (kb.isKeyPressed(Buttons.DOWN)) {
-			move.set(0, accelerationRate);
-			face(FaceDirection.SOUTH);
 		}
 
 		// update position on grid
 		if (move.x() != 0 || move.y() != 0) {
+			game.map().handleMetaEvents(this);
 			move = game.map().move(this, move);
 			game.map().offset().subtract(move);
-			mapPosition.set(offsetX(), offsetX());
+			mapPosition.set(mapX(), mapX());
 			x += move.x();
 			y += move.y();
 		}
@@ -242,7 +274,18 @@ public class Link extends AbstractLivingEntity {
 			game.gameState(GameStateEnum.END);
 		}
 	}
+	
+	@Override
+	public void hit(double damage) {
+		super.hit(damage);
+		if (life() <= 3 && maxLife() > 6) {
+			if (!lowHeartsSound.playing()) {
+				lowHeartsSound.play();
+			}
+		}
+	}
 
+	@Override
 	public void life(double life) {
 		super.life(life);
 		if (life() > 3) {
@@ -271,10 +314,22 @@ public class Link extends AbstractLivingEntity {
 	}
 
 	public void rupees(int rupees) {
-		this.rupees = rupees;
 		if (rupees < maxRupees) {
 			rupees = maxRupees;
 		}
+		this.rupees = rupees;
+	}
+	
+	public int heartPieces() {
+		return heartPieces;
+	}
+
+	public void heartPieces(int heartPieces) {
+		if (heartPieces >= 4) {
+			heartPieces = 0;
+			maxLife++;
+		}
+		this.heartPieces = heartPieces;
 	}
 
 	public int maxRupees() {
@@ -283,6 +338,30 @@ public class Link extends AbstractLivingEntity {
 
 	public void maxRupees(int maxRupees) {
 		this.maxRupees = maxRupees;
+	}
+	
+	public boolean canMove() {
+		return canMove;
+	}
+	
+	public void canMove(boolean canMove) {
+		this.canMove = canMove;
+	}
+	
+	public boolean bossKey() {
+		return bossKey;
+	}
+	
+	public void bossKey(boolean bossKey) {
+		this.bossKey = bossKey;
+	}
+	
+	public int smallKeys() {
+		return smallKeys;
+	}
+	
+	public void smallKeys(int smallKeys) {
+		this.smallKeys = smallKeys;
 	}
 
 	@Override
