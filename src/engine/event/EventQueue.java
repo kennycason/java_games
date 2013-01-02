@@ -26,8 +26,6 @@ public class EventQueue {
 	}
 	
 	public void handle() {
-		//
-		System.out.println("events: " + events.size());
 		Iterator<IEvent> iter = events.iterator();
 		while(iter.hasNext()) {
 			IEvent event = iter.next();

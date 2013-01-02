@@ -3,7 +3,7 @@ package engine.map.tiled;
 import java.awt.Graphics2D;
 
 public class CollisionTile extends AbstractTile {
-
+	
 	public CollisionTile(int value) {
 		super(value);
 		locate(-1, -1);

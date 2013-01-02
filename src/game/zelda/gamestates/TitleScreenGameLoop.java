@@ -84,20 +84,20 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 
 		game.map(loader.load("maps/real.tmx"));
 
-//		game.map().events().add(new EnemyDeployEvent(new LikeLike(4, 7)));
-//		game.map().events().add(new EnemyDeployEvent(new Octorok(9, 10)));
-//		game.map().events().add(new EnemyDeployEvent(new LikeLike(12, 19)));
-//		game.map().events().add(new EnemyDeployEvent(new LikeLike(19, 9)));
-//		game.map().events().add(new EnemyDeployEvent(new RedTurtle(15, 10)));
-//		
-//		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 10), 10000));
-//		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 11), 10000));
-//		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 12), 10000));
-//		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(5, 14), 10000));
-//		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(7, 14), 10000));
-//		
-//		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new RupeeGold(), 25, 11)));
-//		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new HeartPiece(), 26, 11)));
+		game.map().events().add(new EnemyDeployEvent(new LikeLike(4, 7)));
+		game.map().events().add(new EnemyDeployEvent(new Octorok(9, 10)));
+		game.map().events().add(new EnemyDeployEvent(new LikeLike(12, 19)));
+		game.map().events().add(new EnemyDeployEvent(new LikeLike(19, 9)));
+		game.map().events().add(new EnemyDeployEvent(new RedTurtle(15, 10)));
+		
+		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 10), 10000));
+		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 11), 10000));
+		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 12), 10000));
+		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(5, 14), 10000));
+		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(7, 14), 10000));
+		
+		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new RupeeGold(), 25, 11)));
+		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new HeartPiece(), 26, 11)));
 		
 		game.map().items().add(new FullHeart(4, 10));
 		game.map().items().add(new HeartPiece(9, 3));
