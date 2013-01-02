@@ -45,7 +45,6 @@ public class BasicDialog extends AbstractDialog {
 					g.dispose();
 					game.screenPanel().repaint();
 					
-					System.out.println(currentChar + " < " + pages[page].length() + " : " + pages[page]);
 					lastDraw = System.currentTimeMillis();
 					if(currentChar >= pages[page].length()) {
 						phase = 2;
