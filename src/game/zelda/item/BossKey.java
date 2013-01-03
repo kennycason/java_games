@@ -27,6 +27,7 @@ public class BossKey extends AbstractItem {
 	@Override
 	public void consume() {
 		consumed = true;
+		game.link().bossKey(true);
 		sound.play();
 	}
 

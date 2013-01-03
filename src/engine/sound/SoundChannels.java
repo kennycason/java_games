@@ -22,7 +22,7 @@ public class SoundChannels {
 	
 	public static SoundChannels getInstance() {
 		if(INSTANCE == null) {
-			INSTANCE = new SoundChannels(20);
+			INSTANCE = new SoundChannels(25);
 		}
 		return INSTANCE;
 	}

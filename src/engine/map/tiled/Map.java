@@ -8,6 +8,7 @@ import engine.Game;
 import engine.entity.AbstractCollidable;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
+import engine.event.AbstractEvent;
 import engine.event.EventQueue;
 import engine.math.PositionVector;
 import engine.sprite.SimpleSprite;
@@ -68,7 +69,10 @@ public class Map {
     
     private EventQueue events;
     
-    //private HashMap<Integer, IEvent> metaEvents;
+    /**
+     * used to for an event to add events to event queue and avoid ConcurrentModificationException
+     */
+    private List<AbstractEvent> newEvents;
     
     // private final static Logger LOGGER = Logger.getLogger(Map.class);
     
@@ -85,6 +89,7 @@ public class Map {
 		items = new LinkedList<AbstractItem>();
 		//metaEvents = new HashMap<Integer, IEvent>();
 		events = new EventQueue();
+		newEvents = new LinkedList<AbstractEvent>();
 		startX = 0;
 		startY = 0;
 		// look to decouple this later, still experimenting with a good way of handling map events
@@ -361,6 +366,10 @@ public class Map {
 	
 	public EventQueue events() {
 		return events;
+	}
+	
+	public List<AbstractEvent> newEvents() {
+		return newEvents;
 	}
 	
 }

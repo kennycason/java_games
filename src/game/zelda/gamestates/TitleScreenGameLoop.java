@@ -8,13 +8,13 @@ import engine.AbstractGameLoop;
 import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.usable.AbstractUsableEntity;
+import engine.event.ConsumeItemEvent;
 import engine.event.EnemiesDeadItemAppearEvent;
 import engine.event.EnemyDeployEvent;
 import engine.event.TimedDialogDeployEvent;
 import engine.event.TimedEnemyDeployEvent;
 import engine.map.tiled.TiledMapLoader;
 import engine.sound.LoopingSound;
-import engine.sound.SoundChannels;
 import engine.sprite.SimpleSprite;
 import game.zelda.Buttons;
 import game.zelda.dialog.ZeldaDialog;
@@ -86,7 +86,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 
 		game.map(loader.load("maps/real.tmx"));
 		
-		game.map().events().add(new TimedDialogDeployEvent(new ZeldaDialog("This is a test message."), 500));
+		game.map().events().add(new TimedDialogDeployEvent(new ZeldaDialog("Welcome to my Zelda clone.\nIt's still rough so be patient. :)"), 500));
 
 		game.map().events().add(new EnemyDeployEvent(new LikeLike(4, 7)));
 		game.map().events().add(new EnemyDeployEvent(new Octorok(9, 10)));
@@ -95,29 +95,33 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		game.map().events().add(new EnemyDeployEvent(new RedTurtle(15, 10)));
 		
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 10), 10000));
-		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 11), 10000));
-		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 12), 10000));
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(5, 14), 10000));
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(7, 14), 10000));
 		
-		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new RupeeGold(), 25, 11)));
-		game.map().events().add(new EnemiesDeadItemAppearEvent(new TreasureChest(new HeartPiece(), 26, 11)));
-		
+		game.map()
+				.events()
+				.add(new EnemiesDeadItemAppearEvent(new TreasureChest(25, 11,
+						new ZeldaDialog("Found A Gold Rupee! Joy!"),
+						new ConsumeItemEvent(new RupeeGold()))));
+		game.map()
+				.events()
+				.add(new EnemiesDeadItemAppearEvent(new TreasureChest(26, 11,
+						new ZeldaDialog("Found A HeartPiece!\nCollect 4 pieces to gain a heart"),
+						new ConsumeItemEvent(new HeartPiece()))));
+
 		game.map().items().add(new FullHeart(4, 10));
 		game.map().items().add(new HeartPiece(9, 3));
 		game.map().items().add(new HeartPiece(10, 3));
 		game.map().items().add(new HeartPiece(11, 3));
-		game.map().items().add(new TreasureChest(new FullHeart(), 2, 8));		
+		game.map().items().add(new TreasureChest(2, 8, 
+				new ZeldaDialog("Found A Full Heart!\nLife increased by one!"),
+				new ConsumeItemEvent(new FullHeart())
+		));	
 		
 		game.link(new Link());
 		
 		// stop all looping sounds
-		for(String soundId : Game.sounds.all().keySet()) {
-			if(Game.sounds.get(soundId) instanceof LoopingSound) {
-				((LoopingSound) Game.sounds.get(soundId)).stop();
-			}
-		}
-		SoundChannels.getInstance().stopAll();
+		Game.sounds.stopAll();
 		
 		for(String key : Game.usables.all().keySet()) {
 			AbstractUsableEntity entity = Game.usables.get(key);

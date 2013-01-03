@@ -27,6 +27,7 @@ public class SmallKey extends AbstractItem {
 	@Override
 	public void consume() {
 		consumed = true;
+		game.link().smallKeys(game.link().smallKeys() + 1);
 		sound.play();
 	}
 

@@ -9,8 +9,7 @@ public class ZeldaDialog extends BasicDialog {
 	}
 
 	public ZeldaDialog(String[] text) {
-		super(text, 10, 130, 220, 100, 30);
-		textSpeed = 100;
+		super(text, 10, 40, 220, 52, 50);
 	}
 	
 }

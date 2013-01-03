@@ -29,5 +29,14 @@ public class SoundBank {
 	public HashMap<String, AbstractSound> all() {
 		return resources;
 	}
+
+	public void stopAll() {
+		for(String soundId : all().keySet()) {
+			if(get(soundId) instanceof LoopingSound) {
+				((LoopingSound) get(soundId)).stop();
+			}
+		}
+		SoundChannels.getInstance().stopAll();
+	}
 	
 }
