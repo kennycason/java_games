@@ -89,8 +89,9 @@ public class Link extends AbstractLivingEntity {
 		itemB = Game.usables.get("sword3");
 		
 		mapPosition = new PositionVector();
-		mapStartPosition = new PositionVector(8, 8);
-		drawOffset = new PositionVector(8 * width(), 8 * height());
+		drawOffset = new PositionVector(); 
+		
+		mapStartPosition = new PositionVector(7, 6);
 		
 		setAbsoluteLocation(mapStartPosition);
 		
@@ -113,6 +114,7 @@ public class Link extends AbstractLivingEntity {
 		mapPosition.set(position.x(), position.y());
 		locate(mapPosition.x() * game.map().tileWidth(), mapPosition.y() * game.map().tileHeight());
 		game.map().offset().set(0 * game.map().tileWidth(), 0 *  game.map().tileHeight());
+		drawOffset.set(position.x() * width(), position.y() * height());
 	}
 
 	@Override
@@ -245,11 +247,23 @@ public class Link extends AbstractLivingEntity {
 		if (move.x() != 0 || move.y() != 0) {
 			game.map().handleMetaEvents(this);
 			move = game.map().move(this, move);
+			
 			// add smart logic to scroll map or move link
-			game.map().offset().subtract(move);
-			mapPosition.set(mapX(), mapX());
-			x += move.x();
-			y += move.y();
+			if(x < 10 * 16) {
+				drawOffset.x(drawOffset.x() + move.x());
+				x += move.x();
+			} else {
+				game.map().offset().x(game.map().offset().x() - move.x());
+				x += move.x();
+			}
+			if(y < 7 * 16 - 8) { // offset 8 for top menu
+				drawOffset.y(drawOffset.y() + move.y());
+				y += move.y();
+			} else {
+				game.map().offset().y(game.map().offset().y() - move.y());
+				y += move.y();
+			}
+			mapPosition.set(mapX(), mapY());
 		}
 
 		if (kb.isKeyPressed(Buttons.ITEM_B)) {
