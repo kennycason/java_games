@@ -37,7 +37,7 @@ public class TreasureChest extends AbstractItem {
 				openSound.play();
 				open = true;
 				for(AbstractEvent event : events) {
-					game.map().newEvents().add(event);
+					game.map().events().add(event);
 				}
 			}
 		}

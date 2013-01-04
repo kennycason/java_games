@@ -57,8 +57,6 @@ public class Map {
 	
 	private PositionVector offset; // on screen
 	
-	private int entityOffset = 8;
-
 	private TiledSpriteSheet spriteSheet;
 
     private SimpleSprite bg;
@@ -68,12 +66,7 @@ public class Map {
     private List<AbstractItem> items;
     
     private EventQueue events;
-    
-    /**
-     * used to for an event to add events to event queue and avoid ConcurrentModificationException
-     */
-    private List<AbstractEvent> newEvents;
-    
+       
     // private final static Logger LOGGER = Logger.getLogger(Map.class);
     
 	public Map(int width, int height, int tileWidth, int tileHeight) {
@@ -87,13 +80,10 @@ public class Map {
 		metaLayer = new MetaTile[width][height];
 		enemies = new LinkedList<AbstractEnemy>();
 		items = new LinkedList<AbstractItem>();
-		//metaEvents = new HashMap<Integer, IEvent>();
 		events = new EventQueue();
-		newEvents = new LinkedList<AbstractEvent>();
 		startX = 0;
 		startY = 0;
 		// look to decouple this later, still experimenting with a good way of handling map events
-		//metaEvents.put(MetaTilesNumber.HOLE, new LinkFallingMetaEvent());
 	}
 	
 	public void drawBackground(Graphics2D g) {
@@ -296,10 +286,6 @@ public class Map {
 		return false;
 	}
 	
-	public int entityOffset() {
-		return entityOffset;
-	}
-	
 	public void startX(int startX) {
 		this.startX = startX;
 	}
@@ -366,10 +352,6 @@ public class Map {
 	
 	public EventQueue events() {
 		return events;
-	}
-	
-	public List<AbstractEvent> newEvents() {
-		return newEvents;
 	}
 	
 }

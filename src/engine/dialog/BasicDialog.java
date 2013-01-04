@@ -57,7 +57,7 @@ public class BasicDialog extends AbstractDialog {
 					lastDraw = System.currentTimeMillis();
 					if(currentChar >= pages[page].length()) {
 						phase = 2;
-						game.sleep(150);
+						game.sleep(200);
 						pageFinished.play();
 					}
 					currentChar++;

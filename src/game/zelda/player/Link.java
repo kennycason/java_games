@@ -366,12 +366,12 @@ public class Link extends AbstractLivingEntity {
 
 	@Override
 	public int renderX() {
-		return game.map().tileWidth() * game.map().entityOffset();
+		return game.map().tileWidth() * 8;
 	}
 
 	@Override
 	public int renderY() {
-		return game.map().tileHeight() * game.map().entityOffset();
+		return game.map().tileHeight() * 8;
 	}
 
 	public void attackFace(FaceDirection face) {
