@@ -52,7 +52,7 @@ public class MegatonHammer extends AbstractWeapon {
 		if(!using) {
 			return;
 		}
-		sprite.draw(g, renderX(), renderY());
+		sprite.draw(g, x() + game.map().offset().x(), y() + game.map().offset().y());
 		// collide with rocks
 		int offX = game.link().mapX();
 		int offY = game.link().mapY();

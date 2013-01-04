@@ -22,18 +22,6 @@ public abstract class AbstractEntity extends AbstractCollidable {
 	
 	public abstract void draw(Graphics2D g);
 	
-	/**
-	 * default render X and Y
-	 * @return
-	 */
-	public int renderX() {
-		return x() + (int)game.map().offset().x();
-	}
-	
-	public int renderY() {
-		return y() + (int)game.map().offset().y();
-	}
-	
 	public abstract void handle();
 	
 	public void reset() {

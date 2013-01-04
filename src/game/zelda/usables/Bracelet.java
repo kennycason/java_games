@@ -25,7 +25,7 @@ public class Bracelet extends AbstractUsableEntity {
 		if(!using) {
 			return;
 		}
-		//sprite.draw(g, renderX() , renderY());
+		//sprite.draw(g, x() + game.map().offset().x(), y() + game.map().offset().x());
 	}
 	
 	public void use() {

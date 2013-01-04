@@ -48,7 +48,7 @@ public class BabyWorm extends AbstractEnemy {
 	public void draw(Graphics2D g) {
 		tail2.draw(g);
 		tail1.draw(g);
-		spriteCurrent.draw(g, renderX(), renderY());
+		spriteCurrent.draw(g, x(), y());
 		System.out.println("last face: " + lastFace() + " face: " + face());
 	}
 	
@@ -89,7 +89,7 @@ public class BabyWorm extends AbstractEnemy {
 		
 		@Override
 		public void draw(Graphics2D g) {
-			sprite.draw(g, renderX(), renderY());
+			sprite.draw(g, x(), y());
 		}
 		
 	}

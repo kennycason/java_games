@@ -8,7 +8,6 @@ import engine.Game;
 import engine.entity.AbstractCollidable;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
-import engine.event.AbstractEvent;
 import engine.event.EventQueue;
 import engine.math.PositionVector;
 import engine.sprite.SimpleSprite;
@@ -83,7 +82,6 @@ public class Map {
 		events = new EventQueue();
 		startX = 0;
 		startY = 0;
-		// look to decouple this later, still experimenting with a good way of handling map events
 	}
 	
 	public void drawBackground(Graphics2D g) {
@@ -353,5 +351,5 @@ public class Map {
 	public EventQueue events() {
 		return events;
 	}
-	
+
 }

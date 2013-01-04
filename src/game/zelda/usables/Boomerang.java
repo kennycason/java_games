@@ -65,7 +65,7 @@ public class Boomerang extends AbstractWeapon {
 		if(!using) {
 			return;
 		}
-		sprite.draw(g, renderX() , renderY());
+		sprite.draw(g, x() + game.map().offset().x(), y() + game.map().offset().y());
 	}
 	
 	public void use() {

@@ -14,6 +14,7 @@ import engine.keyboard.KeyBoard;
 import engine.math.PositionVector;
 import engine.sound.LoopingSound;
 import engine.sprite.AnimatedSprite;
+import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 import game.zelda.Buttons;
@@ -21,7 +22,11 @@ import game.zelda.Buttons;
 public class Link extends AbstractLivingEntity {
 
 	private PositionVector mapPosition; // position in the map grid
-
+	
+	private PositionVector mapStartPosition;
+	
+	private PositionVector drawOffset;
+	
 	protected PositionVector move = new PositionVector(0, 0);
 	
 	private int moveRate;
@@ -65,9 +70,12 @@ public class Link extends AbstractLivingEntity {
 		spriteS = new AnimatedSprite(sheet.range(0, 1), 200);
 
 		attackE = new AnimatedSprite(sheet.range(6, 6), 0);
-		attackW = SpriteUtils.flipHorizontal(spriteE);
+		attackW = SpriteUtils.flipHorizontal(attackE);
 		attackN = new AnimatedSprite(sheet.range(51, 51), 0);
 		attackS = new AnimatedSprite(sheet.range(50, 50), 0);
+		
+		face = FaceDirection.EAST;
+		spriteCurrent = spriteE;
 
 		items = new AbstractUsableEntity[16];
 		items[0] = Game.usables.get("megaton");
@@ -79,28 +87,32 @@ public class Link extends AbstractLivingEntity {
 		
 		itemA = Game.usables.get("bow");
 		itemB = Game.usables.get("sword3");
-
-		//game.map().startX(6 * game.map().tileWidth());
-		//game.map().startX(12 * game.map().tileHeight());
-		// game.map().locate(AbstractLivingEntity entity)
-		locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
-		game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());
-
+		
+		mapPosition = new PositionVector();
+		mapStartPosition = new PositionVector(8, 8);
+		drawOffset = new PositionVector(8 * width(), 8 * height());
+		
+		setAbsoluteLocation(mapStartPosition);
+		
 		mapPosition = new PositionVector();
 		move = new PositionVector();
 		moveRate = 4; // for horizontal & vertical directions
 		moveRateDiag = 3; // for moving diagonally ~4.2 pixels
 
-		face = FaceDirection.EAST;
-		spriteCurrent = spriteE;
 		invincibleTime = 500;
 		life = 3;
-		maxLife = 4;
+		maxLife = 3;
 		collisionOffset = 5;
 		deadSound = Game.sounds.get("link_die");
 		hitSound = Game.sounds.get("link_hurt");
 		fallSound = Game.sounds.get("link_fall");
 		lowHeartsSound = (LoopingSound) Game.sounds.get("link_low_life");
+	}
+
+	private void setAbsoluteLocation(PositionVector position) {
+		mapPosition.set(position.x(), position.y());
+		locate(mapPosition.x() * game.map().tileWidth(), mapPosition.y() * game.map().tileHeight());
+		game.map().offset().set(0 * game.map().tileWidth(), 0 *  game.map().tileHeight());
 	}
 
 	@Override
@@ -114,7 +126,6 @@ public class Link extends AbstractLivingEntity {
 		}
 		
 		if(falling()) {
-			System.out.println("fall");
 			// do some animations
 			falling = false;
 			canMove = true;
@@ -126,9 +137,7 @@ public class Link extends AbstractLivingEntity {
 				itemB().reset();
 			}
 			game.sleep(1500);
-			game.map().offset().set(2 * game.map().tileWidth(), -4 *  game.map().tileHeight());
-			locate(6 * game.map().tileWidth(), 12 * game.map().tileHeight());
-			// locate(game.map().startX(), game.map().startY());
+			setAbsoluteLocation(mapStartPosition);
 			hit(1);
 		}
 		
@@ -166,7 +175,23 @@ public class Link extends AbstractLivingEntity {
 		if (itemB() != null) {
 			itemB().draw(g);
 		}
-		super.draw(g);
+		if(!invincible) {
+			spriteCurrent.draw(g, drawOffset.x(), drawOffset.y());
+		} else {
+			if(flicker) {
+				// @TODO find better way to do this without creating a new sprite each time
+				SimpleSprite neg = SpriteUtils.negative(spriteCurrent.currentSprite());
+				neg.draw(g, drawOffset.x(), drawOffset.y());
+				neg = null;	
+				flicker = false;
+				flickerCount++;
+			} else {
+				spriteCurrent.draw(g, drawOffset.x(), drawOffset.y());
+				if(flickerCount < maxFlickerCount) {
+					flicker = true;
+				}
+			}	
+		}
 	}
 	
 	public void keyBoard(KeyBoard kb) {
@@ -220,6 +245,7 @@ public class Link extends AbstractLivingEntity {
 		if (move.x() != 0 || move.y() != 0) {
 			game.map().handleMetaEvents(this);
 			move = game.map().move(this, move);
+			// add smart logic to scroll map or move link
 			game.map().offset().subtract(move);
 			mapPosition.set(mapX(), mapX());
 			x += move.x();
@@ -364,16 +390,6 @@ public class Link extends AbstractLivingEntity {
 		this.smallKeys = smallKeys;
 	}
 
-	@Override
-	public int renderX() {
-		return game.map().tileWidth() * 8;
-	}
-
-	@Override
-	public int renderY() {
-		return game.map().tileHeight() * 8;
-	}
-
 	public void attackFace(FaceDirection face) {
 		this.face = face;
 		switch (face) {
@@ -390,6 +406,10 @@ public class Link extends AbstractLivingEntity {
 			spriteCurrent = attackW;
 			break;
 		}
+	}
+	
+	public PositionVector drawOffset() {
+		return drawOffset;
 	}
 
 	public AbstractUsableEntity[] items() {

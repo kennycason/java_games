@@ -84,17 +84,17 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 	@Override
 	public void draw(Graphics2D g) {
 		if(!invincible) {
-			spriteCurrent.draw(g, renderX(), renderY());
+			spriteCurrent.draw(g, x() + game.map().offset().x(), y() + game.map().offset().y());
 		} else {
 			if(flicker) {
 				// @TODO find better way to do this without creating a new sprite each time
 				SimpleSprite neg = SpriteUtils.negative(spriteCurrent.currentSprite());
-				neg.draw(g, renderX(), renderY());
+				neg.draw(g, x() + game.map().offset().x(), y() + game.map().offset().y());
 				neg = null;	
 				flicker = false;
 				flickerCount++;
 			} else {
-				spriteCurrent.draw(g, renderX(), renderY());
+				spriteCurrent.draw(g, x() + game.map().offset().x(), y() + game.map().offset().y());
 				if(flickerCount < maxFlickerCount) {
 					flicker = true;
 				}

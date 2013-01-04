@@ -9,8 +9,15 @@ public class PositionVector {
 	public PositionVector() {
 		this(0, 0);
 	}
+	
 	public PositionVector(int x, int y) {
 		set(x, y);
+	}
+	
+	public PositionVector(PositionVector pv) {
+		if(pv != null) {
+			set(pv.x(), pv.y());
+		}
 	}
 	
 	public void set(int x, int y) {

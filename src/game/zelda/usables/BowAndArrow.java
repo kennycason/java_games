@@ -106,9 +106,9 @@ public class BowAndArrow extends AbstractWeapon {
 					break;
 				}
 			}	
-			
-			if(arrow.renderX() < -arrow.width() || arrow.renderX() > Game.SCREEN_WIDTH ||
-					arrow.renderY() < -arrow.height() || arrow.renderY() > Game.SCREEN_HEIGHT) {
+			int dX = arrow.x() + game.map().offset().x();
+			int dY = arrow.y() + game.map().offset().y();
+			if(dX < -arrow.width() || dX > Game.SCREEN_WIDTH || dY < -arrow.height() || dY > Game.SCREEN_HEIGHT) {
 				removeArrow = true;
 			}
 			if(removeArrow) {
@@ -156,7 +156,7 @@ public class BowAndArrow extends AbstractWeapon {
 
 		@Override
 		public void draw(Graphics2D g) {
-			sprite.draw(g, renderX(), renderY());
+			sprite.draw(g, x() + game.map().offset().x(), y() + game.map().offset().y());
 		}
 		
 	}
@@ -177,6 +177,11 @@ public class BowAndArrow extends AbstractWeapon {
 	
 	public void numArrows(int numArrows) {
 		this.numArrows = numArrows;
+	}
+	
+	public void reset() {
+		super.reset();
+		numArrows = 50;
 	}
 	
 }

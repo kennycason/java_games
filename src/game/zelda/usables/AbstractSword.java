@@ -62,7 +62,9 @@ public abstract class AbstractSword extends AbstractWeapon {
 	@Override
 	public void draw(Graphics2D g) {
 		if(phase > 0) {
-			sprite.draw(g, renderX(), renderY());
+			sprite.draw(g, 
+					x() + game.map().offset().x(), 
+					y() + game.map().offset().y());
 			// collide with cuttable
 			int offX = game.link().mapX();
 			int offY = game.link().mapY();
@@ -170,8 +172,8 @@ public abstract class AbstractSword extends AbstractWeapon {
 				}
 				if(item != null) {
 					item.locate(
-							x * game.map().renderLayers()[1][x][y].width() + game.map().renderLayers()[1][x][y].width() / 4, 
-							y * game.map().renderLayers()[1][x][y].height() + game.map().renderLayers()[1][x][y].height() / 4);
+							x * game.map().renderLayers()[1][x][y].width() + (game.map().renderLayers()[1][x][y].width() - width()) / 2, 
+							y * game.map().renderLayers()[1][x][y].height() + (game.map().renderLayers()[1][x][y].height() - height()) / 2);
 					item.justDropped();
 					game.map().items().add(item);
 				}

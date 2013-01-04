@@ -32,7 +32,7 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	@Override
 	public void handle() {
 		if(justDropped) {
-			if(System.currentTimeMillis() - droppedTime > 500) {
+			if(System.currentTimeMillis() - droppedTime > 200) {
 				justDropped = false;
 			}
 		}
@@ -43,6 +43,11 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 		} else {
 			game.map().collisionLayer()[mapX()][mapY()].value(MetaTilesNumber.COLLISION);
 		}
+	}
+	
+	@Override
+	public void draw(Graphics2D g) {
+		sprite.draw(g, x() + game.map().offset().x(), y() + game.map().offset().y());
 	}
 	
 	public abstract void consume();
@@ -70,11 +75,6 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	
 	public boolean isJustDropped() {
 		return justDropped;
-	}
-	
-	@Override
-	public void draw(Graphics2D g) {
-		sprite.draw(g, renderX(), renderY());
 	}
 
 }
