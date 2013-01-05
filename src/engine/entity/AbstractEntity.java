@@ -35,10 +35,10 @@ public abstract class AbstractEntity extends AbstractCollidable {
 	public abstract void face(FaceDirection face);
 	
 	public int mapX() {
-		return (x + (width() /*- collisionOffset()*/) / 2) / game.map().tileWidth();
+		return (x + width() / 2) / game.map().tileWidth();
 	}
 
 	public int mapY() {
-		return (y + (height() /*- collisionOffset()*/) / 2) / game.map().tileHeight(); 
+		return (y + height() / 2) / game.map().tileHeight(); 
 	}
 }

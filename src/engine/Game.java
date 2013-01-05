@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import engine.clock.Clock;
 import engine.config.ConfigBank;
 import engine.entity.usable.UsableBank;
 import engine.font.FontBank;
@@ -47,6 +48,8 @@ public abstract class Game extends JPanel {
 	public static UsableBank usables;
 	
 	public static ConfigBank config;
+	
+	public static Clock clock;
 	
 	protected int zoom = 2;
 
@@ -91,6 +94,7 @@ public abstract class Game extends JPanel {
 		sounds = new SoundBank();
 		fonts = new FontBank();
 		usables = new UsableBank();
+		clock = Clock.getInstance();
 		
 		keyboard = new KeyBoard();
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
