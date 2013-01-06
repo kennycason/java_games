@@ -37,7 +37,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 
 	@Override
 	public void run() {
-		long currentTime = System.currentTimeMillis();
+		long currentTime = Game.clock.systemElapsedMillis();
 		if (currentTime - lastRefresh >= refreshInterval) {
 			if (game.keyboard().isKeyPressed(Buttons.START)) {
 				if(currentTime - game.gameLoops().get(GameStateEnum.TITLE_SCREEN).transitionTime() >= 500) {
@@ -50,7 +50,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 			// paint everything
 			draw(game.screen().bufferedImage());
 			game.screenPanel().repaint();
-			lastRefresh = System.currentTimeMillis();
+			lastRefresh = Game.clock.systemElapsedMillis();
 		}
 	}
 

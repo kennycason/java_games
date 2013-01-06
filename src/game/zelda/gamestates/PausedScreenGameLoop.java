@@ -3,6 +3,7 @@ package game.zelda.gamestates;
 import java.awt.image.BufferedImage;
 
 import engine.AbstractGameLoop;
+import engine.Game;
 import engine.GameStateEnum;
 import game.zelda.Buttons;
 
@@ -10,7 +11,7 @@ public class PausedScreenGameLoop extends AbstractGameLoop {
 
 	@Override
 	public void run() {
-		long currentTime = System.currentTimeMillis();
+		long currentTime = Game.clock.systemElapsedMillis();
 		if (currentTime - lastRefresh >= refreshInterval) {
 			if (game.keyboard().isKeyPressed(Buttons.PAUSE)) {
 				if (currentTime - game.gameLoops().get(GameStateEnum.PAUSED).transitionTime() >= 1000) {
@@ -19,15 +20,10 @@ public class PausedScreenGameLoop extends AbstractGameLoop {
 					game.gameState(GameStateEnum.MAIN);
 				}
 			}
-			lastRefresh = System.currentTimeMillis();
+			lastRefresh = Game.clock.systemElapsedMillis();
 		}
 	}
-
-	@Override
-	public void end() {
-		
-	}
-
+	
 	@Override
 	public void draw(BufferedImage bi) {
 		

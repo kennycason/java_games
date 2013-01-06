@@ -34,7 +34,7 @@ public class BasicDialog extends AbstractDialog {
 		
 		while(!finished) {
 			if(phase == 1) {
-				if(System.currentTimeMillis() - lastDraw > textSpeed) {	
+				if(Game.clock.elapsedMillis() - lastDraw > textSpeed) {	
 					Graphics2D g = game.screen().bufferedImage().createGraphics();				
 					game.screen().draw(g, 0, 0);
 					if(game.zoom() > 1) {
@@ -54,7 +54,7 @@ public class BasicDialog extends AbstractDialog {
 					g.dispose();
 					game.screenPanel().repaint();
 					
-					lastDraw = System.currentTimeMillis();
+					lastDraw = Game.clock.elapsedMillis();
 					if(currentChar >= pages[page].length()) {
 						phase = 2;
 						game.sleep(200);

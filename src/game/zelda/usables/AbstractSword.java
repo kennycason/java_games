@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.util.Iterator;
 import java.util.Random;
 
-import game.zelda.item.RupeeGold;
 import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
@@ -15,10 +14,7 @@ import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteSheet;
 import engine.sprite.SpriteUtils;
 import game.zelda.item.Heart;
-import game.zelda.item.RupeeBlue;
 import game.zelda.item.RupeeGreen;
-import game.zelda.item.RupeePurple;
-import game.zelda.item.RupeeRed;
 
 public abstract class AbstractSword extends AbstractWeapon {
 	
@@ -155,33 +151,33 @@ public abstract class AbstractSword extends AbstractWeapon {
 		}
 		if(game.map().metaLayer()[x][y].value() == MetaTilesNumber.CUTTABLE) {
 			if(game.map().renderLayers()[1][x][y].rectangleCollide(sprite)) {
-				int val = r.nextInt(100);
-				AbstractItem item = null;
-				if(val >= 0 && val < 20) {
-					item = new RupeePurple();
-				} else if(val >= 20 && val < 40) {
-					item = new RupeeRed();
-				} else if(val >= 40 && val < 60) {
-					item = new RupeeBlue();
-				} else if(val >= 60 && val < 80) {
-					item = new Heart();
-				} else if(val >= 80 && val < 90) {
-					item = new RupeeGreen();
-				} else {
-					item = new RupeeGold();
-				}
-				if(item != null) {
-					item.locate(
-							x * game.map().renderLayers()[1][x][y].width() + (game.map().renderLayers()[1][x][y].width() - width()) / 2, 
-							y * game.map().renderLayers()[1][x][y].height() + (game.map().renderLayers()[1][x][y].height() - height()) / 2);
-					item.justDropped();
-					game.map().items().add(item);
-				}
-				game.map().renderLayers()[1][x][y].value(0);
-				game.map().metaLayer()[x][y].value(0);
-				cutSound.play();
+				cutGrass(x, y);
 			}
 		}
+	}
+	
+	private void cutGrass(int x, int y) {
+		int val = r.nextInt(100);
+		AbstractItem item = null;
+		if(val >= 90) {
+			if(game.link().life() < game.link().maxLife()) {
+				item = new Heart();
+			} else {
+				item = new RupeeGreen();
+			}
+		} else if(val >= 80) {
+			item = new RupeeGreen();
+		}
+		if(item != null) {
+			item.locate(
+					x * game.map().renderLayers()[1][x][y].width() + (game.map().renderLayers()[1][x][y].width() - width()) / 2, 
+					y * game.map().renderLayers()[1][x][y].height() + (game.map().renderLayers()[1][x][y].height() - height()) / 2);
+			item.justDropped();
+			game.map().items().add(item);
+		}
+		game.map().renderLayers()[1][x][y].value(0);
+		game.map().metaLayer()[x][y].value(0);
+		cutSound.play();
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class MainGameLoop extends AbstractGameLoop {
 	@Override
 	public void run() {
 	
-		if(System.currentTimeMillis() - lastRefresh >= refreshInterval) {
+		if(Game.clock.systemElapsedMillis() - lastRefresh >= refreshInterval) {
 			// handle game logic
 			if(game.link().canMove()) {
 				game.link().keyBoard(game.keyboard());
@@ -60,7 +60,7 @@ public class MainGameLoop extends AbstractGameLoop {
 			// paint everything
 			draw(game.screen().bufferedImage());
 			game.screenPanel().repaint();
-			lastRefresh = System.currentTimeMillis();
+			lastRefresh = Game.clock.systemElapsedMillis();
 		}
 	}
 
@@ -101,6 +101,7 @@ public class MainGameLoop extends AbstractGameLoop {
 	
 	@Override
 	public void end() {
+		super.end();
 		sound.stop();
 	}
 

@@ -27,7 +27,7 @@ public abstract class AbstractEnemy extends AbstractLivingEntity {
 	@Override
 	public void handle() {
 		if(invincible) {
-			if(System.currentTimeMillis() - lastTimeHit > invincibleTime) {
+			if(Game.clock.elapsedMillis() - lastTimeHit > invincibleTime) {
 				invincible = false;
 				flickerCount = 0;
 			}

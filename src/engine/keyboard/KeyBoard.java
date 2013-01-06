@@ -3,6 +3,8 @@ package engine.keyboard;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import engine.Game;
+
 public class KeyBoard implements KeyListener {
 	
 	private boolean[] keys;
@@ -24,7 +26,7 @@ public class KeyBoard implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(keyPressedTime(e.getKeyCode()) == -1) { // only want to store the time when the key is first pressed
-			keyPressedTime[e.getKeyCode()] = System.currentTimeMillis();
+			keyPressedTime[e.getKeyCode()] = Game.clock.elapsedMillis();
 		}
 		keys[e.getKeyCode()] = true;
 	}

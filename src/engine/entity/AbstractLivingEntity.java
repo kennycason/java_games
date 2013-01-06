@@ -3,6 +3,7 @@ package engine.entity;
 import java.awt.Graphics2D;
 
 import engine.FaceDirection;
+import engine.Game;
 import engine.ai.IAIStrategy;
 import engine.sound.AbstractSound;
 import engine.sprite.AnimatedSprite;
@@ -149,7 +150,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity {
 				dead = true;
 			}
 			invincible = true;
-			lastTimeHit = System.currentTimeMillis();
+			lastTimeHit = Game.clock.elapsedMillis();
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package engine.event;
 
+import engine.Game;
+
 
 public abstract class AbstractTimedDeployableEvent extends AbstractEvent {
 	
@@ -9,12 +11,12 @@ public abstract class AbstractTimedDeployableEvent extends AbstractEvent {
 	
 	public AbstractTimedDeployableEvent(long deployTime) {
 		this.deployTime = deployTime;
-		createdTime = System.currentTimeMillis();
+		createdTime = Game.clock.elapsedMillis();
 	}
 
 	@Override
 	public boolean ready() {
-		return System.currentTimeMillis() - createdTime > deployTime;
+		return Game.clock.elapsedMillis() - createdTime > deployTime;
 	}
 
 }

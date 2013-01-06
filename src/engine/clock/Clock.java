@@ -55,6 +55,10 @@ public class Clock {
 		}
 	}
 	
+	public long systemElapsedMillis() {
+		return System.currentTimeMillis();
+	}
+	
 	public long elapsedSeconds() {
 		return elapsedMillis() / 1000;
 	}

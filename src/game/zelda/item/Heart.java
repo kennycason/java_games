@@ -25,7 +25,7 @@ public class Heart extends AbstractItem {
 			consumed = true;
 			sound.play();
 		} else {
-			if(System.currentTimeMillis() - droppedTime > 500) {
+			if(Game.clock.elapsedMillis() - droppedTime > 500) {
 				justDropped = false;
 			}
 		}

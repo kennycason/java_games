@@ -58,8 +58,8 @@ public class BowAndArrow extends AbstractWeapon {
 	}
 	
 	public void use() {
-		if(numArrows > 0 && System.currentTimeMillis() - lastShotTime > 750) {
-			lastShotTime = System.currentTimeMillis();
+		if(numArrows > 0 && Game.clock.elapsedMillis() - lastShotTime > 750) {
+			lastShotTime = Game.clock.elapsedMillis();
 			//sound.play();
 	
 			x = game.link().x();

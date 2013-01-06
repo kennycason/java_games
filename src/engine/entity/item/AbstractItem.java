@@ -2,6 +2,7 @@ package engine.entity.item;
 
 import java.awt.Graphics2D;
 
+import engine.Game;
 import engine.entity.AbstractSimpleEntity;
 import engine.map.tiled.MetaTilesNumber;
 
@@ -9,7 +10,7 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 
 	protected boolean consumed;
 	
-	protected boolean mustTouch; // if true link must physically touch the item to obtain. i.e. can't use boomerang
+	protected boolean mustTouch; // if true link must physically touch the item to obtain. i.e. can't use boomerang/sword
 	
 	protected boolean disappearAfterConsume;
 	
@@ -32,7 +33,7 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	@Override
 	public void handle() {
 		if(justDropped) {
-			if(System.currentTimeMillis() - droppedTime > 200) {
+			if(Game.clock.elapsedMillis() - droppedTime > 250) {
 				justDropped = false;
 			}
 		}
@@ -70,7 +71,7 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	
 	public void justDropped() {
 		justDropped = true;
-		droppedTime = System.currentTimeMillis();
+		droppedTime = Game.clock.elapsedMillis();
 	}
 	
 	public boolean isJustDropped() {

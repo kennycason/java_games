@@ -3,6 +3,8 @@ package engine.sprite;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import engine.Game;
+
 public class AnimatedSprite extends AbstractSprite {
 
 	private SpriteSheet sprites;
@@ -77,8 +79,8 @@ public class AnimatedSprite extends AbstractSprite {
 		}
 		sprites.get(currentFrame).draw(g, x, y);
 		if (numFrames > 0 && animationSpeed > 0) {
-			if (System.currentTimeMillis() - lastAnimation > animationSpeed) {
-				lastAnimation = System.currentTimeMillis();
+			if (Game.clock.elapsedMillis() - lastAnimation > animationSpeed) {
+				lastAnimation = Game.clock.elapsedMillis();
 				currentFrame += animationIncrementor;
 				if(!reverseCycle) {
 					if (currentFrame >= numFrames) {
@@ -110,7 +112,7 @@ public class AnimatedSprite extends AbstractSprite {
 	
 	public void reset() {
 		currentFrame = 0;
-		lastAnimation = System.currentTimeMillis();
+		lastAnimation = Game.clock.elapsedMillis();
 		doneCycling = false;
 	}
 

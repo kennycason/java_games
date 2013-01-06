@@ -23,7 +23,7 @@ public abstract class AbstractRupee extends AbstractItem {
 	@Override
 	public void consume() {
 		if(justDropped) {
-			if(System.currentTimeMillis() - droppedTime > 500) {
+			if(Game.clock.elapsedMillis() - droppedTime > 500) {
 				justDropped = false;
 			}
 		}
@@ -32,7 +32,7 @@ public abstract class AbstractRupee extends AbstractItem {
 			consumed = true;
 			sound.play();
 		} else {
-			if(System.currentTimeMillis() - droppedTime > 500) {
+			if(Game.clock.elapsedMillis() - droppedTime > 500) {
 				justDropped = false;
 			}
 		}

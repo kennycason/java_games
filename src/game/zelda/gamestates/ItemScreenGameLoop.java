@@ -57,7 +57,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 
 	@Override
 	public void run() {
-		long currentTime = System.currentTimeMillis();
+		long currentTime = Game.clock.systemElapsedMillis();
 		if (currentTime - lastRefresh >= refreshInterval) {
 			if (game.keyboard().isKeyPressed(Buttons.START)) {
 				if (currentTime
@@ -75,28 +75,28 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 						cursorY = 0;
 					}
 					mouseCursor.play();
-					cursorLastMoved = System.currentTimeMillis();
+					cursorLastMoved = Game.clock.elapsedMillis();
 				} else if (game.keyboard().isKeyPressed(Buttons.DOWN)) {
 					cursorY++;
 					if (cursorY > 3) {
 						cursorY = 3;
 					}
 					mouseCursor.play();
-					cursorLastMoved = System.currentTimeMillis();
+					cursorLastMoved = Game.clock.elapsedMillis();
 				} else if (game.keyboard().isKeyPressed(Buttons.LEFT)) {
 					cursorX--;
 					if (cursorX < 0) {
 						cursorX = 0;
 					}
 					mouseCursor.play();
-					cursorLastMoved = System.currentTimeMillis();
+					cursorLastMoved = Game.clock.elapsedMillis();
 				} else if (game.keyboard().isKeyPressed(Buttons.RIGHT)) {
 					cursorX++;
 					if (cursorX > 3) {
 						cursorX = 3;
 					}
 					mouseCursor.play();
-					cursorLastMoved = System.currentTimeMillis();
+					cursorLastMoved = Game.clock.elapsedMillis();
 				}
 			}
 			if (currentTime - itemSelected > 450) {
@@ -105,7 +105,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 					AbstractUsableEntity old = game.link().itemB();
 					game.link().itemB(game.link().items()[item]);
 					game.link().items()[item] = old;
-					itemSelected = System.currentTimeMillis();
+					itemSelected = Game.clock.elapsedMillis();
 					mouseSelect.play();
 				}
 
@@ -114,7 +114,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 					AbstractUsableEntity old = game.link().itemA();
 					game.link().itemA(game.link().items()[item]);
 					game.link().items()[item] = old;
-					itemSelected = System.currentTimeMillis();
+					itemSelected = Game.clock.elapsedMillis();
 					mouseSelect.play();
 				}
 			}
@@ -122,7 +122,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 			// paint everything
 			draw(game.screen().bufferedImage());
 			game.screenPanel().repaint();
-			lastRefresh = System.currentTimeMillis();
+			lastRefresh = Game.clock.systemElapsedMillis();
 		}
 	}
 

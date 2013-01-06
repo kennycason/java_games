@@ -13,7 +13,7 @@ public class AggressiveAIStrategy implements IAIStrategy {
 
 	private AbstractLivingEntity entity;
 
-	private long lastMoved = System.currentTimeMillis();
+	private long lastMoved = Game.clock.elapsedMillis();
 
 	private long moveDelay = 500;
 
@@ -42,18 +42,17 @@ public class AggressiveAIStrategy implements IAIStrategy {
 		this.aggressionMoveDelay = aggressionMoveDelay;
 		this.moveDelay = moveDelay;
 		this.moveSpeed = moveSpeed;
-		move = new PositionVector();
+		move = new PositionVector();		
 	}
 
 	@Override
 	public void handle() {
-		double dist = Math.sqrt(Math.pow(entity.x() - game.link().x(), 2)
-				+ Math.pow(entity.x() - game.link().y(), 2));
+		double dist = Math.sqrt(Math.pow(entity.x() - game.link().x(), 2) + Math.pow(entity.x() - game.link().y(), 2));
 		if (dist <= aggressionRange) {
-			if (System.currentTimeMillis() - lastMoved > aggressionMoveDelay) { // move
+			if (Game.clock.elapsedMillis() - lastMoved > aggressionMoveDelay) { // move
 				moving = true;
 				move.set(0, 0);
-				lastMoved = System.currentTimeMillis();
+				lastMoved = Game.clock.elapsedMillis();
 				if (game.link().x() - entity.x() < -4) {
 					move.x(-moveSpeed);
 				} else if (game.link().x() - entity.x() > 4) {
@@ -70,9 +69,9 @@ public class AggressiveAIStrategy implements IAIStrategy {
 				}
 			}
 		} else {
-			if (System.currentTimeMillis() - lastMoved > moveDelay) { // move
+			if (Game.clock.elapsedMillis() - lastMoved > moveDelay) { // move
 				moving = true;
-				lastMoved = System.currentTimeMillis();
+				lastMoved = Game.clock.elapsedMillis();
 				movingDir = r.nextInt(16);
 				switch (movingDir) {
 				case 0: // north
@@ -109,8 +108,12 @@ public class AggressiveAIStrategy implements IAIStrategy {
 				moving = false;
 			}
 		}
-		move = game.map().move(entity, move);
-		entity.locate(entity.x() + move.x(), entity.y() + move.y());
+		if(moving) {
+			move = game.map().move(entity, move);
+			entity.locate(entity.x() + move.x(), entity.y() + move.y());
+			lastMoved = Game.clock.elapsedMillis();
+			moving = false;
+		}
 
 	}
 

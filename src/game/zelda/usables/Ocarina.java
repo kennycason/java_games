@@ -45,7 +45,7 @@ public class Ocarina extends AbstractUsableEntity {
 
 		x = game.link().x();
 		y = game.link().y();
-		playTime = System.currentTimeMillis();
+		playTime = Game.clock.elapsedMillis();
 
 	}
 	
@@ -57,7 +57,7 @@ public class Ocarina extends AbstractUsableEntity {
 		if(!using) {
 			return;
 		}
-		if(System.currentTimeMillis() - playTime > 1000) {
+		if(Game.clock.elapsedMillis() - playTime > 1000) {
 			using = false;
 		}
 	}

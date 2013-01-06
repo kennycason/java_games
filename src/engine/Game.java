@@ -161,9 +161,12 @@ public abstract class Game extends JPanel {
 
 	public void sleep(int time) {
 		try {
+			clock.pause();
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		} finally {
+			clock.start();
 		}
 	}
 	

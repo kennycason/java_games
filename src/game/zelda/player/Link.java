@@ -152,7 +152,7 @@ public class Link extends AbstractLivingEntity {
 
 		// handle invincibility (after getting hit)
 		if (invincible) {
-			if (System.currentTimeMillis() - lastTimeHit > invincibleTime) {
+			if (Game.clock.elapsedMillis() - lastTimeHit > invincibleTime) {
 				invincible = false;
 				flickerCount = 0;
 			}
@@ -293,14 +293,14 @@ public class Link extends AbstractLivingEntity {
 			}
 		}
 		if (kb.isKeyPressed(Buttons.START)) {
-			if (System.currentTimeMillis()
+			if (Game.clock.systemElapsedMillis()
 					- game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
 				game.gameLoops().get(GameStateEnum.ITEM_SCREEN).start();
 				game.gameState(GameStateEnum.ITEM_SCREEN);
 			}
 		}
 		if (kb.isKeyPressed(Buttons.PAUSE)) {
-			if (System.currentTimeMillis()
+			if (Game.clock.systemElapsedMillis()
 					- game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
 				game.gameLoops().get(GameStateEnum.PAUSED).start();
 				game.gameState(GameStateEnum.PAUSED);

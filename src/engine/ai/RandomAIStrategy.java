@@ -13,7 +13,7 @@ public class RandomAIStrategy implements IAIStrategy {
 	
 	private AbstractLivingEntity entity;
 
-	private long lastMoved = System.currentTimeMillis();
+	private long lastMoved = Game.clock.elapsedMillis();
 	
 	private long moveDelay = 1000;
 	
@@ -54,8 +54,8 @@ public class RandomAIStrategy implements IAIStrategy {
 			if(distMoved >= 16) { // moved 1 square
 				moving = false;
 			}
-		} else if(System.currentTimeMillis() - lastMoved > moveDelay) { // move
-			lastMoved = System.currentTimeMillis();
+		} else if(Game.clock.elapsedMillis() - lastMoved > moveDelay) { // move
+			lastMoved = Game.clock.elapsedMillis();
 			movingDir = r.nextInt(4);
 			if(movingDir < 4) {
 				distMoved = 0;

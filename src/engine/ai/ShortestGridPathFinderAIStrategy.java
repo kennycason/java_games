@@ -12,7 +12,7 @@ public class ShortestGridPathFinderAIStrategy implements IAIStrategy {
 
 	private AbstractLivingEntity entity;
 
-	private long lastMoved = System.currentTimeMillis();
+	private long lastMoved = Game.clock.elapsedMillis();
 
 	private long moveDelay = 50;
 	
@@ -54,13 +54,13 @@ public class ShortestGridPathFinderAIStrategy implements IAIStrategy {
 			entity.locate(entity.x() + move.x(), entity.y() + move.y());
 			moving = false;
 		} else {
-			if(System.currentTimeMillis() - lastMoved > moveDelay) {
+			if(Game.clock.elapsedMillis() - lastMoved > moveDelay) {
 				double dist = Math.sqrt(Math.pow(entity.x() - game.link().x(),
 						2) + Math.pow(entity.y() - game.link().y(), 2));
 				if (dist < 500) {
 					moving = true;
 					move.set(0, 0);
-					lastMoved = System.currentTimeMillis();
+					lastMoved = Game.clock.elapsedMillis();
 					resetNodes();
 					endX = game.link().mapX();
 					endY = game.link().mapY();
