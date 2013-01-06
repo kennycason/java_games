@@ -11,6 +11,7 @@ import engine.entity.usable.AbstractUsableEntity;
 import engine.event.ConsumeItemEvent;
 import engine.event.EnemiesDeadItemAppearEvent;
 import engine.event.EnemyDeployEvent;
+import engine.event.TimedDialogDeployEvent;
 import engine.event.TimedEnemyDeployEvent;
 import engine.map.tiled.TiledMapLoader;
 import engine.sound.LoopingSound;
@@ -69,23 +70,12 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		g.dispose();
 	}
 	
-	@Override
-	public void start() {
-		super.start();
-		sound.play();
-	}
-
-	@Override
-	public void end() {
-		sound.stop();
-	}
-	
 	public void newGame() { 
 		TiledMapLoader loader = new TiledMapLoader();
 
 		game.map(loader.load("maps/real.tmx"));
 		
-		//game.map().events().add(new TimedDialogDeployEvent(new ZeldaDialog("Welcome to my Zelda clone.\nIt's still rough so be patient. :)"), 500));
+		game.map().events().add(new TimedDialogDeployEvent(new ZeldaDialog("Welcome to my Zelda clone.\nIt's still rough so be patient. :)"), 500));
 
 		game.map().events().add(new EnemyDeployEvent(new LikeLike(4, 7)));
 		game.map().events().add(new EnemyDeployEvent(new Octorok(9, 10)));
@@ -127,6 +117,18 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 			entity.reset();
 		}
 		
+	}
+	
+	@Override 
+	public void start() {
+		lastRefresh = Game.clock.systemElapsedMillis() - refreshInterval;
+		transitionTime = Game.clock.systemElapsedMillis();
+		sound.play();
+	}
+		
+	@Override
+	public void end() {
+		sound.stop();
 	}
 
 }

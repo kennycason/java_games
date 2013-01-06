@@ -277,8 +277,7 @@ public class Link extends AbstractLivingEntity {
 				for (AbstractItem item : game.map().items()) {
 					if (!item.walkable()) {
 						boolean wasConsumed = item.consumed();
-						item.consume(); // actually should just attempt to
-										// consume
+						item.consume(); // actually should just attempt to consume
 						if (item.consumed() && !wasConsumed) {
 							itemConsumed = true;
 							game.sleep(300);

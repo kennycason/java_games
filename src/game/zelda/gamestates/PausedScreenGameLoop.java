@@ -28,5 +28,18 @@ public class PausedScreenGameLoop extends AbstractGameLoop {
 	public void draw(BufferedImage bi) {
 		
 	}
+	
+	
+	@Override 
+	public void start() {
+		lastRefresh = Game.clock.systemElapsedMillis() - refreshInterval;
+		transitionTime = Game.clock.systemElapsedMillis();
+		Game.clock.pause();
+	}
+
+	@Override
+	public void end() {
+		Game.clock.start();
+	}
 
 }

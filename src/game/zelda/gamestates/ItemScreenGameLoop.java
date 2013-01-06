@@ -59,6 +59,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 	public void run() {
 		long currentTime = Game.clock.systemElapsedMillis();
 		if (currentTime - lastRefresh >= refreshInterval) {
+			lastRefresh = Game.clock.systemElapsedMillis();
 			if (game.keyboard().isKeyPressed(Buttons.START)) {
 				if (currentTime
 						- game.gameLoops().get(GameStateEnum.ITEM_SCREEN)
@@ -75,28 +76,28 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 						cursorY = 0;
 					}
 					mouseCursor.play();
-					cursorLastMoved = Game.clock.elapsedMillis();
+					cursorLastMoved = Game.clock.systemElapsedMillis();
 				} else if (game.keyboard().isKeyPressed(Buttons.DOWN)) {
 					cursorY++;
 					if (cursorY > 3) {
 						cursorY = 3;
 					}
 					mouseCursor.play();
-					cursorLastMoved = Game.clock.elapsedMillis();
+					cursorLastMoved = Game.clock.systemElapsedMillis();
 				} else if (game.keyboard().isKeyPressed(Buttons.LEFT)) {
 					cursorX--;
 					if (cursorX < 0) {
 						cursorX = 0;
 					}
 					mouseCursor.play();
-					cursorLastMoved = Game.clock.elapsedMillis();
+					cursorLastMoved = Game.clock.systemElapsedMillis();
 				} else if (game.keyboard().isKeyPressed(Buttons.RIGHT)) {
 					cursorX++;
 					if (cursorX > 3) {
 						cursorX = 3;
 					}
 					mouseCursor.play();
-					cursorLastMoved = Game.clock.elapsedMillis();
+					cursorLastMoved = Game.clock.systemElapsedMillis();
 				}
 			}
 			if (currentTime - itemSelected > 450) {
@@ -105,7 +106,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 					AbstractUsableEntity old = game.link().itemB();
 					game.link().itemB(game.link().items()[item]);
 					game.link().items()[item] = old;
-					itemSelected = Game.clock.elapsedMillis();
+					itemSelected = Game.clock.systemElapsedMillis();
 					mouseSelect.play();
 				}
 
@@ -114,7 +115,7 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 					AbstractUsableEntity old = game.link().itemA();
 					game.link().itemA(game.link().items()[item]);
 					game.link().items()[item] = old;
-					itemSelected = Game.clock.elapsedMillis();
+					itemSelected = Game.clock.systemElapsedMillis();
 					mouseSelect.play();
 				}
 			}
@@ -122,7 +123,6 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 			// paint everything
 			draw(game.screen().bufferedImage());
 			game.screenPanel().repaint();
-			lastRefresh = Game.clock.systemElapsedMillis();
 		}
 	}
 
@@ -174,9 +174,17 @@ public class ItemScreenGameLoop extends AbstractGameLoop {
 		menu.draw(g);
 		g.dispose();
 	}
+	
+	@Override 
+	public void start() {
+		lastRefresh = Game.clock.systemElapsedMillis() - refreshInterval;
+		transitionTime = Game.clock.systemElapsedMillis();
+		Game.clock.pause();
+	}
 
 	@Override
 	public void end() {
+		Game.clock.start();
 		// sound.stop();
 	}
 

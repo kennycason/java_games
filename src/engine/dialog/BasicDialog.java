@@ -31,10 +31,12 @@ public class BasicDialog extends AbstractDialog {
 	@Override
 	public void trigger() {
 		happened = true;
-		
+		Game.clock.pause();
+		int originalTextSpeed = textSpeed;
 		while(!finished) {
 			if(phase == 1) {
-				if(Game.clock.elapsedMillis() - lastDraw > textSpeed) {	
+				if(Game.clock.systemElapsedMillis() - lastDraw > textSpeed) {	
+					lastDraw = Game.clock.systemElapsedMillis();
 					Graphics2D g = game.screen().bufferedImage().createGraphics();				
 					game.screen().draw(g, 0, 0);
 					if(game.zoom() > 1) {
@@ -54,13 +56,17 @@ public class BasicDialog extends AbstractDialog {
 					g.dispose();
 					game.screenPanel().repaint();
 					
-					lastDraw = Game.clock.elapsedMillis();
 					if(currentChar >= pages[page].length()) {
 						phase = 2;
 						game.sleep(200);
 						pageFinished.play();
 					}
 					currentChar++;
+				}
+				if(game.keyboard().isKeyPressed(Buttons.ITEM_A)) {
+					textSpeed = originalTextSpeed / 2;
+				} else {
+					textSpeed = originalTextSpeed;
 				}
 			} else if(phase == 2) {
 				while(!game.keyboard().isKeyPressed(Buttons.ITEM_A) &&
@@ -76,8 +82,8 @@ public class BasicDialog extends AbstractDialog {
 					}
 				}
 			} 
-			
 		}
+		Game.clock.start();
 	}
 
 	@Override

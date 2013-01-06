@@ -16,17 +16,11 @@ public abstract class AbstractGameLoop {
 		game = GameFactory.get();
 	}
 	
-	public void start() {
-		lastRefresh = Game.clock.systemElapsedMillis() - refreshInterval;
-		transitionTime = Game.clock.systemElapsedMillis();
-		Game.clock.start();
-	}
+	public abstract void start();
 	
 	public abstract void run();
 	
-	public void end() {
-		Game.clock.pause();
-	}
+	public abstract void end();
 	
 	public abstract void draw(BufferedImage bi);
 	

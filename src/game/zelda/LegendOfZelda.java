@@ -108,6 +108,7 @@ public class LegendOfZelda extends Game {
 					((TitleScreenGameLoop)gameLoops.get(GameStateEnum.TITLE_SCREEN)).newGame();
 					gameLoops.get(GameStateEnum.TITLE_SCREEN).start();
 					gameState = GameStateEnum.MAIN;
+					gameLoops.get(GameStateEnum.MAIN).start();
 					break;
 				case MAIN:
 					gameLoops.get(GameStateEnum.MAIN).run();

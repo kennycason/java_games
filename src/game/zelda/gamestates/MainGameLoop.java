@@ -93,15 +93,18 @@ public class MainGameLoop extends AbstractGameLoop {
 	
 	@Override
 	public void start() {
-		super.start();
+		lastRefresh = Game.clock.systemElapsedMillis() - refreshInterval;
+		transitionTime = Game.clock.systemElapsedMillis();
 		if(!sound.playing()) {
 			sound.play();
 		}
+		System.out.println("start");
+		Game.clock.start();
 	}
 	
 	@Override
 	public void end() {
-		super.end();
+		Game.clock.stop();
 		sound.stop();
 	}
 
