@@ -91,9 +91,9 @@ public class Link extends AbstractLivingEntity {
 		mapPosition = new PositionVector();
 		drawOffset = new PositionVector(); 
 		
-		mapStartPosition = new PositionVector(7, 6);
+		mapStartPosition = new PositionVector(10, 12);
 		
-		setAbsoluteLocation(mapStartPosition);
+		setLocation(mapStartPosition);
 		
 		mapPosition = new PositionVector();
 		move = new PositionVector();
@@ -103,18 +103,20 @@ public class Link extends AbstractLivingEntity {
 		invincibleTime = 500;
 		life = 3;
 		maxLife = 3;
-		collisionOffset = 5;
+		collisionOffset = 4;
 		deadSound = Game.sounds.get("link_die");
 		hitSound = Game.sounds.get("link_hurt");
 		fallSound = Game.sounds.get("link_fall");
 		lowHeartsSound = (LoopingSound) Game.sounds.get("link_low_life");
 	}
 
-	private void setAbsoluteLocation(PositionVector position) {
+	private void setLocation(PositionVector position) {
 		mapPosition.set(position.x(), position.y());
-		locate(mapPosition.x() * game.map().tileWidth(), mapPosition.y() * game.map().tileHeight());
-		game.map().offset().set(0 * game.map().tileWidth(), 0 *  game.map().tileHeight());
-		drawOffset.set(position.x() * width(), position.y() * height());
+		int realX = -(position.x() - 8) * game.map().tileWidth();
+		int realY = -(position.y() - 8) *  game.map().tileHeight();
+		game.map().offset().set(realX, realY);
+		locate((position.x()) * width(), (position.y()) * height());
+		drawOffset.set(8 * width(), 8 * height());
 	}
 
 	@Override
@@ -139,7 +141,7 @@ public class Link extends AbstractLivingEntity {
 				itemB().reset();
 			}
 			game.sleep(1500);
-			setAbsoluteLocation(mapStartPosition);
+			setLocation(mapStartPosition);
 			hit(1);
 		}
 		
@@ -248,21 +250,8 @@ public class Link extends AbstractLivingEntity {
 			game.map().handleMetaEvents(this);
 			move = game.map().move(this, move);
 			
-			// add smart logic to scroll map or move link
-			if(x < 10 * 16) {
-				drawOffset.x(drawOffset.x() + move.x());
-				x += move.x();
-			} else {
-				game.map().offset().x(game.map().offset().x() - move.x());
-				x += move.x();
-			}
-			if(y < 7 * 16 - 8) { // offset 8 for top menu
-				drawOffset.y(drawOffset.y() + move.y());
-				y += move.y();
-			} else {
-				game.map().offset().y(game.map().offset().y() - move.y());
-				y += move.y();
-			}
+			updatePosition(move);
+				
 			mapPosition.set(mapX(), mapY());
 		}
 
@@ -314,6 +303,71 @@ public class Link extends AbstractLivingEntity {
 		}
 	}
 	
+	private void updatePosition(PositionVector move) {
+		
+		// update position on grid
+		// simplest
+		if (move.x() != 0 || move.y() != 0) {
+			game.map().handleMetaEvents(this);
+			move = game.map().move(this, move);
+
+			game.map().offset().x(game.map().offset().x() - move.x());
+			x += move.x();
+			game.map().offset().y(game.map().offset().y() - move.y());
+			y += move.y();
+
+			mapPosition.set(mapX(), mapY());
+		}
+		
+		// update position on grid
+		// version 2
+//		if (move.x() != 0 || move.y() != 0) {
+//			game.map().handleMetaEvents(this);
+//			move = game.map().move(this, move);
+//
+//			// add smart logic to scroll map or move link
+//			if (x < 10 * 16) {
+//				drawOffset.x(drawOffset.x() + move.x());
+//				x += move.x();
+//			} else {
+//				game.map().offset().x(game.map().offset().x() - move.x());
+//				x += move.x();
+//			}
+//			if (y < 7 * 16 - 8) { // offset 8 for top menu
+//				drawOffset.y(drawOffset.y() + move.y());
+//				y += move.y();
+//			} else {
+//				game.map().offset().y(game.map().offset().y() - move.y());
+//				y += move.y();
+//			}
+//			mapPosition.set(mapX(), mapY());
+//		}
+
+		// version 3
+//		x += move.x();
+//		y += move.y();	
+//		System.out.println("draw: " + drawOffset.x() + " " + drawOffset.y());
+//		System.out.println(x() + " " +  y());
+//		if(x() < 8 * 16) {
+//			game.map().offset().x(0);
+//			drawOffset.x(drawOffset.x() + move.x());
+//		} else if(x() > game.map().width() * 16 - 7 * 16){
+//			//game.map().offset().x(Game.SCREEN_WIDTH - game.map().width() * 16);
+//			drawOffset.x(drawOffset.x() + move.x());
+//		} else {
+//			game.map().offset().x(game.map().offset().x() - move.x());
+//		}
+//		if(y() < 8 * 16) {
+//			game.map().offset().y(0);
+//			drawOffset.y(drawOffset.y() + move.y());
+//		} else if(y() > game.map().height() * 16 - 7 * 16){
+//			//game.map().offset().y(Game.SCREEN_HEIGHT - game.map().height() * 16);
+//			drawOffset.y(drawOffset.y() + move.y());
+//		} else {
+//			game.map().offset().y(game.map().offset().y() - move.y());
+//		}
+	}
+
 	@Override
 	public void hit(double damage) {
 		super.hit(damage);

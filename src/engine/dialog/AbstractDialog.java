@@ -1,9 +1,10 @@
 package engine.dialog;
 
-import engine.event.AbstractEvent;
-import engine.sound.AbstractSound;
+import engine.sound.LoopingSound;
 import engine.Game;
 import engine.GameFactory;
+import engine.event.AbstractEvent;
+import engine.sound.AbstractSound;
 
 public abstract class AbstractDialog extends AbstractEvent {
 	
@@ -33,7 +34,7 @@ public abstract class AbstractDialog extends AbstractEvent {
 	
 	protected String[] pages;
 	
-	protected AbstractSound textTyped;
+	protected LoopingSound textTyped;
 	
 	protected AbstractSound pageFinished;
 	
@@ -59,7 +60,7 @@ public abstract class AbstractDialog extends AbstractEvent {
 		currentChar = 1;
 		page = 0;
 		phase = 1; // 1 draw text, 2, wait for user to press enter
-		textTyped = Game.sounds.get("dialog_typing");
+		textTyped = (LoopingSound) Game.sounds.get("dialog_typing");
 		pageFinished = Game.sounds.get("dialog_finished");
 	}
 	

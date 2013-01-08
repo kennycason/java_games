@@ -77,7 +77,7 @@ public class LegendOfZelda extends Game {
 		Game.sounds.set("menu_select", new SoundEffect("sounds/effects/Oracle_Menu_Select.wav"));	
 		Game.sounds.set("rock_shatter", new SoundEffect("sounds/effects/Oracle_Rock_Shatter.wav"));	
 		Game.sounds.set("bush_cut", new SoundEffect("sounds/effects/Oracle_Bush_Cut.wav"));	
-		Game.sounds.set("dialog_typing", new SoundEffect("sounds/effects/Oracle_Text_Letter.wav"));	
+		Game.sounds.set("dialog_typing", new LoopingSound("sounds/effects/Oracle_Text_Letter.wav"));	
 		Game.sounds.set("dialog_finished", new SoundEffect("sounds/effects/Oracle_Text_Done.wav"));	
 		
 		Game.usables.set("sword1", new SwordLevel1());

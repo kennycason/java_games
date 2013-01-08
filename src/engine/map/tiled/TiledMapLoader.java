@@ -155,6 +155,7 @@ public class TiledMapLoader {
 				x = 0;
 				y++;
 			}
+			//System.out.println(x + ", " + y + ": width: " + width + " height: " + height);
 			gid = Integer.parseInt(tile.attr("gid"));
 			if (layer < 3) { 
 				map.renderLayers()[layer][x][y] = new RenderTile(map.spriteSheet()

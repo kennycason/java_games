@@ -13,7 +13,7 @@ public abstract class AbstractCollidable {
 	/**
 	 * used to make the "rectangle" in rectangle collision a bit smaller or larger
 	 */
-	protected int collisionOffset = 1;
+	protected int collisionOffset = 0;
 	
 	public int x() {
 		return x;

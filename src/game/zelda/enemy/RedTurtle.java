@@ -25,6 +25,7 @@ public class RedTurtle extends AbstractEnemy {
 		damage = 0.5;
 		life = 2;
 		maxLife = 2;
+		collisionOffset = 2;
 		dropItemProbability = 60;
 		dropItems.add(new RupeeBlue());
 	}

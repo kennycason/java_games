@@ -98,7 +98,6 @@ public class MainGameLoop extends AbstractGameLoop {
 		if(!sound.playing()) {
 			sound.play();
 		}
-		System.out.println("start");
 		Game.clock.start();
 	}
 	

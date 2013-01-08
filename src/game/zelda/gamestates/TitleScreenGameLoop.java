@@ -86,7 +86,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 10), 10000));
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(5, 14), 10000));
 		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(7, 14), 10000));
-		
+	
 		game.map()
 				.events()
 				.add(new EnemiesDeadItemAppearEvent(new TreasureChest(25, 11,

@@ -41,8 +41,6 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 			if(rectangleCollide(game.link())) {
 				consume();
 			}
-		} else {
-			game.map().collisionLayer()[mapX()][mapY()].value(MetaTilesNumber.COLLISION);
 		}
 	}
 	

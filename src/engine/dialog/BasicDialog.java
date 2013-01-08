@@ -35,6 +35,9 @@ public class BasicDialog extends AbstractDialog {
 		int originalTextSpeed = textSpeed;
 		while(!finished) {
 			if(phase == 1) {
+				if(!textTyped.playing()) {
+					textTyped.play();
+				}
 				if(Game.clock.systemElapsedMillis() - lastDraw > textSpeed) {	
 					lastDraw = Game.clock.systemElapsedMillis();
 					Graphics2D g = game.screen().bufferedImage().createGraphics();				
@@ -51,12 +54,12 @@ public class BasicDialog extends AbstractDialog {
 					g.setColor(Color.WHITE);
 
 					drawString(g, pages[page].substring(0, currentChar), x + 5, y + 15);
-					textTyped.play();
 
 					g.dispose();
 					game.screenPanel().repaint();
 					
 					if(currentChar >= pages[page].length()) {
+						textTyped.stop();
 						phase = 2;
 						game.sleep(200);
 						pageFinished.play();
