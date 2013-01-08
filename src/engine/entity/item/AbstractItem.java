@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import engine.Game;
 import engine.entity.AbstractSimpleEntity;
-import engine.map.tiled.MetaTilesNumber;
 
 public abstract class AbstractItem extends AbstractSimpleEntity {
 
