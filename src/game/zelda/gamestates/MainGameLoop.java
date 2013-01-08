@@ -30,10 +30,6 @@ public class MainGameLoop extends AbstractGameLoop {
 	
 		if(Game.clock.systemElapsedMillis() - lastRefresh >= refreshInterval) {
 			// handle game logic
-			if(game.link().canMove()) {
-				game.link().keyBoard(game.keyboard());
-			}
-			game.link().handle();
 			
 			// enemies
 			Iterator<AbstractEnemy> enemyIter = game.map().enemies().iterator();
@@ -56,6 +52,8 @@ public class MainGameLoop extends AbstractGameLoop {
 			
 			// handle map events
 			game.map().events().handle();
+			
+			game.link().handle();
 			
 			// paint everything
 			draw(game.screen().bufferedImage());

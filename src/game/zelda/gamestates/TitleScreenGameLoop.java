@@ -40,7 +40,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 	public void run() {
 		long currentTime = Game.clock.systemElapsedMillis();
 		if (currentTime - lastRefresh >= refreshInterval) {
-			if (game.keyboard().isKeyPressed(Buttons.START)) {
+			if (Game.keyboard.isKeyPressed(Buttons.START)) {
 				if(currentTime - game.gameLoops().get(GameStateEnum.TITLE_SCREEN).transitionTime() >= 500) {
 					end();
 					newGame();

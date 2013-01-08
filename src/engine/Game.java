@@ -51,14 +51,14 @@ public abstract class Game extends JPanel {
 	
 	public static Clock clock;
 	
+	public static KeyBoard keyboard;
+	
 	protected int zoom = 2;
 
 	protected final SimpleSprite screen;
 
 	protected final JLabel screenPanel = new JLabel();
 
-	protected final KeyBoard keyboard;
-	
 	// @TODO create Interface for Player to decouple Game and Link
 	protected Link link;
 	
@@ -95,8 +95,8 @@ public abstract class Game extends JPanel {
 		fonts = new FontBank();
 		usables = new UsableBank();
 		clock = Clock.getInstance();
-		
 		keyboard = new KeyBoard();
+		
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new DefaultKeyEventDispatcher(keyboard));
 		this.setFocusable(true);
@@ -145,10 +145,6 @@ public abstract class Game extends JPanel {
 	
 	public SimpleSprite screen() {
 		return screen;
-	}
-
-	public KeyBoard keyboard() {
-		return keyboard;
 	}
 
 	public int zoom() {

@@ -81,25 +81,25 @@ public class Boomerang extends AbstractWeapon {
 		y = game.link().y();
 		start.x(x);
 		start.y(y);
-		if (game.keyboard().isKeyPressed(Buttons.RIGHT)
-				&& game.keyboard().isKeyPressed(Buttons.UP)) {
+		if (Game.keyboard.isKeyPressed(Buttons.RIGHT)
+				&& Game.keyboard.isKeyPressed(Buttons.UP)) {
 			move.set(speedAngled, -speedAngled);
-		} else if (game.keyboard().isKeyPressed(Buttons.RIGHT)
-				&& game.keyboard().isKeyPressed(Buttons.DOWN)) {
+		} else if (Game.keyboard.isKeyPressed(Buttons.RIGHT)
+				&& Game.keyboard.isKeyPressed(Buttons.DOWN)) {
 			move.set(speedAngled, speedAngled);
-		} else if (game.keyboard().isKeyPressed(Buttons.LEFT)
-				&& game.keyboard().isKeyPressed(Buttons.DOWN)) {
+		} else if (Game.keyboard.isKeyPressed(Buttons.LEFT)
+				&& Game.keyboard.isKeyPressed(Buttons.DOWN)) {
 			move.set(-speedAngled, speedAngled);
-		} else if (game.keyboard().isKeyPressed(Buttons.LEFT)
-				&& game.keyboard().isKeyPressed(Buttons.UP)) {
+		} else if (Game.keyboard.isKeyPressed(Buttons.LEFT)
+				&& Game.keyboard.isKeyPressed(Buttons.UP)) {
 			move.set(-speedAngled, -speedAngled);
-		} else if (game.keyboard().isKeyPressed(Buttons.UP)) {
+		} else if (Game.keyboard.isKeyPressed(Buttons.UP)) {
 			move.set(0, -speed);
-		} else if (game.keyboard().isKeyPressed(Buttons.RIGHT)) {
+		} else if (Game.keyboard.isKeyPressed(Buttons.RIGHT)) {
 			move.set(speed, 0);
-		} else if (game.keyboard().isKeyPressed(Buttons.DOWN)) {
+		} else if (Game.keyboard.isKeyPressed(Buttons.DOWN)) {
 			move.set(0, speed);
-		} else if (game.keyboard().isKeyPressed(Buttons.LEFT)) {
+		} else if (Game.keyboard.isKeyPressed(Buttons.LEFT)) {
 			move.set(-speed, 0);
 		} else {
 			switch(game.link().face()) {

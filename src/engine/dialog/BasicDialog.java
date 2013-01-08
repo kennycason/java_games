@@ -66,15 +66,15 @@ public class BasicDialog extends AbstractDialog {
 					}
 					currentChar++;
 				}
-				if(game.keyboard().isKeyPressed(Buttons.ITEM_A)) {
+				if(Game.keyboard.isKeyPressed(Buttons.ITEM_A)) {
 					textSpeed = originalTextSpeed / 2;
 				} else {
 					textSpeed = originalTextSpeed;
 				}
 			} else if(phase == 2) {
-				while(!game.keyboard().isKeyPressed(Buttons.ITEM_A) &&
-						!game.keyboard().isKeyPressed(Buttons.ITEM_B) &&
-						!game.keyboard().isKeyPressed(Buttons.START)) {
+				while(!Game.keyboard.isKeyPressed(Buttons.ITEM_A) &&
+						!Game.keyboard.isKeyPressed(Buttons.ITEM_B) &&
+						!Game.keyboard.isKeyPressed(Buttons.START)) {
 					if(page >= pages.length) {
 						finished = true;
 						game.sleep(150);

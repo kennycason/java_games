@@ -10,7 +10,6 @@ import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.usable.AbstractUsableEntity;
-import engine.keyboard.KeyBoard;
 import engine.math.PositionVector;
 import engine.sound.LoopingSound;
 import engine.sprite.AnimatedSprite;
@@ -108,6 +107,7 @@ public class Link extends AbstractLivingEntity {
 		hitSound = Game.sounds.get("link_hurt");
 		fallSound = Game.sounds.get("link_fall");
 		lowHeartsSound = (LoopingSound) Game.sounds.get("link_low_life");
+		
 	}
 
 	private void setLocation(PositionVector position) {
@@ -169,6 +169,7 @@ public class Link extends AbstractLivingEntity {
 			}
 		}
 
+		keyBoard();
 	}
 
 	@Override
@@ -198,48 +199,48 @@ public class Link extends AbstractLivingEntity {
 		}
 	}
 	
-	public void keyBoard(KeyBoard kb) {
+	public void keyBoard() {
 		move.set(0, 0);
 		// handle angles first
 		if(canMove) {
-			if (kb.isKeyPressed(Buttons.RIGHT) && kb.isKeyPressed(Buttons.UP)) {
+			if (Game.keyboard.isKeyPressed(Buttons.RIGHT) && Game.keyboard.isKeyPressed(Buttons.UP)) {
 				move.set(moveRateDiag,-moveRateDiag); 
-				if (kb.keyPressedTime(Buttons.RIGHT) < kb.keyPressedTime(Buttons.UP)) {
+				if (Game.keyboard.keyPressedTime(Buttons.RIGHT) < Game.keyboard.keyPressedTime(Buttons.UP)) {
 					face(FaceDirection.EAST);
 				} else {
 					face(FaceDirection.NORTH);
 				}
-			} else if (kb.isKeyPressed(Buttons.RIGHT) && kb.isKeyPressed(Buttons.DOWN)) {
+			} else if (Game.keyboard.isKeyPressed(Buttons.RIGHT) && Game.keyboard.isKeyPressed(Buttons.DOWN)) {
 				move.set(moveRateDiag, moveRateDiag); 
-				if (kb.keyPressedTime(Buttons.RIGHT) < kb.keyPressedTime(Buttons.DOWN)) {
+				if (Game.keyboard.keyPressedTime(Buttons.RIGHT) < Game.keyboard.keyPressedTime(Buttons.DOWN)) {
 					face(FaceDirection.EAST);
 				} else {
 					face(FaceDirection.SOUTH);
 				}
-			} else if (kb.isKeyPressed(Buttons.LEFT) && kb.isKeyPressed(Buttons.UP)) {
+			} else if (Game.keyboard.isKeyPressed(Buttons.LEFT) && Game.keyboard.isKeyPressed(Buttons.UP)) {
 				move.set(-moveRateDiag, -moveRateDiag); 
-				if (kb.keyPressedTime(Buttons.LEFT) < kb.keyPressedTime(Buttons.UP)) {
+				if (Game.keyboard.keyPressedTime(Buttons.LEFT) < Game.keyboard.keyPressedTime(Buttons.UP)) {
 					face(FaceDirection.WEST);
 				} else {
 					face(FaceDirection.NORTH);
 				}
-			} else if (kb.isKeyPressed(Buttons.LEFT)&& kb.isKeyPressed(Buttons.DOWN)) {
+			} else if (Game.keyboard.isKeyPressed(Buttons.LEFT)&& Game.keyboard.isKeyPressed(Buttons.DOWN)) {
 				move.set(-moveRateDiag, moveRateDiag);
-				if (kb.keyPressedTime(Buttons.LEFT) < kb.keyPressedTime(Buttons.DOWN)) {
+				if (Game.keyboard.keyPressedTime(Buttons.LEFT) < Game.keyboard.keyPressedTime(Buttons.DOWN)) {
 					face(FaceDirection.WEST);
 				} else {
 					face(FaceDirection.SOUTH);
 				}
-			} else if (kb.isKeyPressed(Buttons.RIGHT)) {
+			} else if (Game.keyboard.isKeyPressed(Buttons.RIGHT)) {
 				move.set(moveRate, 0);
 				face(FaceDirection.EAST);
-			} else if (kb.isKeyPressed(Buttons.LEFT)) {
+			} else if (Game.keyboard.isKeyPressed(Buttons.LEFT)) {
 				move.set(-moveRate, 0);
 				face(FaceDirection.WEST);
-			} else if (kb.isKeyPressed(Buttons.UP)) {
+			} else if (Game.keyboard.isKeyPressed(Buttons.UP)) {
 				move.set(0, -moveRate);
 				face(FaceDirection.NORTH);
-			} else if (kb.isKeyPressed(Buttons.DOWN)) {
+			} else if (Game.keyboard.isKeyPressed(Buttons.DOWN)) {
 				move.set(0, moveRate);
 				face(FaceDirection.SOUTH);
 			}
@@ -255,12 +256,12 @@ public class Link extends AbstractLivingEntity {
 			mapPosition.set(mapX(), mapY());
 		}
 
-		if (kb.isKeyPressed(Buttons.ITEM_B)) {
+		if (Game.keyboard.isKeyPressed(Buttons.ITEM_B)) {
 			if (itemB() != null && !itemA().using() && !itemB().using()) {
 				itemB().use();
 			}
 		}
-		if (kb.isKeyPressed(Buttons.ITEM_A)) {
+		if (Game.keyboard.isKeyPressed(Buttons.ITEM_A)) {
 			boolean itemConsumed = false;
 			if (face() == FaceDirection.NORTH) {
 				for (AbstractItem item : game.map().items()) {
@@ -280,31 +281,30 @@ public class Link extends AbstractLivingEntity {
 				}
 			}
 		}
-		if (kb.isKeyPressed(Buttons.START)) {
+		if (Game.keyboard.isKeyPressed(Buttons.START)) {
 			if (Game.clock.systemElapsedMillis()
 					- game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
 				game.gameLoops().get(GameStateEnum.ITEM_SCREEN).start();
 				game.gameState(GameStateEnum.ITEM_SCREEN);
 			}
 		}
-		if (kb.isKeyPressed(Buttons.PAUSE)) {
+		if (Game.keyboard.isKeyPressed(Buttons.PAUSE)) {
 			if (Game.clock.systemElapsedMillis()
 					- game.gameLoops().get(GameStateEnum.MAIN).transitionTime() >= 1000) {
 				game.gameLoops().get(GameStateEnum.PAUSED).start();
 				game.gameState(GameStateEnum.PAUSED);
 			}
 		}
-		if (kb.isKeyPressed(Buttons.RESET)) {
+		if (Game.keyboard.isKeyPressed(Buttons.RESET)) {
 			game.gameLoops().get(GameStateEnum.MAIN).end();
 			game.gameState(GameStateEnum.TITLE_SCREEN);
 		}
-		if (kb.isKeyPressed(Buttons.ESCAPE)) {
+		if (Game.keyboard.isKeyPressed(Buttons.ESCAPE)) {
 			game.gameState(GameStateEnum.END);
 		}
 	}
 	
 	private void updatePosition(PositionVector move) {
-		
 		// update position on grid
 		// simplest
 		if (move.x() != 0 || move.y() != 0) {
@@ -318,54 +318,7 @@ public class Link extends AbstractLivingEntity {
 
 			mapPosition.set(mapX(), mapY());
 		}
-		
-		// update position on grid
-		// version 2
-//		if (move.x() != 0 || move.y() != 0) {
-//			game.map().handleMetaEvents(this);
-//			move = game.map().move(this, move);
-//
-//			// add smart logic to scroll map or move link
-//			if (x < 10 * 16) {
-//				drawOffset.x(drawOffset.x() + move.x());
-//				x += move.x();
-//			} else {
-//				game.map().offset().x(game.map().offset().x() - move.x());
-//				x += move.x();
-//			}
-//			if (y < 7 * 16 - 8) { // offset 8 for top menu
-//				drawOffset.y(drawOffset.y() + move.y());
-//				y += move.y();
-//			} else {
-//				game.map().offset().y(game.map().offset().y() - move.y());
-//				y += move.y();
-//			}
-//			mapPosition.set(mapX(), mapY());
-//		}
 
-		// version 3
-//		x += move.x();
-//		y += move.y();	
-//		System.out.println("draw: " + drawOffset.x() + " " + drawOffset.y());
-//		System.out.println(x() + " " +  y());
-//		if(x() < 8 * 16) {
-//			game.map().offset().x(0);
-//			drawOffset.x(drawOffset.x() + move.x());
-//		} else if(x() > game.map().width() * 16 - 7 * 16){
-//			//game.map().offset().x(Game.SCREEN_WIDTH - game.map().width() * 16);
-//			drawOffset.x(drawOffset.x() + move.x());
-//		} else {
-//			game.map().offset().x(game.map().offset().x() - move.x());
-//		}
-//		if(y() < 8 * 16) {
-//			game.map().offset().y(0);
-//			drawOffset.y(drawOffset.y() + move.y());
-//		} else if(y() > game.map().height() * 16 - 7 * 16){
-//			//game.map().offset().y(Game.SCREEN_HEIGHT - game.map().height() * 16);
-//			drawOffset.y(drawOffset.y() + move.y());
-//		} else {
-//			game.map().offset().y(game.map().offset().y() - move.y());
-//		}
 	}
 
 	@Override

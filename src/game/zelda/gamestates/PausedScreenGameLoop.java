@@ -13,7 +13,7 @@ public class PausedScreenGameLoop extends AbstractGameLoop {
 	public void run() {
 		long currentTime = Game.clock.systemElapsedMillis();
 		if (currentTime - lastRefresh >= refreshInterval) {
-			if (game.keyboard().isKeyPressed(Buttons.PAUSE)) {
+			if (Game.keyboard.isKeyPressed(Buttons.PAUSE)) {
 				if (currentTime - game.gameLoops().get(GameStateEnum.PAUSED).transitionTime() >= 1000) {
 					end();
 					game.gameLoops().get(GameStateEnum.MAIN).start();
