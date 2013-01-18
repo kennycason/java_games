@@ -67,6 +67,8 @@ public class Octorok extends AbstractEnemy {
 			case WEST:
 				spriteCurrent = spriteW;
 				break;
+			default:
+				break;
 		}
 	}
 

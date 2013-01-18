@@ -8,12 +8,14 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 
-import engine.graphics.sprite.OpenGlSprite;
 import engine.graphics.shape.Circle;
 import engine.graphics.shape.GradientCircle;
 import engine.graphics.shape.Polygon;
 import engine.graphics.shape.Square;
 import engine.graphics.shape.Triangle;
+import engine.graphics.sprite.SimpleSprite;
+import engine.graphics.sprite.SpriteBank;
+import engine.graphics.sprite.SpriteSheet;
 import engine.math.Vector2D;
 
 class Screen implements GLEventListener {
@@ -22,7 +24,7 @@ class Screen implements GLEventListener {
 
 	private Triangle triangle = new Triangle(100, 100);
 	
-	private OpenGlSprite sprite = new OpenGlSprite();
+	private SimpleSprite sprite;
 	
 	private Polygon polygon = new Polygon(
 			new Vector2D(10, 10),
@@ -42,6 +44,12 @@ class Screen implements GLEventListener {
 	private int height;
 
 	public Screen(int width, int height) {
+		SpriteBank sprites = new SpriteBank();
+		sprites.set("entities", new SpriteSheet("sprites/entity/zelda/entities.png", 16, 16));
+		SpriteSheet sheet = (SpriteSheet) sprites.get("entities");
+		
+		sprite = sheet.get(1);
+		
 		square.color(0xff0000);
 		square.locate(100, 100);
 		triangle.color(0x00ff00);
@@ -64,7 +72,8 @@ class Screen implements GLEventListener {
 		square.draw(gl);
 		circle.draw(gl);
 		gCircle.draw(gl);
-		sprite.draw(gl);
+		sprite.draw(gl, 230, 230);
+		sprite.draw(gl, 430, 230);
 		gl.glFlush();
 	}
 
@@ -89,7 +98,8 @@ class Screen implements GLEventListener {
 		gl.glDisable(GL.GL_DEPTH_TEST);
 		// Setting the clear color (in this case black)
 		// and clearing the buffer with this set clear color
-		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		// gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+		//gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		// This defines how to blend when a transparent graphics
 		// is placed over another (here we have blended colors of
 		// two consecutively overlapping graphic objects)

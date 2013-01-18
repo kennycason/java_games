@@ -13,12 +13,19 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.media.opengl.GL2;
+import javax.media.opengl.GLProfile;
 
 import org.apache.log4j.Logger;
+
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 
 public class SimpleSprite extends AbstractSprite {
 
 	private BufferedImage bi;
+	
+	private Texture texture;
 	
 	private static final Logger LOGGER = Logger.getLogger(SimpleSprite.class.getName());
 
@@ -73,7 +80,24 @@ public class SimpleSprite extends AbstractSprite {
 	public void draw(Graphics g, int x, int y) {
 		locate(x, y); // for collision detection
 		g.drawImage(bi, x, y, x + spriteWidth, y + spriteHeight, 0, 0, spriteWidth, spriteHeight, null);
-
+	}
+	
+	public void draw(GL2 gl, int x, int y) {
+		locate(x, y);
+		gl.glLoadIdentity();
+		texture().enable(gl);
+		texture().bind(gl);
+		gl.glColor3f(1.0f, 1.0f, 1.0f);
+		gl.glBegin(GL2.GL_POLYGON);
+			gl.glTexCoord2d (0, 0);
+			gl.glVertex2d (x(), y());
+			gl.glTexCoord2d(1,0);
+			gl.glVertex2d (x() + width(), y());
+			gl.glTexCoord2d(1,1);
+			gl.glVertex2d (x() +width(), y() + height());
+			gl.glTexCoord2d(0,1);
+			gl.glVertex2d (x(), y() + height());
+		gl.glEnd();
 	}
 
 	public void addTransparency(final int rgb) {
@@ -93,6 +117,14 @@ public class SimpleSprite extends AbstractSprite {
 		ImageProducer ip = new FilteredImageSource(bi.getSource(), filter);
 		Image i = Toolkit.getDefaultToolkit().createImage(ip);
 		bi = SpriteUtils.imageToBufferedImage(i, spriteWidth, spriteHeight);
+		texture = null;
+	}
+	
+	public  Texture texture() {
+		if(texture == null) {
+			texture = AWTTextureIO.newTexture(GLProfile.get(GLProfile.GL2), bi, true);
+		}
+		return texture;
 	}
 	
 }
