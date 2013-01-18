@@ -8,8 +8,9 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 
-import engine.graphics.shape.GradientCircle;
+import engine.graphics.sprite.OpenGlSprite;
 import engine.graphics.shape.Circle;
+import engine.graphics.shape.GradientCircle;
 import engine.graphics.shape.Polygon;
 import engine.graphics.shape.Square;
 import engine.graphics.shape.Triangle;
@@ -20,6 +21,8 @@ class Screen implements GLEventListener {
 	private Square square = new Square(20);
 
 	private Triangle triangle = new Triangle(100, 100);
+	
+	private OpenGlSprite sprite = new OpenGlSprite();
 	
 	private Polygon polygon = new Polygon(
 			new Vector2D(10, 10),
@@ -61,6 +64,7 @@ class Screen implements GLEventListener {
 		square.draw(gl);
 		circle.draw(gl);
 		gCircle.draw(gl);
+		sprite.draw(gl);
 		gl.glFlush();
 	}
 
