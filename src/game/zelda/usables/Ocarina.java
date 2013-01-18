@@ -5,9 +5,9 @@ import java.awt.Graphics2D;
 import engine.FaceDirection;
 import engine.Game;
 import engine.entity.usable.AbstractUsableEntity;
+import engine.graphics.sprite.SimpleSprite;
+import engine.graphics.sprite.SpriteSheet;
 import engine.sound.AbstractSound;
-import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteSheet;
 
 public class Ocarina extends AbstractUsableEntity {
 	

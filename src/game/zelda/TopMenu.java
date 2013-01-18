@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import engine.Game;
 import engine.GameFactory;
-import engine.sprite.SpriteSheet;
+import engine.graphics.sprite.SpriteSheet;
 import game.zelda.item.EntityItemSpriteResourceNumber;
 
 public class TopMenu {

@@ -8,11 +8,11 @@ import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.usable.AbstractWeapon;
+import engine.graphics.sprite.SimpleSprite;
+import engine.graphics.sprite.SpriteSheet;
+import engine.graphics.sprite.SpriteUtils;
 import engine.map.tiled.MetaTilesNumber;
 import engine.sound.AbstractSound;
-import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteSheet;
-import engine.sprite.SpriteUtils;
 import game.zelda.item.Heart;
 import game.zelda.item.RupeeGreen;
 

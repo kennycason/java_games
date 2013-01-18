@@ -1,6 +1,6 @@
 package engine.map.tiled;
 
-import engine.sprite.SimpleSprite;
+import engine.graphics.sprite.SimpleSprite;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

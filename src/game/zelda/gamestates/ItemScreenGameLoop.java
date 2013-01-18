@@ -10,8 +10,8 @@ import engine.AbstractGameLoop;
 import engine.Game;
 import engine.GameStateEnum;
 import engine.entity.usable.AbstractUsableEntity;
+import engine.graphics.sprite.SpriteSheet;
 import engine.sound.AbstractSound;
-import engine.sprite.SpriteSheet;
 import game.zelda.Buttons;
 import game.zelda.TopMenu;
 

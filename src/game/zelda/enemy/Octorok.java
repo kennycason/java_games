@@ -4,9 +4,9 @@ import engine.FaceDirection;
 import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteSheet;
-import engine.sprite.SpriteUtils;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SpriteSheet;
+import engine.graphics.sprite.SpriteUtils;
 import game.zelda.item.Heart;
 import game.zelda.item.RupeeGreen;
 

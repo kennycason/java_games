@@ -3,8 +3,8 @@ package game.zelda.enemy;
 import engine.Game;
 import engine.ai.RandomAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteSheet;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SpriteSheet;
 import game.zelda.item.RupeeBlue;
 
 public class LikeLike extends AbstractEnemy {

@@ -3,9 +3,9 @@ package game.zelda.enemy;
 import engine.Game;
 import engine.ai.AggressiveAIStrategy;
 import engine.entity.enemy.AbstractEnemy;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteBank;
-import engine.sprite.SpriteSheet;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SpriteBank;
+import engine.graphics.sprite.SpriteSheet;
 import game.zelda.item.RupeeBlue;
 
 public class RedTurtle extends AbstractEnemy {

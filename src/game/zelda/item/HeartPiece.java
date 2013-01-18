@@ -2,9 +2,9 @@ package game.zelda.item;
 
 import engine.Game;
 import engine.entity.item.AbstractItem;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SpriteSheet;
 import engine.sound.AbstractSound;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteSheet;
 
 public class HeartPiece extends AbstractItem {
 	

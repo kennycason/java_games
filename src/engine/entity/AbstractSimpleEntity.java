@@ -1,7 +1,7 @@
 package engine.entity;
 
 import engine.FaceDirection;
-import engine.sprite.AnimatedSprite;
+import engine.graphics.sprite.AnimatedSprite;
 
 public abstract class AbstractSimpleEntity extends AbstractEntity {
 

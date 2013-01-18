@@ -10,11 +10,11 @@ import engine.Game;
 import engine.entity.AbstractSimpleEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.usable.AbstractWeapon;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SimpleSprite;
+import engine.graphics.sprite.SpriteSheet;
+import engine.graphics.sprite.SpriteUtils;
 import engine.math.PositionVector;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteSheet;
-import engine.sprite.SpriteUtils;
 
 public class BowAndArrow extends AbstractWeapon {
 	
