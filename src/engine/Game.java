@@ -22,6 +22,7 @@ import engine.keyboard.DefaultKeyEventDispatcher;
 import engine.keyboard.KeyBoard;
 import engine.map.tiled.Map;
 import engine.map.tiled.TiledMapLoader;
+import engine.mouse.Mouse;
 import engine.sound.SoundBank;
 import engine.sprite.SimpleSprite;
 import engine.sprite.SpriteBank;
@@ -31,9 +32,9 @@ public abstract class Game extends JPanel {
 
 	protected static final long serialVersionUID = 1L;
 
-	public static final int SCREEN_WIDTH = 240;
+	public static int SCREEN_WIDTH = 240;
 
-	public static final int SCREEN_HEIGHT = 240;
+	public static int SCREEN_HEIGHT = 240;
 	
 	public static Locale locale;
 	
@@ -53,7 +54,9 @@ public abstract class Game extends JPanel {
 	
 	public static KeyBoard keyboard;
 	
-	protected int zoom = 2;
+	public static Mouse mouse;
+	
+	protected static int ZOOM = 2;
 
 	protected final SimpleSprite screen;
 
@@ -71,10 +74,17 @@ public abstract class Game extends JPanel {
 	protected HashMap<GameStateEnum, AbstractGameLoop> gameLoops;
 
 	protected Game() {
+		this(SCREEN_WIDTH, SCREEN_HEIGHT, 2);
+	}
+	
+	protected Game(int width, int height, int zoom) {
 		super(true);
 		System.setProperty("sun.java2d.opengl", "true");
 		System.setProperty("sun.java2d.ddscale", "true");
 		System.setProperty("sun.java2d.translaccel", "true");
+		SCREEN_WIDTH = width;
+		SCREEN_HEIGHT = height;
+		ZOOM = zoom;
 		this.setLayout(new GridLayout());
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH * zoom, SCREEN_HEIGHT * zoom));
 		this.setIgnoreRepaint(true);
@@ -96,9 +106,11 @@ public abstract class Game extends JPanel {
 		usables = new UsableBank();
 		clock = Clock.getInstance();
 		keyboard = new KeyBoard();
+		mouse = new Mouse();
 		
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new DefaultKeyEventDispatcher(keyboard));
+        this.addMouseListener(mouse);
 		this.setFocusable(true);
 		this.requestFocusInWindow();
 		
@@ -147,8 +159,8 @@ public abstract class Game extends JPanel {
 		return screen;
 	}
 
-	public int zoom() {
-		return zoom;
+	public static int zoom() {
+		return ZOOM;
 	}
 	
 	public HashMap<GameStateEnum, AbstractGameLoop> gameLoops() {
