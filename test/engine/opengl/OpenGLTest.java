@@ -1,13 +1,4 @@
-package test.engine.opengl;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLCanvas;
-import javax.swing.JFrame;
-
+package engine.opengl;
 
 public class OpenGLTest {
 	
