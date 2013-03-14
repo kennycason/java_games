@@ -70,26 +70,29 @@ public class MainGameLoop extends AbstractGameLoop {
 		int y = -1;
 
 		if(!gameOver) {
+			// reveal
 			if (Game.mouse.isMouseClicked(MouseEvent.BUTTON1)) {
-				if (Game.clock.elapsedMillis() - mouseLastClicked > 150) {
+				if (Game.clock.elapsedMillis() - mouseLastClicked > 250) {
 					// System.out.println("imm. after: " + Game.mouse.x() + " " + Game.mouse.y());
-					mouseLastClicked = Game.clock.elapsedMillis();
-					x = (int) ((Game.mouse.x() / Game.zoom() - 10) / (double) (tileDim + 1));
-					y = (int) ((Game.mouse.y() / Game.zoom() - 10) / (double) (tileDim + 1));		
+					x = (int) ((Game.mouse.x2() - 10) / (double) (tileDim + 1));
+					y = (int) ((Game.mouse.y2() - 10) / (double) (tileDim + 1));		
 					if (x >= 0 && x < width && y >= 0 && y < height) {
+						mouseLastClicked = Game.clock.elapsedMillis();
 						// System.out.println("after: " + Game.mouse.x() + " " + Game.mouse.y());
 						// System.out.println("final: " + x + " " + y + " zoom: " + Game.zoom() + " tileDim: " + tileDim);
 						click(x, y, 0);
 					}
 				}
 			}
+			// flag
 			if (Game.mouse.isMouseClicked(MouseEvent.BUTTON3)) {
-				if (Game.clock.elapsedMillis() - mouseLastClicked > 150) {
-					mouseLastClicked = Game.clock.elapsedMillis();
-					x = (int) ((Game.mouse.x() / Game.zoom() - 10) / (double) (tileDim + 1));
-					y = (int) ((Game.mouse.y() / Game.zoom() - 10) / (double) (tileDim + 1));
+				if (Game.clock.elapsedMillis() - mouseLastClicked > 250) {
+					x = (int) ((Game.mouse.x2() - 10) / (double) (tileDim + 1));
+					y = (int) ((Game.mouse.y2() - 10) / (double) (tileDim + 1));
+					System.out.println("cliked loop: " + x + " " + y);
 					if (x >= 0 && x < width && y >= 0 && y < height) {
-						flagged[x][y] = true;
+						mouseLastClicked = Game.clock.elapsedMillis();
+						flagged[x][y] = !flagged[x][y];
 					}
 				}
 			}
