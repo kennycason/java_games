@@ -27,9 +27,9 @@ public class Mouse implements MouseListener {
 	public Mouse() {
 		keys = new boolean[MouseEvent.MOUSE_LAST];
 		keyPressedTime = new long[MouseEvent.MOUSE_LAST];
-		Arrays.fill(keyPressedTime, -100);
+		Arrays.fill(keyPressedTime, -1);
 		keyReleasedTime = new long[MouseEvent.MOUSE_LAST];
-		Arrays.fill(keyReleasedTime, -100);
+		Arrays.fill(keyReleasedTime, -1);
 		for(int i = 0; i < keys.length; i++) {
 			keyPressedTime[i] = -1;
 		}
@@ -53,7 +53,8 @@ public class Mouse implements MouseListener {
 		keyPressedTime[e.getButton()] = Game.clock.elapsedMillis();
 		x1 = e.getX() / Game.zoom();
 		y1 = e.getY() / Game.zoom();
-	//	System.out.println("pressed: " + x + " " + y);
+		x2 = -1;
+		y2 = -1;
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class Mouse implements MouseListener {
 		keyReleasedTime[e.getButton()] = Game.clock.elapsedMillis();
 		x2 = e.getX() / Game.zoom();
 		y2 = e.getY() / Game.zoom();
-		System.out.println("released: " + x2 + " " + y2);
+		// System.out.println("released: " + x2 + " " + y2);
 	}
 	
 	public long mouseClickedTime(int e) {

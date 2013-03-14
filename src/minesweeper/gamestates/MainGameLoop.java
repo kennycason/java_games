@@ -89,7 +89,7 @@ public class MainGameLoop extends AbstractGameLoop {
 				if (Game.clock.elapsedMillis() - mouseLastClicked > 250) {
 					x = (int) ((Game.mouse.x2() - 10) / (double) (tileDim + 1));
 					y = (int) ((Game.mouse.y2() - 10) / (double) (tileDim + 1));
-					System.out.println("cliked loop: " + x + " " + y);
+					// System.out.println("cliked loop: " + x + " " + y);
 					if (x >= 0 && x < width && y >= 0 && y < height) {
 						mouseLastClicked = Game.clock.elapsedMillis();
 						flagged[x][y] = !flagged[x][y];
