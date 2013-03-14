@@ -1,12 +1,13 @@
 *.class
 
 # Package Files #
-# *.jar
+#*.jar
 *.war
 *.ear
 
 .classpath
 .settings/org.eclipse.jdt.core.prefs
 *.prefs
-
+lib/opengl/x86/*.jar
+lib/opengl/x86-64/*.jar
 bin/

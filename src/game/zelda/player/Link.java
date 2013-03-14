@@ -10,12 +10,12 @@ import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.usable.AbstractUsableEntity;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SimpleSprite;
+import engine.graphics.sprite.SpriteSheet;
+import engine.graphics.sprite.SpriteUtils;
 import engine.math.PositionVector;
 import engine.sound.LoopingSound;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteSheet;
-import engine.sprite.SpriteUtils;
 import game.zelda.Buttons;
 
 public class Link extends AbstractLivingEntity {

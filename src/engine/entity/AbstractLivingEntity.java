@@ -5,10 +5,10 @@ import java.awt.Graphics2D;
 import engine.FaceDirection;
 import engine.Game;
 import engine.ai.IAIStrategy;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SimpleSprite;
+import engine.graphics.sprite.SpriteUtils;
 import engine.sound.AbstractSound;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteUtils;
 
 public abstract class AbstractLivingEntity extends AbstractEntity {
 

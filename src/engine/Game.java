@@ -17,6 +17,8 @@ import engine.clock.Clock;
 import engine.config.ConfigBank;
 import engine.entity.usable.UsableBank;
 import engine.font.FontBank;
+import engine.graphics.sprite.SimpleSprite;
+import engine.graphics.sprite.SpriteBank;
 import engine.il8n.StringBank;
 import engine.keyboard.DefaultKeyEventDispatcher;
 import engine.keyboard.KeyBoard;
@@ -24,8 +26,6 @@ import engine.map.tiled.Map;
 import engine.map.tiled.TiledMapLoader;
 import engine.mouse.Mouse;
 import engine.sound.SoundBank;
-import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteBank;
 import game.zelda.player.Link;
 
 public abstract class Game extends JPanel {

@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import engine.FaceDirection;
 import engine.Game;
 import engine.entity.usable.AbstractUsableEntity;
-import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteSheet;
+import engine.graphics.sprite.SimpleSprite;
+import engine.graphics.sprite.SpriteSheet;
 
 public class Bracelet extends AbstractUsableEntity {
 	

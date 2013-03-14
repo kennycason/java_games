@@ -2,7 +2,7 @@ package engine.map.tiled;
 
 import java.awt.Graphics2D;
 
-import engine.sprite.SimpleSprite;
+import engine.graphics.sprite.SimpleSprite;
 
 public class RenderTile extends AbstractTile {
 

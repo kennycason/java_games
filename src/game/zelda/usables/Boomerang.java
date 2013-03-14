@@ -8,11 +8,11 @@ import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.entity.usable.AbstractWeapon;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SpriteSheet;
+import engine.graphics.sprite.SpriteUtils;
 import engine.math.PositionVector;
 import engine.sound.LoopingSound;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteSheet;
-import engine.sprite.SpriteUtils;
 import game.zelda.Buttons;
 
 public class Boomerang extends AbstractWeapon {

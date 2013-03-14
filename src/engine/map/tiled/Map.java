@@ -9,8 +9,8 @@ import engine.entity.AbstractCollidable;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.event.EventQueue;
+import engine.graphics.sprite.SimpleSprite;
 import engine.math.PositionVector;
-import engine.sprite.SimpleSprite;
 import game.zelda.map.meta.LinkFallingMetaEvent;
 
 /**

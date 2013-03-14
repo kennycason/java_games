@@ -6,11 +6,11 @@ import java.util.Iterator;
 import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.usable.AbstractWeapon;
+import engine.graphics.sprite.AnimatedSprite;
+import engine.graphics.sprite.SpriteSheet;
+import engine.graphics.sprite.SpriteUtils;
 import engine.map.tiled.MetaTilesNumber;
 import engine.sound.AbstractSound;
-import engine.sprite.AnimatedSprite;
-import engine.sprite.SpriteSheet;
-import engine.sprite.SpriteUtils;
 
 public class MegatonHammer extends AbstractWeapon {
 	
