@@ -3,13 +3,10 @@ package minesweeper;
 import java.awt.Font;
 
 import minesweeper.gamestates.MainGameLoop;
+import engine.graphics.sprite.SpriteSheet;
 import engine.Game;
 import engine.GameFactory;
 import engine.GameStateEnum;
-import engine.sound.LoopingSound;
-import engine.sprite.SimpleSprite;
-import engine.sprite.SpriteSheet;
-import game.zelda.usables.SwordLevel1;
 
 public class MineSweeper extends Game {
 
