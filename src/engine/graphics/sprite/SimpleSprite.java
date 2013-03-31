@@ -84,20 +84,24 @@ public class SimpleSprite extends AbstractSprite {
 	
 	public void draw(GL2 gl, int x, int y) {
 		locate(x, y);
-		gl.glLoadIdentity();
 		texture().enable(gl);
 		texture().bind(gl);
+		
+		gl.glLoadIdentity();
 		gl.glColor3f(1.0f, 1.0f, 1.0f);
+		gl.glTranslated(x(), y(), 0);
+		
 		gl.glBegin(GL2.GL_POLYGON);
 			gl.glTexCoord2d (0, 0);
-			gl.glVertex2d (x(), y());
+			gl.glVertex2d (0, 0);
 			gl.glTexCoord2d(1,0);
-			gl.glVertex2d (x() + width(), y());
+			gl.glVertex2d (width(), 0);
 			gl.glTexCoord2d(1,1);
-			gl.glVertex2d (x() +width(), y() + height());
+			gl.glVertex2d (width(), height());
 			gl.glTexCoord2d(0,1);
-			gl.glVertex2d (x(), y() + height());
+			gl.glVertex2d (0, height());
 		gl.glEnd();
+		texture.disable(gl);
 	}
 
 	public void addTransparency(final int rgb) {

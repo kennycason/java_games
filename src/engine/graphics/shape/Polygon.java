@@ -41,10 +41,15 @@ public class Polygon extends AbstractShape {
 	@Override
 	public void draw(GL2 gl) {
 		gl.glLoadIdentity();
+		gl.glTranslated(x(), y(), 0);
+		gl.glRotated(rot.x(), 1.0, 0, 0);
+		gl.glRotated(rot.y(), 0, 1.0, 0);
+		gl.glRotated(rot.z(), 0, 0, 1.0);
 		gl.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
+		
 		gl.glBegin(GL2.GL_POLYGON);
 		for (Vector2D v : vectors) {
-			gl.glVertex3d(x() + v.x(), y() + v.y(), 0);
+			gl.glVertex3d(v.x(), v.y(), 0);
 		}
 		gl.glEnd();
 	}

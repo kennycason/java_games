@@ -16,11 +16,16 @@ public class Triangle extends AbstractShape {
 	@Override
 	public void draw(GL2 gl) {
 		gl.glLoadIdentity();
+		gl.glTranslated(x(), y(), 0);
+		gl.glRotated(rot.x(), 1.0, 0, 0);
+		gl.glRotated(rot.y(), 0, 1.0, 0);
+		gl.glRotated(rot.z(), 0, 0, 1.0);
 		gl.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
+		
 		gl.glBegin(GL2.GL_TRIANGLES);
-		gl.glVertex3f(x(), y() + height, 0.0f);
-		gl.glVertex3f(x() + width / 2.0f, y(), 0.0f);
-		gl.glVertex3f(x() + width, y() + height, 0.0f);
+			gl.glVertex3f(0, height, 0.0f);
+			gl.glVertex3f(width / 2.0f, 0, 0.0f);
+			gl.glVertex3f(width, height, 0.0f);
 		gl.glEnd();
 	}
 

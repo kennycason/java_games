@@ -13,12 +13,16 @@ public class EmptyHalfCircle extends AbstractShape {
 	@Override
 	public void draw(GL2 gl) {
 		gl.glLoadIdentity();
+		gl.glTranslated(x() + radius, y() + radius, 0);
+		gl.glRotated(rot.x(), 1.0, 0, 0);
+		gl.glRotated(rot.y(), 0, 1.0, 0);
+		gl.glRotated(rot.z(), 0, 0, 1.0);
 		gl.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
-		gl.glLineWidth(1f);
+		
 		gl.glBegin(GL2.GL_LINE_LOOP); 
 		   for (int i = 0; i <= 100; i++) {
 		      float angle = (float) (i * Math.PI / 100.0);
-		      gl.glVertex2d(x() + (Math.cos(angle) * radius), y() + (Math.sin(angle) * radius));
+		      gl.glVertex2d((Math.cos(angle) * radius), y() + (Math.sin(angle) * radius));
 		   }
 		gl.glEnd();
 	}

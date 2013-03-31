@@ -23,7 +23,7 @@ public class OpenGLTest {
     	// The canvas is the widget that's drawn in the JFrame
     	GLCanvas glcanvas = new GLCanvas(capabilities);
     	glcanvas.addGLEventListener(new Screen(640, 480));
-    	glcanvas.setSize( 640, 480 );
+    	glcanvas.setSize(640, 480);
     	
         JFrame frame = new JFrame( "Hello World" );
         frame.getContentPane().add( glcanvas);

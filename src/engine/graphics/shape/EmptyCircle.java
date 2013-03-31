@@ -15,12 +15,17 @@ public class EmptyCircle extends AbstractShape {
 	@Override
 	public void draw(GL2 gl) {
 		gl.glLoadIdentity();
+		gl.glTranslated(x() + radius, y() + radius, 0);
+		gl.glRotated(rot.x(), 1.0, 0, 0);
+		gl.glRotated(rot.y(), 0, 1.0, 0);
+		gl.glRotated(rot.z(), 0, 0, 1.0);
 		gl.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
+		
 		gl.glLineWidth(1f);
 		gl.glBegin(GL2.GL_LINE_LOOP); 
 		   for (int i = 0; i <= 360; i++) {
 		      float degInRad = i * DEG2RAD;
-		      gl.glVertex2d(x() + Math.cos(degInRad) * radius, y() + Math.sin(degInRad) * radius);
+		      gl.glVertex2d(Math.cos(degInRad) * radius, Math.sin(degInRad) * radius);
 		   }
 		 
 		gl.glEnd();
