@@ -20,7 +20,7 @@ public class MineSweeper extends Game {
 	}
 	
 	private MineSweeper() {
-		super(240, 240, 2);
+		super(460, 350, 2);
 	}
 	
 	/**

@@ -9,6 +9,7 @@ import java.util.Random;
 
 import engine.AbstractGameLoop;
 import engine.Game;
+import engine.GameStateEnum;
 
 public class MainGameLoop extends AbstractGameLoop {
 
@@ -36,17 +37,17 @@ public class MainGameLoop extends AbstractGameLoop {
 	
 	public MainGameLoop() {
 		super();
-		width = 20;
-		height = 20;
+		width = 40;
+		height = 30;
 		map = new boolean[width][height];
 		clicked = new boolean[width][height];
 		flagged = new boolean[width][height];
 		sorroundingMines = new int[width][height];
 		random = new Random();
-		numMines = 35;
+		numMines = 200;
 		newMap();
 		// printMap();
-		// clickAll();
+		//clickAll();
 	}
 	
 	@Override
@@ -89,10 +90,14 @@ public class MainGameLoop extends AbstractGameLoop {
 					x = (int) ((Game.mouse.x() / Game.zoom() - 10) / (double) (tileDim + 1));
 					y = (int) ((Game.mouse.y() / Game.zoom() - 10) / (double) (tileDim + 1));
 					if (x >= 0 && x < width && y >= 0 && y < height) {
-						flagged[x][y] = true;
+						flagged[x][y] = !flagged[x][y];
 					}
 				}
 			}
+		}
+		if(Game.keyboard.isKeyPressed(KeyEvent.VK_H)) {
+			help();	
+			game.sleep(150);
 		}
 		if(Game.keyboard.isKeyPressed(KeyEvent.VK_C)) {
 			clickAll();	
@@ -101,7 +106,7 @@ public class MainGameLoop extends AbstractGameLoop {
 			newMap();
 		}
 		if(Game.keyboard.isKeyPressed(KeyEvent.VK_ESCAPE)) {
-			System.exit(0);	
+			game.gameState(GameStateEnum.END);
 		}
 	}
 	
@@ -131,6 +136,20 @@ public class MainGameLoop extends AbstractGameLoop {
 		click(x, y + 1, depth + 1);
 		click(x + 1, y + 1, depth + 1);
 	}
+	
+	private void help() {
+		if(!isWin() && !isLose()) {
+			for(int y = 0; y < height; y++) {
+				for(int x = 0; x < width; x++) {
+					if(!map[x][y] && !clicked[x][y]) {
+						flagged[x][y] = false;
+						click(x, y, 0);
+						return;
+					}
+				}
+			}
+		}
+	}
 
 	@Override
 	public void draw(BufferedImage bi) {
@@ -151,7 +170,7 @@ public class MainGameLoop extends AbstractGameLoop {
 						g.setColor(Color.WHITE);
 						g.fillRect(x * (tileDim + 1) + 10, y * (tileDim + 1) + 10, tileDim, tileDim);
 						if(sorroundingMines[x][y] > 0) {
-							g.setColor(Color.BLACK);
+							g.setColor(getMineCountColor(sorroundingMines[x][y]));
 							g.setFont(Game.fonts.get("small"));
 							g.drawString(String.valueOf(sorroundingMines[x][y]), 
 									x * (tileDim + 1) + 11, y * (tileDim + 1) + 19);
@@ -180,6 +199,25 @@ public class MainGameLoop extends AbstractGameLoop {
 		g.dispose();
 	}
 	
+	private Color getMineCountColor(int num) {
+		switch(num) {
+			case 1:
+				return Color.BLACK;
+			case 2: 
+				return Color.GRAY;
+			case 3:
+				return Color.BLUE;
+			case 4:
+				return Color.RED;
+			case 5:
+				return Color.MAGENTA;
+			case 6:
+				return Color.GREEN;
+			default:
+				return Color.BLACK;
+		}
+	}
+
 	@Override
 	public void start() {
 		lastRefresh = Game.clock.systemElapsedMillis() - refreshInterval;
