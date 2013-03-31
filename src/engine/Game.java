@@ -59,6 +59,8 @@ public abstract class Game extends JPanel {
 	protected static int ZOOM = 2;
 
 	protected final SimpleSprite screen;
+	
+	protected JFrame frame;
 
 	protected final JLabel screenPanel = new JLabel();
 
@@ -117,15 +119,15 @@ public abstract class Game extends JPanel {
 		loader = new TiledMapLoader();
 		gameState = GameStateEnum.TITLE_SCREEN;
 		gameLoops = new HashMap<GameStateEnum, AbstractGameLoop>();
-	}
-	
-	public void start() {
-		JFrame frame = new JFrame();
-		frame.setTitle(strings.get("title"));
+		
+		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
 		frame.pack();
 		frame.setResizable(false);
+	}
+	
+	public void start() {
 		frame.setVisible(true);
 	}
 	
@@ -176,6 +178,10 @@ public abstract class Game extends JPanel {
 		} finally {
 			clock.start();
 		}
+	}
+	
+	public void setTitle(String title) {
+		frame.setTitle(title);
 	}
 	
 }

@@ -29,6 +29,7 @@ public class LegendOfZelda extends Game {
 	public static void main(String[] args) {
 		GameFactory.set(new LegendOfZelda());
 		Game game = GameFactory.get();
+		game.setTitle(Game.strings.get("title"));
 		game.start();
 		game.run();
 	}

@@ -15,6 +15,7 @@ public class MineSweeper extends Game {
 	public static void main(String[] args) {
 		GameFactory.set(new MineSweeper());
 		Game game = GameFactory.get();
+		game.setTitle("MineSweeper");
 		game.start();
 		game.run();
 	}
