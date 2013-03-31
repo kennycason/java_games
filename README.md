@@ -9,34 +9,34 @@ Zelda Game written in Java - Still a new project so it's definitely a work in pr
 <table>
     <tr>
         <td>
-            <img src="http://ken-soft.com/images/zelda/zelda8.png" width="400px"/>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/zelda8.png" width="400px"/>
         </td>
         <td>
-            <img src="http://ken-soft.com/images/zelda/zelda5.png" width="400px"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <img src="http://ken-soft.com/images/zelda/zelda7.png" width="400px"/>
-        </td>
-        <td>
-            <img src="http://ken-soft.com/images/zelda/zelda11.png" width="400px"/>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/zelda5.png" width="400px"/>
         </td>
     </tr>
     <tr>
         <td>
-            <img src="http://ken-soft.com/images/zelda/zelda9.png" width="400px"/>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/zelda7.png" width="400px"/>
         </td>
         <td>
-            <img src="http://ken-soft.com/images/zelda/zelda10.png" width="400px"/>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/zelda11.png" width="400px"/>
         </td>
     </tr>
     <tr>
         <td>
-            <img src="http://ken-soft.com/images/zelda/zelda12.png" width="400px"/>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/zelda9.png" width="400px"/>
         </td>
         <td>
-            <img src="http://ken-soft.com/images/zelda/zelda13.png" width="400px"/>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/zelda10.png" width="400px"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/zelda12.png" width="400px"/>
+        </td>
+        <td>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/zelda13.png" width="400px"/>
         </td>
     </tr>
 </table>
