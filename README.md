@@ -1,9 +1,11 @@
+Java Game Engin
+
+
+
 Legend of Zelda
 =============
 By: Kenny Cason<br/>
-Zelda Game written in Java - Still a new project so it's definitely a work in progress.<br/>
-
-
+Zelda Game written in Java - Still a new project so it's definitely a work in progress. But should demonstrate much of hte functionality<br/>
 <table>
     <tr>
         <td>
