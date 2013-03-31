@@ -1,4 +1,4 @@
-package engine.opengl;
+package test.engine.opengl;
 
 public class OpenGLTest {
 	

@@ -44,7 +44,7 @@ public class MainGameLoop extends AbstractGameLoop {
 		flagged = new boolean[width][height];
 		sorroundingMines = new int[width][height];
 		random = new Random();
-		numMines = 200;
+		numMines = 150;
 		newMap();
 		// printMap();
 		//clickAll();

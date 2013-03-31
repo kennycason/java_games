@@ -1,4 +1,4 @@
-package engine.clock;
+package test.engine.clock;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
