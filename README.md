@@ -41,6 +41,20 @@ Zelda Game written in Java - Still a new project so it's definitely a work in pr
     </tr>
 </table>
 
+MineSweeper
+============
+<table>
+    <tr>
+        <td>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/minesweeper_winning.jpg" width="400px"/>
+        </td>
+        <td>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/minesweeper1.jpg" width="400px"/>
+        </td>
+    </tr>
+</table>
+
+
 **Required Libraries**<br/>
 Java 1.7<br/>
 jsoup-1.7.1.jar<br/>
