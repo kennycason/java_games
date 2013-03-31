@@ -49,7 +49,7 @@ MineSweeper
             <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/minesweeper_winning.jpg" width="400px"/>
         </td>
         <td>
-            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/minesweeper1.jpg" width="400px"/>
+            <img src="https://raw.github.com/kennycason/java_games/master/doc/screenshots/minesweeper1.png" width="400px"/>
         </td>
     </tr>
 </table>
