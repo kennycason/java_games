@@ -11,6 +11,7 @@ import engine.graphics.sprite.SpriteSheet;
 import engine.graphics.sprite.SpriteUtils;
 import engine.map.tiled.MetaTilesNumber;
 import engine.sound.AbstractSound;
+import game.zelda.player.Link;
 
 public class MegatonHammer extends AbstractWeapon {
 	
@@ -25,8 +26,8 @@ public class MegatonHammer extends AbstractWeapon {
 	
 	private AbstractSound crushSound;
 	
-	public MegatonHammer() {
-		super();
+	public MegatonHammer(Link link) {
+		super(link);
 		damage = 2;
 		using = false;
 		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
@@ -54,8 +55,8 @@ public class MegatonHammer extends AbstractWeapon {
 		}
 		sprite.draw(g, x() + game.map().offset().x(), y() + game.map().offset().y());
 		// collide with rocks
-		int offX = game.link().mapX();
-		int offY = game.link().mapY();
+		int offX = user.mapX();
+		int offY = user.mapY();
 		smash(offX - 1, offY - 1); 
 		smash(offX, offY - 1); 
 		smash(offX + 1, offY - 1);
@@ -72,7 +73,7 @@ public class MegatonHammer extends AbstractWeapon {
 		if (using()) {
 			if(sprite.doneAnimating()) {
 				using = false;
-				game.link().face(game.link().face());
+				user.face(user.face());
 				return;
 			}
 			// enemies
@@ -91,24 +92,24 @@ public class MegatonHammer extends AbstractWeapon {
 	public void use() {
 		swingSound.play();
 		using = true;
-		game.link().attackFace(game.link().face());
+		((Link)user).attackFace(user.face());
 
-		switch (game.link().face()) {
+		switch (user.face()) {
 			case NORTH:
 				sprite = spriteN;
-				locate(game.link().x() - 2, game.link().y() - 9);
+				locate(user.x() - 2, user.y() - 9);
 				break;
 			case EAST:
 				sprite = spriteE;
-				locate(game.link().x() + 12, game.link().y() + 2);
+				locate(user.x() + 12, user.y() + 2);
 				break;
 			case SOUTH:
 				sprite = spriteS;
-				locate(game.link().x() - 2, game.link().y() + 9);
+				locate(user.x() - 2, user.y() + 9);
 				break;
 			case WEST:
 				sprite = spriteW;
-				locate(game.link().x() + -12, game.link().y() + 2);
+				locate(user.x() + -12, user.y() + 2);
 				break;
 		}
 		sprite.reset();

@@ -10,7 +10,7 @@ import game.zelda.item.EntityItemSpriteResourceNumber;
 
 public class TopMenu {
 	
-	private Game game;
+	private LegendOfZelda game;
 
 	/**
 	 * quick references to commonly used sprite resources
@@ -18,7 +18,7 @@ public class TopMenu {
 	private SpriteSheet entities8x8;
 	
 	public TopMenu() {
-		game = GameFactory.get();
+		game = (LegendOfZelda)GameFactory.get();
 		entities8x8 = (SpriteSheet) Game.sprites.get("entities8x8");
 	}
 	

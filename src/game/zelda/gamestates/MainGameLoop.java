@@ -12,6 +12,7 @@ import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.sound.LoopingSound;
 import game.zelda.TopMenu;
+import game.zelda.player.Link;
 
 public class MainGameLoop extends AbstractGameLoop {
 
@@ -19,8 +20,11 @@ public class MainGameLoop extends AbstractGameLoop {
 	
 	private LoopingSound sound;
 	
-	public MainGameLoop() {
+	private Link link;
+
+	public MainGameLoop(Link link) {
 		super();
+		this.link = link;
 		menu = new TopMenu();
 		sound = (LoopingSound) Game.sounds.get("main_theme");
 	}
@@ -53,7 +57,7 @@ public class MainGameLoop extends AbstractGameLoop {
 			// handle map events
 			game.map().events().handle();
 			
-			game.link().handle();
+			link.handle();
 			
 			// paint everything
 			draw(game.screen().bufferedImage());
@@ -82,7 +86,7 @@ public class MainGameLoop extends AbstractGameLoop {
 			enemy.draw(g);
 		}
 		
-		game.link().draw(g);
+		link.draw(g);
 		game.map().drawTopLater(g);
 		menu.draw(g);
 		game.map().drawMetaLaters(g); // doesn't really draw, just resets the positions

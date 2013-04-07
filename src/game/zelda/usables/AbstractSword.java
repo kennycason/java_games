@@ -15,6 +15,7 @@ import engine.map.tiled.MetaTilesNumber;
 import engine.sound.AbstractSound;
 import game.zelda.item.Heart;
 import game.zelda.item.RupeeGreen;
+import game.zelda.player.Link;
 
 public abstract class AbstractSword extends AbstractWeapon {
 	
@@ -36,9 +37,12 @@ public abstract class AbstractSword extends AbstractWeapon {
 	protected AbstractSound cutSound;
 	
 	protected Random r = new Random();
+	
+	protected Link link;
 
-	protected AbstractSword(int entityNumber, int damage) {
-		super();
+	protected AbstractSword(Link link, int entityNumber, int damage) {
+		super(link);
+		this.link = link;
 		this.damage = damage;
 		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
@@ -62,8 +66,8 @@ public abstract class AbstractSword extends AbstractWeapon {
 					x() + game.map().offset().x(), 
 					y() + game.map().offset().y());
 			// collide with cuttable
-			int offX = game.link().mapX();
-			int offY = game.link().mapY();
+			int offX = link.mapX();
+			int offY = link.mapY();
 			cut(offX - 1, offY - 1); 
 			cut(offX, offY - 1); 
 			cut(offX + 1, offY - 1);
@@ -96,50 +100,50 @@ public abstract class AbstractSword extends AbstractWeapon {
 				}
 			}
 			
-			game.link().attackFace(game.link().face());
+			link.attackFace(link.face());
 			if(phase == 1) {
-				switch(game.link().face()) {
+				switch(link.face()) {
 					case NORTH:
 						sprite = spriteN2;
-						locate(game.link().x() + 11, game.link().y() - 7);	
+						locate(link.x() + 11, link.y() - 7);	
 						break;
 					case EAST:
 						sprite = spriteE2;
-						locate(game.link().x() + 11, game.link().y() + 9);
+						locate(link.x() + 11, link.y() + 9);
 						break;
 					case SOUTH:
 						sprite = spriteS2;
-						locate(game.link().x() - 5, game.link().y() + 11);
+						locate(link.x() - 5, link.y() + 11);
 						break;
 					case WEST:
 						sprite = spriteW2;
-						locate(game.link().x() - 11, game.link().y() - 5);
+						locate(link.x() - 11, link.y() - 5);
 						break;
 				}
 				phase++;
 			} else if(phase >= 2) {
-				switch(game.link().face()) {
+				switch(link.face()) {
 					case NORTH:
 						sprite = spriteN;
-						locate(game.link().x() -5, game.link().y() - 9);	
+						locate(link.x() -5, link.y() - 9);	
 						break;
 					case EAST:
 						sprite = spriteE;
-						locate(game.link().x() + 13, game.link().y() - 3);
+						locate(link.x() + 13, link.y() - 3);
 						break;
 					case SOUTH:
 						sprite = spriteS;
-						locate(game.link().x() + 6, game.link().y() + 11);
+						locate(link.x() + 6, link.y() + 11);
 						break;
 					case WEST:
 						sprite = spriteW;
-						locate(game.link().x() + -12, game.link().y() + 5);
+						locate(link.x() + -12, link.y() + 5);
 						break;
 				}
 				phase++;
 				if(phase >= 6) {
 					phase = 0;
-					game.link().face(game.link().face());
+					link.face(link.face());
 				}
 			}
 		}
@@ -160,13 +164,13 @@ public abstract class AbstractSword extends AbstractWeapon {
 		int val = r.nextInt(100);
 		AbstractItem item = null;
 		if(val >= 90) {
-			if(game.link().life() < game.link().maxLife()) {
-				item = new Heart();
+			if(link.life() < link.maxLife()) {
+				item = new Heart(link);
 			} else {
-				item = new RupeeGreen();
+				item = new RupeeGreen(link);
 			}
 		} else if(val >= 80) {
-			item = new RupeeGreen();
+			item = new RupeeGreen(link);
 		}
 		if(item != null) {
 			item.locate(

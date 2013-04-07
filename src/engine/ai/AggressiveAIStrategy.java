@@ -4,6 +4,7 @@ import java.util.Random;
 
 import engine.Game;
 import engine.GameFactory;
+import engine.entity.AbstractEntity;
 import engine.entity.AbstractLivingEntity;
 import engine.math.PositionVector;
 
@@ -12,6 +13,8 @@ public class AggressiveAIStrategy implements IAIStrategy {
 	private Game game;
 
 	private AbstractLivingEntity entity;
+	
+	private AbstractEntity target;
 
 	private long lastMoved = Game.clock.elapsedMillis();
 
@@ -34,10 +37,11 @@ public class AggressiveAIStrategy implements IAIStrategy {
 	// private final static Logger LOGGER =
 	// Logger.getLogger(AggressiveAIStrategy.class);
 
-	public AggressiveAIStrategy(AbstractLivingEntity entity, int moveDelay,
+	public AggressiveAIStrategy(AbstractLivingEntity entity, AbstractEntity target, int moveDelay,
 			int aggressionMoveDelay, int moveSpeed, int aggressionRange) {
 		this.game = GameFactory.get();
 		this.entity = entity;
+		this.target = target;
 		this.aggressionRange = aggressionRange;
 		this.aggressionMoveDelay = aggressionMoveDelay;
 		this.moveDelay = moveDelay;
@@ -47,22 +51,22 @@ public class AggressiveAIStrategy implements IAIStrategy {
 
 	@Override
 	public void handle() {
-		double dist = Math.sqrt(Math.pow(entity.x() - game.link().x(), 2) + Math.pow(entity.x() - game.link().y(), 2));
+		double dist = Math.sqrt(Math.pow(entity.x() - target.x(), 2) + Math.pow(entity.x() - target.y(), 2));
 		if (dist <= aggressionRange) {
 			if (Game.clock.elapsedMillis() - lastMoved > aggressionMoveDelay) { // move
 				moving = true;
 				move.set(0, 0);
 				lastMoved = Game.clock.elapsedMillis();
-				if (game.link().x() - entity.x() < -4) {
+				if (target.x() - entity.x() < -4) {
 					move.x(-moveSpeed);
-				} else if (game.link().x() - entity.x() > 4) {
+				} else if (target.x() - entity.x() > 4) {
 					move.x(moveSpeed);
 				} else {
 					move.x(0);
 				}
-				if (game.link().y() - entity.y() < -4) {
+				if (target.y() - entity.y() < -4) {
 					move.y(-moveSpeed);
-				} else if (game.link().y() - entity.y() > 4) {
+				} else if (target.y() - entity.y() > 4) {
 					move.y(moveSpeed);
 				} else {
 					move.y(0);

@@ -1,4 +1,4 @@
-package minesweeper.gamestates;
+package game.minesweeper.gamestates;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

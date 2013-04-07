@@ -4,10 +4,15 @@ package engine;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.KeyboardFocusManager;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLProfile;
+import javax.media.opengl.awt.GLCanvas;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +31,7 @@ import engine.map.tiled.Map;
 import engine.map.tiled.TiledMapLoader;
 import engine.mouse.Mouse;
 import engine.sound.SoundBank;
+import game.cubes.GLScreen;
 import game.zelda.player.Link;
 
 public abstract class Game extends JPanel {
@@ -60,13 +66,12 @@ public abstract class Game extends JPanel {
 
 	protected final SimpleSprite screen;
 	
+	protected GLCanvas glcanvas; // will be moving to only use OpenGL in the future;
+	
 	protected JFrame frame;
 
 	protected final JLabel screenPanel = new JLabel();
 
-	// @TODO create Interface for Player to decouple Game and Link
-	protected Link link;
-	
 	protected Map map;
 	
 	protected TiledMapLoader loader;
@@ -90,6 +95,7 @@ public abstract class Game extends JPanel {
 		this.setLayout(new GridLayout());
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH * zoom, SCREEN_HEIGHT * zoom));
 		this.setIgnoreRepaint(true);
+		
 		screen = new SimpleSprite(new BufferedImage(SCREEN_WIDTH * zoom, SCREEN_HEIGHT * zoom, BufferedImage.TYPE_INT_ARGB));
 		screenPanel.setIcon(new ImageIcon(screen.bufferedImage()));
 		screenPanel.setDoubleBuffered(true);
@@ -125,6 +131,26 @@ public abstract class Game extends JPanel {
 		frame.add(this);
 		frame.pack();
 		frame.setResizable(false);
+		
+//    	GLProfile profile = GLProfile.get(GLProfile.GL2);
+//    	GLCapabilities capabilities = new GLCapabilities(profile);
+//    	
+//        frame = new JFrame( "Hello World" );
+// 
+//    	// The canvas is the widget that's drawn in the JFrame
+//    	glcanvas = new GLCanvas(capabilities);
+//    	glcanvas.addGLEventListener(new GLScreen(460, 350));
+//    	glcanvas.setSize(640, 480);
+//        frame.getContentPane().add( glcanvas);
+//        
+//        // shutdown the program on windows close event
+//        frame.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent ev) {
+//               // System.exit(0);
+//            }
+//        });
+//        frame.setSize( frame.getContentPane().getPreferredSize() );
+//        frame.setVisible( true );
 	}
 	
 	public void start() {
@@ -132,14 +158,6 @@ public abstract class Game extends JPanel {
 	}
 	
 	public abstract void run();
-
-	public Link link() {
-		return link;
-	}
-	
-	public void link(Link link) {
-		this.link = link;
-	}
 
 	public Map map() {
 		return map;
@@ -182,6 +200,10 @@ public abstract class Game extends JPanel {
 	
 	public void setTitle(String title) {
 		frame.setTitle(title);
+	}
+
+	public GLCanvas glCanvas() {
+		return glcanvas;
 	}
 	
 }

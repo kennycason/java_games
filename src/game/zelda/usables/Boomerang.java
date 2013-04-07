@@ -3,6 +3,7 @@ package game.zelda.usables;
 import java.awt.Graphics2D;
 import java.util.Iterator;
 
+import game.zelda.player.Link;
 import engine.FaceDirection;
 import engine.Game;
 import engine.entity.enemy.AbstractEnemy;
@@ -35,8 +36,8 @@ public class Boomerang extends AbstractWeapon {
 	
 	private AbstractItem pickedUpItem;
 	
-	public Boomerang() {
-		super();
+	public Boomerang(Link link) {
+		super(link);
 		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		SpriteSheet sheet = new SpriteSheet(8, 16, 16);
@@ -77,8 +78,8 @@ public class Boomerang extends AbstractWeapon {
 		using = true;
 		returning = false;
 		
-		x = game.link().x();
-		y = game.link().y();
+		x = user.x();
+		y = user.y();
 		start.x(x);
 		start.y(y);
 		if (Game.keyboard.isKeyPressed(Buttons.RIGHT)
@@ -102,7 +103,7 @@ public class Boomerang extends AbstractWeapon {
 		} else if (Game.keyboard.isKeyPressed(Buttons.LEFT)) {
 			move.set(-speed, 0);
 		} else {
-			switch(game.link().face()) {
+			switch(user.face()) {
 				case NORTH:
 					move.set(0, -speed);
 					break;
@@ -161,20 +162,20 @@ public class Boomerang extends AbstractWeapon {
 			}
 		} else {
 			int mX = 0, mY = 0;
-			if(game.link().x() - x() < -4) {
+			if(user.x() - x() < -4) {
 				mX = -speed;
-			} else if(game.link().x() - x() > 4) {
+			} else if(user.x() - x() > 4) {
 				mX = speed;
 			}
-			if(game.link().y() - y() < -4) {
+			if(user.y() - y() < -4) {
 				mY = -speed;
-			} else if(game.link().y() - y() > 4) {
+			} else if(user.y() - y() > 4) {
 				mY = speed;
 			} 
 			move.set(mX, mY);
 			x += move.x();
 			y += move.y();
-			if(rectangleCollide(game.link())) {
+			if(rectangleCollide(user)) {
 				if(pickedUpItem != null) {
 					pickedUpItem.consume();
 				}

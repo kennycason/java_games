@@ -2,7 +2,9 @@ package engine.entity.item;
 
 import java.awt.Graphics2D;
 
+import engine.entity.AbstractLivingEntity;
 import engine.Game;
+import engine.entity.AbstractEntity;
 import engine.entity.AbstractSimpleEntity;
 
 public abstract class AbstractItem extends AbstractSimpleEntity {
@@ -19,8 +21,11 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 	
 	protected long droppedTime;
 	
-	public AbstractItem() {
+	protected AbstractEntity owner;
+	
+	public AbstractItem(AbstractEntity owner) {
 		super();
+		this.owner = owner;
 		consumed = false;
 		mustTouch = false;
 		walkable = true;
@@ -37,7 +42,7 @@ public abstract class AbstractItem extends AbstractSimpleEntity {
 			}
 		}
 		if(walkable) {
-			if(rectangleCollide(game.link())) {
+			if(rectangleCollide(owner)) {
 				consume();
 			}
 		}

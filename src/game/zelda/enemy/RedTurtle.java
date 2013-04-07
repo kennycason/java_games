@@ -7,11 +7,12 @@ import engine.graphics.sprite.AnimatedSprite;
 import engine.graphics.sprite.SpriteBank;
 import engine.graphics.sprite.SpriteSheet;
 import game.zelda.item.RupeeBlue;
+import game.zelda.player.Link;
 
 public class RedTurtle extends AbstractEnemy {
 
-	public RedTurtle(int x, int y) {
-		setAIStrategy(new AggressiveAIStrategy(this, 20, 100, 2, 400));
+	public RedTurtle(Link link, int x, int y) {
+		setAIStrategy(new AggressiveAIStrategy(this, link, 20, 100, 2, 400));
 		SpriteBank rsrcs = Game.sprites;
 		SpriteSheet sheet = (SpriteSheet) rsrcs.get("entities");
 		
@@ -27,7 +28,7 @@ public class RedTurtle extends AbstractEnemy {
 		maxLife = 2;
 		collisionOffset = 2;
 		dropItemProbability = 60;
-		dropItems.add(new RupeeBlue());
+		dropItems.add(new RupeeBlue(link));
 	}
 
 	@Override

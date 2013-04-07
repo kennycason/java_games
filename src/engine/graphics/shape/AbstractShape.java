@@ -16,6 +16,7 @@ public abstract class AbstractShape extends AbstractCollidable {
 	protected AbstractShape() {
 		super();
 		rot = new Vector3D();
+		color = Color.WHITE;
 	}
 	
 	public abstract void draw(final GL2 gl);

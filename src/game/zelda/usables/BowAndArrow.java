@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import game.zelda.player.Link;
 import engine.FaceDirection;
 import engine.Game;
 import engine.entity.AbstractSimpleEntity;
@@ -32,8 +33,8 @@ public class BowAndArrow extends AbstractWeapon {
 
 	private long lastShotTime;
 	
-	public BowAndArrow() {
-		super();
+	public BowAndArrow(Link link) {
+		super(link);
 		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		bow = entities.get(163);
@@ -62,10 +63,10 @@ public class BowAndArrow extends AbstractWeapon {
 			lastShotTime = Game.clock.elapsedMillis();
 			//sound.play();
 	
-			x = game.link().x();
-			y = game.link().y();
+			x = user.x();
+			y = user.y();
 			numArrows--;
-			switch(game.link().face()) {
+			switch(user.face()) {
 				case NORTH:
 					arrows.add(new Arrow(arrowN, 0, -speed, x, y));
 					break;

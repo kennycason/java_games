@@ -5,17 +5,21 @@ import engine.entity.item.AbstractItem;
 import engine.graphics.sprite.AnimatedSprite;
 import engine.graphics.sprite.SpriteSheet;
 import engine.sound.AbstractSound;
+import game.zelda.player.Link;
 
 public class HeartPiece extends AbstractItem {
 	
 	private AbstractSound sound;
 	
-	public HeartPiece() {
-		this(0, 0);
+	private Link link;
+	
+	public HeartPiece(Link link) {
+		this(link, 0, 0);
 	}
 	
-	public HeartPiece(int x, int y) {
-		super();
+	public HeartPiece(Link link, int x, int y) {
+		super(link);
+		this.link = link;
 		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		sprite = new AnimatedSprite(sheet.range(157), 0);
 		locate(x * sprite.width(), y * sprite.height());
@@ -26,8 +30,8 @@ public class HeartPiece extends AbstractItem {
 	
 	@Override
 	public void consume() {
-		game.link().heartPieces(game.link().heartPieces() + 1);
-		game.link().life(game.link().life() + 5);
+		link.heartPieces(link.heartPieces() + 1);
+		link.life(link.life() + 5);
 		consumed = true;
 		sound.play();
 	}

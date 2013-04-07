@@ -2,6 +2,7 @@ package engine.ai;
 
 import engine.Game;
 import engine.GameFactory;
+import engine.entity.AbstractEntity;
 import engine.entity.AbstractLivingEntity;
 import engine.map.tiled.MetaTilesNumber;
 import engine.math.PositionVector;
@@ -12,6 +13,8 @@ public class ShortestGridPathFinderAIStrategy implements IAIStrategy {
 
 	private AbstractLivingEntity entity;
 
+	private AbstractEntity target;
+	
 	private long lastMoved = Game.clock.elapsedMillis();
 
 	private long moveDelay = 50;
@@ -37,9 +40,10 @@ public class ShortestGridPathFinderAIStrategy implements IAIStrategy {
 	// private final static Logger LOGGER = Logger.getLogger(DynamicShortestGridPathFinderAIStrategy.class);
 
 	// TODO debating on a DynamicProgramming approach or A*
-	public ShortestGridPathFinderAIStrategy(AbstractLivingEntity entity, int moveDelay, int moveSpeed) {
+	public ShortestGridPathFinderAIStrategy(AbstractLivingEntity entity, AbstractEntity target, int moveDelay, int moveSpeed) {
 		game = GameFactory.get();
 		this.entity = entity;
+		this.target = target;
 		this.moveDelay = moveDelay;
 		this.moveSpeed = moveSpeed;
 		//path = new LinkedList<PositionVector>();
@@ -55,15 +59,15 @@ public class ShortestGridPathFinderAIStrategy implements IAIStrategy {
 			moving = false;
 		} else {
 			if(Game.clock.elapsedMillis() - lastMoved > moveDelay) {
-				double dist = Math.sqrt(Math.pow(entity.x() - game.link().x(),
-						2) + Math.pow(entity.y() - game.link().y(), 2));
+				double dist = Math.sqrt(Math.pow(entity.x() - target.x(),
+						2) + Math.pow(entity.y() - target.y(), 2));
 				if (dist < 500) {
 					moving = true;
 					move.set(0, 0);
 					lastMoved = Game.clock.elapsedMillis();
 					resetNodes();
-					endX = game.link().mapX();
-					endY = game.link().mapY();
+					endX = target.mapX();
+					endY = target.mapY();
 					startX = entity.mapX();
 					endY = entity.mapY();
 					search(startX, startY, endX, endY);

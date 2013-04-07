@@ -13,6 +13,7 @@ import game.zelda.gamestates.ItemScreenGameLoop;
 import game.zelda.gamestates.MainGameLoop;
 import game.zelda.gamestates.PausedScreenGameLoop;
 import game.zelda.gamestates.TitleScreenGameLoop;
+import game.zelda.player.Link;
 import game.zelda.usables.Boomerang;
 import game.zelda.usables.BowAndArrow;
 import game.zelda.usables.Bracelet;
@@ -25,6 +26,9 @@ import game.zelda.usables.SwordLevel3;
 public class LegendOfZelda extends Game {
 
 	private static final long serialVersionUID = 1L;
+
+	// @TODO create Interface for Player to decouple Game and Link
+	private Link link;
 
 	public static void main(String[] args) {
 		GameFactory.set(new LegendOfZelda());
@@ -44,6 +48,7 @@ public class LegendOfZelda extends Game {
 	@Override
 	public void start() {
 		super.start();
+		
 		// load globals
 		
 		// load sprites
@@ -81,18 +86,31 @@ public class LegendOfZelda extends Game {
 		Game.sounds.set("dialog_typing", new LoopingSound("sounds/effects/Oracle_Text_Letter.wav"));	
 		Game.sounds.set("dialog_finished", new SoundEffect("sounds/effects/Oracle_Text_Done.wav"));	
 		
-		Game.usables.set("sword1", new SwordLevel1());
-		Game.usables.set("sword2", new SwordLevel2());
-		Game.usables.set("sword3", new SwordLevel3());
-		Game.usables.set("boomerang", new Boomerang());
-		Game.usables.set("bow", new BowAndArrow());
-		Game.usables.set("ocarina", new Ocarina());
-		Game.usables.set("megaton", new MegatonHammer()); // still need to finess the graphics
-		Game.usables.set("bracelet", new Bracelet());
 		
-		gameLoops.put(GameStateEnum.TITLE_SCREEN, new TitleScreenGameLoop());
-		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop());
-		gameLoops.put(GameStateEnum.ITEM_SCREEN, new ItemScreenGameLoop());
+		link = new Link();
+		
+		Game.usables.set("sword1", new SwordLevel1(link));
+		Game.usables.set("sword2", new SwordLevel2(link));
+		Game.usables.set("sword3", new SwordLevel3(link));
+		Game.usables.set("boomerang", new Boomerang(link));
+		Game.usables.set("bow", new BowAndArrow(link));
+		Game.usables.set("ocarina", new Ocarina(link));
+		Game.usables.set("megaton", new MegatonHammer(link)); // still need to finess the graphics
+		Game.usables.set("bracelet", new Bracelet(link));
+		
+		link.addUsable(Game.usables.get("megaton"));
+		link.addUsable(Game.usables.get("sword1"));
+		link.addUsable(Game.usables.get("boomerang"));
+		link.addUsable(Game.usables.get("ocarina"));
+		link.addUsable(Game.usables.get("sword2"));
+		link.addUsable(Game.usables.get("bracelet"));
+		
+		link.itemA(Game.usables.get("bow"));
+		link.itemB(Game.usables.get("sword3"));
+		
+		gameLoops.put(GameStateEnum.TITLE_SCREEN, new TitleScreenGameLoop(link));
+		gameLoops.put(GameStateEnum.MAIN, new MainGameLoop(link));
+		gameLoops.put(GameStateEnum.ITEM_SCREEN, new ItemScreenGameLoop(link));
 		gameLoops.put(GameStateEnum.PAUSED, new PausedScreenGameLoop());
 		
 
@@ -131,4 +149,8 @@ public class LegendOfZelda extends Game {
 		}
 	}
 		
+	
+	public Link link() {
+		return link;
+	}
 }

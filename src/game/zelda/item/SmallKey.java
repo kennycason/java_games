@@ -5,17 +5,21 @@ import engine.entity.item.AbstractItem;
 import engine.graphics.sprite.AnimatedSprite;
 import engine.graphics.sprite.SpriteSheet;
 import engine.sound.AbstractSound;
+import game.zelda.player.Link;
 
 public class SmallKey extends AbstractItem {
 	
 	private AbstractSound sound;
 	
-	public SmallKey() {
-		this(0, 0);
+	private Link link;
+	
+	public SmallKey(Link link) {
+		this(link, 0, 0);
 	}
 	
-	public SmallKey(int x, int y) {
-		super();
+	public SmallKey(Link link, int x, int y) {
+		super(link);
+		this.link = link;
 		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		sprite = new AnimatedSprite(sheet.range(358), 0);
 		locate(x * sprite.width(), y * sprite.height());
@@ -27,7 +31,7 @@ public class SmallKey extends AbstractItem {
 	@Override
 	public void consume() {
 		consumed = true;
-		game.link().smallKeys(game.link().smallKeys() + 1);
+		link.smallKeys(link.smallKeys() + 1);
 		sound.play();
 	}
 

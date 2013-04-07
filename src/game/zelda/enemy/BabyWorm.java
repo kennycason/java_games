@@ -13,6 +13,7 @@ import engine.graphics.sprite.SpriteUtils;
 import game.zelda.item.Heart;
 import game.zelda.item.RupeeGold;
 import game.zelda.item.RupeeGreen;
+import game.zelda.player.Link;
 
 public class BabyWorm extends AbstractEnemy {
 	
@@ -20,7 +21,7 @@ public class BabyWorm extends AbstractEnemy {
 	
 	private Body tail2;
 	
-	public BabyWorm(int x, int y) {
+	public BabyWorm(Link link, int x, int y) {
 		setAIStrategy(new RandomAIStrategy(this, 2500));
 		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		
@@ -38,10 +39,10 @@ public class BabyWorm extends AbstractEnemy {
 		damage = 2.0;
 		life = 10;
 		maxLife = 10;
-		dropItems.add(new Heart());
-		dropItems.add(new Heart());
-		dropItems.add(new RupeeGreen());
-		dropItems.add(new RupeeGold());
+		dropItems.add(new Heart(link));
+		dropItems.add(new Heart(link));
+		dropItems.add(new RupeeGreen(link));
+		dropItems.add(new RupeeGold(link));
 	}
 
 	@Override

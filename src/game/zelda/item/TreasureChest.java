@@ -7,6 +7,7 @@ import engine.graphics.sprite.AnimatedSprite;
 import engine.graphics.sprite.SpriteSheet;
 import engine.map.tiled.MetaTilesNumber;
 import engine.sound.AbstractSound;
+import game.zelda.player.Link;
 
 public class TreasureChest extends AbstractItem {
 	
@@ -16,8 +17,11 @@ public class TreasureChest extends AbstractItem {
 	
 	private boolean open = false;
 	
-	public TreasureChest(int x, int y, AbstractEvent ... events) {
-		super();
+	private Link link;
+	
+	public TreasureChest(Link link, int x, int y, AbstractEvent ... events) {
+		super(link);
+		this.link = link;
 		mustTouch = true;
 		walkable = false;
 		disappearAfterConsume = true;
@@ -34,7 +38,7 @@ public class TreasureChest extends AbstractItem {
 	@Override
 	public void consume() {
 		if(!open) {
-			if(game.link().mapX() == mapX() && game.link().mapY() == mapY() + 1) {
+			if(link.mapX() == mapX() && link.mapY() == mapY() + 1) {
 				game.map().collisionLayer()[mapX()][mapY()].value(0);
 				consumed = true;
 				openSound.play();

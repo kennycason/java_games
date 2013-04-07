@@ -2,6 +2,7 @@ package engine.entity.usable;
 
 import java.awt.Graphics2D;
 
+import engine.entity.AbstractLivingEntity;
 import engine.FaceDirection;
 import engine.entity.AbstractEntity;
 
@@ -9,8 +10,11 @@ public abstract class AbstractUsableEntity extends AbstractEntity {
 	
 	protected boolean using;
 	
-	public AbstractUsableEntity() {
+	protected AbstractLivingEntity user;
+	
+	public AbstractUsableEntity(AbstractLivingEntity user) {
 		super();
+		this.user = user;
 	}
 	
 	public abstract void draw(Graphics2D g);

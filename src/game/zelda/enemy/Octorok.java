@@ -9,10 +9,11 @@ import engine.graphics.sprite.SpriteSheet;
 import engine.graphics.sprite.SpriteUtils;
 import game.zelda.item.Heart;
 import game.zelda.item.RupeeGreen;
+import game.zelda.player.Link;
 
 public class Octorok extends AbstractEnemy {
 
-	public Octorok(int x, int y) {
+	public Octorok(Link link, int x, int y) {
 		setAIStrategy(new RandomAIStrategy(this, 2500));
 		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		SpriteSheet west = new SpriteSheet(2, 16, 16);
@@ -36,10 +37,10 @@ public class Octorok extends AbstractEnemy {
 		damage = 0.5;
 		life = 4;
 		maxLife = 1;
-		dropItems.add(new Heart());
-		dropItems.add(new Heart());
-		dropItems.add(new RupeeGreen());
-		dropItems.add(new RupeeGreen());
+		dropItems.add(new Heart(link));
+		dropItems.add(new Heart(link));
+		dropItems.add(new RupeeGreen(link));
+		dropItems.add(new RupeeGreen(link));
 		
 		
 	}

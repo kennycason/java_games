@@ -1,12 +1,12 @@
-package minesweeper;
+package game.minesweeper;
 
 import java.awt.Font;
 
-import minesweeper.gamestates.MainGameLoop;
 import engine.graphics.sprite.SpriteSheet;
 import engine.Game;
 import engine.GameFactory;
 import engine.GameStateEnum;
+import game.minesweeper.gamestates.MainGameLoop;
 
 public class MineSweeper extends Game {
 

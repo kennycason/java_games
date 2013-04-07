@@ -15,6 +15,7 @@ import engine.event.TimedDialogDeployEvent;
 import engine.event.TimedEnemyDeployEvent;
 import engine.graphics.sprite.SimpleSprite;
 import engine.map.tiled.TiledMapLoader;
+import engine.math.PositionVector;
 import engine.sound.LoopingSound;
 import game.zelda.Buttons;
 import game.zelda.dialog.ZeldaDialog;
@@ -31,8 +32,11 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 
 	private LoopingSound sound;
 	
-	public TitleScreenGameLoop() {
+	private Link link;
+
+	public TitleScreenGameLoop(Link link) {
 		super();
+		this.link = link;
 		sound = (LoopingSound) Game.sounds.get("main_theme");
 	}
 
@@ -58,8 +62,8 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 	@Override
 	public void draw(BufferedImage bi) {
 		Graphics2D g = bi.createGraphics();
-		if(game.zoom() > 1) {
-			g.scale(game.zoom(), game.zoom());
+		if(Game.zoom() > 1) {
+			g.scale(Game.zoom(), Game.zoom());
 		}
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT);
@@ -77,37 +81,35 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 		
 		game.map().events().add(new TimedDialogDeployEvent(new ZeldaDialog("Welcome to my Zelda clone.\nIt's still rough so be patient. :)"), 500));
 
-		game.map().events().add(new EnemyDeployEvent(new LikeLike(4, 7)));
-		game.map().events().add(new EnemyDeployEvent(new Octorok(9, 10)));
-		game.map().events().add(new EnemyDeployEvent(new LikeLike(12, 19)));
-		game.map().events().add(new EnemyDeployEvent(new LikeLike(19, 9)));
-		game.map().events().add(new EnemyDeployEvent(new RedTurtle(15, 10)));
+		game.map().events().add(new EnemyDeployEvent(new LikeLike(link, 4, 7)));
+		game.map().events().add(new EnemyDeployEvent(new Octorok(link, 9, 10)));
+		game.map().events().add(new EnemyDeployEvent(new LikeLike(link, 12, 19)));
+		game.map().events().add(new EnemyDeployEvent(new LikeLike(link, 19, 9)));
+		game.map().events().add(new EnemyDeployEvent(new RedTurtle(link, 15, 10)));
 		
-		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(2, 10), 10000));
-		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(5, 14), 10000));
-		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(7, 14), 10000));
+		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(link, 2, 10), 10000));
+		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(link, 5, 14), 10000));
+		game.map().events().add(new TimedEnemyDeployEvent(new RedTurtle(link, 7, 14), 10000));
 	
 		game.map()
 				.events()
-				.add(new EnemiesDeadItemAppearEvent(new TreasureChest(25, 11,
+				.add(new EnemiesDeadItemAppearEvent(new TreasureChest(link, 25, 11,
 						new ZeldaDialog("Found A Gold Rupee! Joy!"),
-						new ConsumeItemEvent(new RupeeGold()))));
+						new ConsumeItemEvent(new RupeeGold(link)))));
 		game.map()
 				.events()
-				.add(new EnemiesDeadItemAppearEvent(new TreasureChest(26, 11,
+				.add(new EnemiesDeadItemAppearEvent(new TreasureChest(link, 26, 11,
 						new ZeldaDialog("Found A HeartPiece!\nCollect 4 pieces to gain a heart"),
-						new ConsumeItemEvent(new HeartPiece()))));
+						new ConsumeItemEvent(new HeartPiece(link)))));
 
-		game.map().items().add(new FullHeart(4, 10));
-		game.map().items().add(new HeartPiece(9, 3));
-		game.map().items().add(new HeartPiece(10, 3));
-		game.map().items().add(new HeartPiece(11, 3));
-		game.map().items().add(new TreasureChest(2, 8, 
+		game.map().items().add(new FullHeart(link, 4, 10));
+		game.map().items().add(new HeartPiece(link, 9, 3));
+		game.map().items().add(new HeartPiece(link, 10, 3));
+		game.map().items().add(new HeartPiece(link, 11, 3));
+		game.map().items().add(new TreasureChest(link, 2, 8, 
 				new ZeldaDialog("Found A Full Heart!\nLife increased by one!"),
-				new ConsumeItemEvent(new FullHeart())
+				new ConsumeItemEvent(new FullHeart(link))
 		));	
-		
-		game.link(new Link());
 		
 		// stop all looping sounds
 		Game.sounds.stopAll();
@@ -116,6 +118,7 @@ public class TitleScreenGameLoop extends AbstractGameLoop {
 			AbstractUsableEntity entity = Game.usables.get(key);
 			entity.reset();
 		}
+		link.setLocation(new PositionVector(10, 12));
 		
 	}
 	

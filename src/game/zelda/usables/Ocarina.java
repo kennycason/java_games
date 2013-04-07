@@ -8,6 +8,7 @@ import engine.entity.usable.AbstractUsableEntity;
 import engine.graphics.sprite.SimpleSprite;
 import engine.graphics.sprite.SpriteSheet;
 import engine.sound.AbstractSound;
+import game.zelda.player.Link;
 
 public class Ocarina extends AbstractUsableEntity {
 	
@@ -19,8 +20,8 @@ public class Ocarina extends AbstractUsableEntity {
 	
 	private long playTime;
 	
-	public Ocarina() {
-		super();
+	public Ocarina(Link link) {
+		super(link);
 		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		sprite = entities.get(361);
@@ -43,8 +44,8 @@ public class Ocarina extends AbstractUsableEntity {
 		sound.play();
 		using = true;
 
-		x = game.link().x();
-		y = game.link().y();
+		x = user.x();
+		y = user.y();
 		playTime = Game.clock.elapsedMillis();
 
 	}

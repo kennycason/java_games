@@ -77,22 +77,11 @@ public class Link extends AbstractLivingEntity {
 		spriteCurrent = spriteE;
 
 		items = new AbstractUsableEntity[16];
-		items[0] = Game.usables.get("megaton");
-		items[1] = Game.usables.get("sword1");
-		items[2] = Game.usables.get("boomerang");
-		items[3] = Game.usables.get("ocarina");
-		items[4] = Game.usables.get("sword2");
-		items[5] = Game.usables.get("bracelet");
-		
-		itemA = Game.usables.get("bow");
-		itemB = Game.usables.get("sword3");
 		
 		mapPosition = new PositionVector();
 		drawOffset = new PositionVector(); 
 		
 		mapStartPosition = new PositionVector(10, 12);
-		
-		setLocation(mapStartPosition);
 		
 		mapPosition = new PositionVector();
 		move = new PositionVector();
@@ -110,7 +99,7 @@ public class Link extends AbstractLivingEntity {
 		
 	}
 
-	private void setLocation(PositionVector position) {
+	public void setLocation(PositionVector position) {
 		mapPosition.set(position.x(), position.y());
 		int realX = -(position.x() - 8) * game.map().tileWidth();
 		int realY = -(position.y() - 8) *  game.map().tileHeight();
@@ -355,6 +344,15 @@ public class Link extends AbstractLivingEntity {
 		this.itemB = itemB;
 	}
 
+	public void addUsable(AbstractUsableEntity item) {
+		for(int i = 0; i < items.length; i++) {
+			if(items[i] == null) {
+				items[i] = item;
+				break;
+			}
+		}
+	}
+	
 	public int rupees() {
 		return rupees;
 	}

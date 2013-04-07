@@ -5,13 +5,17 @@ import engine.entity.item.AbstractItem;
 import engine.graphics.sprite.AnimatedSprite;
 import engine.graphics.sprite.SpriteSheet;
 import engine.sound.AbstractSound;
+import game.zelda.player.Link;
 
 public class Heart extends AbstractItem {
 	
 	private AbstractSound sound;
 	
-	public Heart() {
-		super();
+	private Link link;
+	
+	public Heart(Link link) {
+		super(link);
+		this.link = link;
 		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		sprite = new AnimatedSprite(sheet.range(257), 0);
 		collisionOffset = 4;
@@ -21,7 +25,7 @@ public class Heart extends AbstractItem {
 	@Override
 	public void consume() {
 		if(!justDropped) {
-			game.link().life(game.link().life() + 1);
+			link.life(link.life() + 1);
 			consumed = true;
 			sound.play();
 		} else {

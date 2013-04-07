@@ -6,6 +6,8 @@ import java.util.List;
 
 import engine.Game;
 import engine.entity.AbstractCollidable;
+import engine.entity.AbstractEntity;
+import engine.entity.AbstractLivingEntity;
 import engine.entity.enemy.AbstractEnemy;
 import engine.entity.item.AbstractItem;
 import engine.event.EventQueue;
@@ -181,13 +183,13 @@ public class Map {
 //		}
 //	}
 	
-	public void handleMetaEvents(AbstractCollidable entity) {
+	public void handleMetaEvents(AbstractLivingEntity entity) {
 		int x = entity.mapX();
 		int y = entity.mapY();
 		// System.out.println("meta event: " + metaLayer[x][y].value());
 		switch(metaLayer[x][y].value()) {
 			case MetaTilesNumber.HOLE:
-				events.add(new LinkFallingMetaEvent());
+				events.add(new LinkFallingMetaEvent(entity));
 				break;
 		}
 //		if(metaEvents.containsKey(metaLayer[x][y].value())) {

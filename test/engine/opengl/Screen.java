@@ -7,10 +7,9 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
-import javax.media.opengl.fixedfunc.GLLightingFunc;
 
-import engine.graphics.shape.Cube;
 import engine.graphics.shape.Circle;
+import engine.graphics.shape.Cube;
 import engine.graphics.shape.GradientCircle;
 import engine.graphics.shape.Polygon;
 import engine.graphics.shape.Square;

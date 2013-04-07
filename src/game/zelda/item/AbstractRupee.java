@@ -1,5 +1,6 @@
 package game.zelda.item;
 
+import game.zelda.player.Link;
 import engine.Game;
 import engine.entity.item.AbstractItem;
 import engine.graphics.sprite.AnimatedSprite;
@@ -12,8 +13,8 @@ public abstract class AbstractRupee extends AbstractItem {
 	
 	protected AbstractSound sound;
 	
-	protected AbstractRupee(int value, int spriteNumber) {
-		super();
+	protected AbstractRupee(Link link, int value, int spriteNumber) {
+		super(link);
 		this.value = value;
 		SpriteSheet sheet = (SpriteSheet) Game.sprites.get("entities");
 		sprite = new AnimatedSprite(sheet.range(spriteNumber), 0);
@@ -28,7 +29,7 @@ public abstract class AbstractRupee extends AbstractItem {
 			}
 		}
 		if(!justDropped) {
-			game.link().rupees(game.link().rupees() + value);
+			((Link) owner).rupees(((Link) owner).rupees() + value);
 			consumed = true;
 			sound.play();
 		} else {

@@ -1,9 +1,11 @@
 package game.zelda.usables;
 
+import game.zelda.player.Link;
+
 public class SwordLevel3 extends AbstractSword {
 
-	public SwordLevel3() {
-		super(55, 3);
+	public SwordLevel3(Link link) {
+		super(link, 55, 3);
 	}
 
 	@Override

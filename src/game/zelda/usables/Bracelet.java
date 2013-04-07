@@ -7,13 +7,14 @@ import engine.Game;
 import engine.entity.usable.AbstractUsableEntity;
 import engine.graphics.sprite.SimpleSprite;
 import engine.graphics.sprite.SpriteSheet;
+import game.zelda.player.Link;
 
 public class Bracelet extends AbstractUsableEntity {
 	
 	private SimpleSprite sprite;
 	
-	public Bracelet() {
-		super();
+	public Bracelet(Link link) {
+		super(link);
 		SpriteSheet entities = (SpriteSheet) Game.sprites.get("entities");
 		
 		sprite = entities.get(408);
@@ -34,8 +35,8 @@ public class Bracelet extends AbstractUsableEntity {
 		}
 		using = true;
 
-		x = game.link().x();
-		y = game.link().y();
+		x = user.x();
+		y = user.y();
 
 	}
 	
