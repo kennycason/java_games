@@ -1,6 +1,8 @@
 Java Game Engine
 
+## I highly recommend just using LibGDX https://libgdx.badlogicgames.com/
 
+I'm sure of the logic can transfer over, but this was a pretty hacked project. :)
 
 Legend of Zelda
 =============
